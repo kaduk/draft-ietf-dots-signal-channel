@@ -142,8 +142,7 @@
 
       <t>A companion document defines the DOTS data channel, a separate
       reliable communication layer for DOTS management and configuration
-      purposes.<!--target-prefix validation? multicast broadcast are not valid ones. No need to check if the prefix is owned by that domain(?)
-What behavior to follow if the server fails to resolve a target-fqdn?--></t>
+      purposes.</t>
     </abstract>
 
     <note title="Editorial Note (To be removed by RFC Editor)">
@@ -152,9 +151,9 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
           <t>"This version of this YANG module is part of RFC XXXX;"</t>
 
           <t>"RFC XXXX: Distributed Denial-of-Service Open Threat Signaling
-          (DOTS) Signal Channel";</t>
+          (DOTS) Signal Channel Specification";</t>
 
-          <t>"| 3.00 | Alternate server | [RFCXXXX] |"</t>
+          <t>"| [RFCXXXX] |"</t>
 
           <t>reference: RFC XXXX</t>
         </list>Please update TBD statements with the port number to be
@@ -187,9 +186,9 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
       legitimate traffic. Stateful firewalls can also be attacked by sending
       traffic that causes the firewall to maintain an excessive number of
       states that may jeopardize the firewall's operation overall, besides
-      like performance impacts. The firewall then runs out of memory, and can
-      no longer instantiate the states required to process legitimate flows.
-      Other possible DDoS attacks are discussed in <xref
+      likely performance impacts. The firewall then runs out of memory, and
+      can no longer instantiate the states required to process legitimate
+      flows. Other possible DDoS attacks are discussed in <xref
       target="RFC4732"></xref>.</t>
 
       <t>In many cases, it may not be possible for network administrators to
@@ -270,7 +269,7 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
       statement that applies to either protocol alone.</t>
 
       <t>The reader should be familiar with the terms defined in <xref
-      target="I-D.ietf-dots-architecture"></xref>.</t>
+      target="I-D.ietf-dots-requirements"></xref>.</t>
 
       <t>The meaning of the symbols in YANG tree diagrams is defined in <xref
       target="I-D.ietf-netmod-yang-tree-diagrams"></xref>.</t>
@@ -406,8 +405,8 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
       <section anchor="discover" title="DOTS Server(s) Discovery">
         <t>This document assumes that DOTS clients are provisioned with the
         reachability information of their DOTS server(s) using a variety of
-        means (e.g., local configuration, or dynamic means such as DHCP).
-        These means are out of scope of this document.</t>
+        means (e.g., local configuration, or dynamic means such as DHCP). The
+        description of such means is out of scope of this document.</t>
 
         <t>Likewise, it is out of scope of this document to specify the
         behavior of a DOTS client when it sends requests (e.g., contact all
@@ -478,10 +477,10 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
         the DOTS client for sending its subsequent messages to the DOTS
         server.</t>
 
-        <t>The order of preference of DOTS signal channel address family and
-        transport protocol (most preferred first) is: UDP over IPv6, UDP over
-        IPv4, TCP over IPv6, and finally TCP over IPv4. This order adheres to
-        the address preference order specified in <xref
+        <t>The order of preference of the DOTS signal channel address family
+        and transport protocol (most preferred first) is: UDP over IPv6, UDP
+        over IPv4, TCP over IPv6, and finally TCP over IPv4. This order
+        adheres to the address preference order specified in <xref
         target="RFC6724"></xref> and the DOTS signal channel preference which
         privileges the use of UDP over TCP (to avoid TCP's head of line
         blocking).</t>
@@ -565,8 +564,8 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
 
           <t>If this DOTS client is entitled to solicit the DOTS service, the
           DOTS server can enable mitigation on behalf of the DOTS client by
-          communicating the DOTS client's request to the mitigator and
-          relaying selected mitigator feedback to the requesting DOTS
+          communicating the DOTS client's request to a mitigator and relaying
+          the feedback of the thus-selected mitigator to the requesting DOTS
           client.</t>
 
           <t><figure anchor="Figure1"
@@ -662,7 +661,7 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
               unique relative to the 'mid' parameter values of active
               mitigation requests conveyed from the DOTS client to the DOTS
               server. In order to handle out-of-order delivery of mitigation
-              requests, 'mid' values MUST be monotonically increasing.<vspace
+              requests, 'mid' values MUST increase monotonically. <vspace
               blankLines="1" />This identifier MUST be generated by the DOTS
               client.<vspace blankLines="1" />This is a mandatory Uri-Path
               parameter.</t>
@@ -679,8 +678,11 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
               reminder, the prefix length must be less than or equal to 32
               (resp. 128) for IPv4 (resp. IPv6).<vspace blankLines="1" />The
               prefix list MUST NOT include broadcast, loopback, or multicast
-              addresses. These addresses are considered as invalid values.
-              <vspace blankLines="1" />This is an optional attribute.</t>
+              addresses. These addresses are considered as invalid values. In
+              addition, the DOTS server MUST validate that target prefixes are
+              within the scope of the DOTS client's domain. Other validation
+              checks may be supported by DOTS servers.<vspace
+              blankLines="1" />This is an optional attribute.</t>
 
               <t hangText="target-port-range:">A list of port numbers bound to
               resources under attack. <vspace blankLines="1" />A port range is
@@ -705,13 +707,20 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
               Names (FQDNs) identifying resources under attack. An FQDN is the
               full name of a resource, rather than just its hostname. For
               example, "venera" is a hostname, and "venera.isi.edu" is an FQDN
-              <xref target="RFC1983"></xref>. <vspace blankLines="1" />This is
-              an optional attribute.</t>
+              <xref target="RFC1983"></xref>. <vspace blankLines="1" />How a
+              name is passed to an underlying name resolution library is
+              implementation- and deployment-specific. Nevertheless, once the
+              name is resolved into one or multiple IP addresses, DOTS servers
+              MUST apply the same validation checks as those for
+              'target-prefix'.<vspace blankLines="1" />This is an optional
+              attribute.</t>
 
               <t hangText="target-uri: ">A list of Uniform Resource
               Identifiers (URIs) <xref target="RFC3986"></xref> identifying
-              resources under attack. <vspace blankLines="1" />This is an
-              optional attribute.</t>
+              resources under attack. <vspace blankLines="1" />The same
+              validation checks used for 'target-fqdn' MUST be followed by
+              DOTS servers to validate a target URI. <vspace
+              blankLines="1" />This is an optional attribute.</t>
 
               <t hangText="alias-name:">A list of aliases of resources for
               which the mitigation is requested. Aliases can be created using
@@ -724,24 +733,24 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
 
               <t hangText="lifetime: ">Lifetime of the mitigation request in
               seconds. The RECOMMENDED lifetime of a mitigation request is
-              3600 seconds (60 minutes) -- this value was chosen to be long
-              enough so that refreshing is not typically a burden on the DOTS
-              client, while expiring the request where the client has
-              unexpectedly quit in a timely manner. DOTS clients MUST include
-              this parameter in their mitigation requests. Upon the expiry of
-              this lifetime, and if the request is not refreshed, the
-              mitigation request is removed. The request can be refreshed by
-              sending the same request again. <vspace blankLines="1" />A
-              lifetime of '0' in a mitigation request is an invalid value.
-              <vspace blankLines="1" />A lifetime of negative one (-1)
-              indicates indefinite lifetime for the mitigation request. The
-              DOTS server MAY refuse indefinite lifetime, for policy reasons;
-              the granted lifetime value is returned in the response. DOTS
-              clients MUST be prepared to not be granted mitigations with
-              indefinite lifetimes.<vspace blankLines="1" />The DOTS server
-              MUST always indicate the actual lifetime in the response and the
-              remaining lifetime in status messages sent to the DOTS client.
-              <vspace blankLines="1" />This is a mandatory attribute.</t>
+              3600 seconds -- this value was chosen to be long enough so that
+              refreshing is not typically a burden on the DOTS client, while
+              expiring the request where the client has unexpectedly quit in a
+              timely manner. DOTS clients MUST include this parameter in their
+              mitigation requests. Upon the expiry of this lifetime, and if
+              the request is not refreshed, the mitigation request is removed.
+              The request can be refreshed by sending the same request again.
+              <vspace blankLines="1" />A lifetime of '0' in a mitigation
+              request is an invalid value. <vspace blankLines="1" />A lifetime
+              of negative one (-1) indicates indefinite lifetime for the
+              mitigation request. The DOTS server MAY refuse indefinite
+              lifetime, for policy reasons; the granted lifetime value is
+              returned in the response. DOTS clients MUST be prepared to not
+              be granted mitigations with indefinite lifetimes.<vspace
+              blankLines="1" />The DOTS server MUST always indicate the actual
+              lifetime in the response and the remaining lifetime in status
+              messages sent to the DOTS client. <vspace blankLines="1" />This
+              is a mandatory attribute.</t>
             </list></t>
 
           <t>In deployments where server-domain DOTS gateways are enabled,
@@ -833,37 +842,32 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
               a configuration parameter to identify DOTS gateways that are
               trusted to supply 'cdid' attributes.<vspace
               blankLines="1" />Only single-valued 'cdid' are defined in this
-              document.<vspace blankLines="1" />This is an optional
-              Uri-Path.</t>
+              document.<vspace blankLines="1" />This is an optional Uri-Path.
+              When present, 'cdid' MUST be positioned before 'cuid'.</t>
+            </list>A DOTS gateway may add the following parameter: <list
+              style="hanging">
+              <t hangText="hop-limit:">This attribute is used to detect and
+              prevent infinite loops. This attribute is typically inserted by
+              a DOTS gateway. <vspace blankLines="1" />Each intermediate DOTS
+              agent involved in the handling of a DOTS message MUST decrement
+              the hop-limit value by 1 prior to forwarding upstream if this
+              parameter exists. DOTS messages MUST NOT be forwarded if the
+              value of hop-limit is set to '0' after decrement. Messages that
+              cannot be forwarded because of exhausted hop-limit SHOULD be
+              logged with a 5.06 (Hop Limit Reached) error message sent back
+              to the DOTS peer. It is RECOMMENDED that DOTS clients and
+              gateways support means to alert administrators about loop errors
+              so that appropriate actions are undertaken.<vspace
+              blankLines="1" />The initial hop-limit value SHOULD be
+              configurable. If no initial value is explicitly provided, the
+              default initial hop-limit value of 16 MUST be used. <vspace
+              blankLines="1" />Because forwarding errors may occur if
+              inadequate hop-limit values are used, DOTS agents at the
+              boundaries of an administrative domain MAY be instructed to
+              rewrite the value of hop-limit carried in received messages
+              (that is, ignore the value of hop-limit received in a message).
+              <vspace blankLines="1" />This is an optional attribute.</t>
             </list></t>
-
-          <t><!--   hop-limit:  This attribute is used to detect and prevent infinite
-      loops.  This attribute is typically inserted by a DOTS gateway.
-
-      Each intermediate DOTS agent involved in the handling of a DOTS
-      message MUST decrement the hop-limit value by 1 prior to
-      forwarding upstream if this parameter exists.  DOTS messages MUST
-      NOT be forwarded if the value of hop-limit is set to '0' after
-      decrement.  Messages that cannot be forwarded because of exhausted
-      hop-limit SHOULD be logged with a 5.06 (Hop Limit Reached) error
-      message sent back to the DOTS peer.  It is RECOMMENDED that DOTS
-      clients and gateways support means to alert administrators about
-      loop errors so that appropriate actions are undertaken.
-
-      The initial hop-limit value SHOULD be configurable.  If no initial
-      value is explicitly provided, the default initial hop-limit value
-      of 16 MUST be used.
-
-      Because forwarding errors may occur if inadequate hop-limit values
-      are used, DOTS agents at the boundaries of an administrative
-      domain MAY be instructed to rewrite the value of hop-limit carried
-      in received messages (that is, ignore the value of hop-limit
-      received in a message).
-
-      This is an optional attribute.-->The CBOR key values for the parameters
-          are defined in <xref target="mapping"></xref>. <xref
-          target="IANA"></xref> defines how the CBOR key values can be
-          allocated for future uses.</t>
 
           <t>Because of the complexity to handle partial failure cases, this
           specification does not allow for including multiple mitigation
@@ -871,8 +875,8 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
           include multiple 'scope' parameters in the same PUT request.</t>
 
           <t>FQDN and URI mitigation scopes may be thought of as a form of
-          scope alias, in which the addresses to which the domain name or URI
-          resolve represent the full scope of the mitigation.</t>
+          scope alias, in which the addresses associated with the domain name
+          or URI represent the full scope of the mitigation.</t>
 
           <t>In the PUT request at least one of the attributes
           'target-prefix', 'target-fqdn','target-uri', or 'alias-name' MUST be
@@ -983,12 +987,12 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
           manage.</t>
 
           <t>The DOTS server couples the DOTS signal and data channel sessions
-          using the DOTS client identity (e.g., client certificate, 'cuid')
-          and optionally the 'cdid' parameter value, so the DOTS server can
-          validate whether the aliases conveyed in the mitigation request were
-          indeed created by the same DOTS client using the DOTS data channel
-          session. If the aliases were not created by the DOTS client, the
-          DOTS server MUST return 4.00 (Bad Request) in the response.</t>
+          using the DOTS client identity and optionally the 'cdid' parameter
+          value, so the DOTS server can validate whether the aliases conveyed
+          in the mitigation request were indeed created by the same DOTS
+          client using the DOTS data channel session. If the aliases were not
+          created by the DOTS client, the DOTS server MUST return 4.00 (Bad
+          Request) in the response.</t>
 
           <t>The DOTS server couples the DOTS signal channel sessions using
           the DOTS client identity and optionally the 'cdid' parameter value,
@@ -1010,13 +1014,11 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
 
           <t><xref target="put_response"></xref> shows an example response to
           a PUT request that is successfully processed by a DOTS server (i.e.,
-          CoAP 2.xx response codes). This PUT request is assumed to be relayed
-          by a server-domain DOTS gateway.</t>
+          CoAP 2.xx response codes).</t>
 
           <t><figure anchor="put_response" title="2.xx Response Body">
               <artwork align="left"><![CDATA[{
   "ietf-dots-signal-channel:mitigation-scope": {
-     "cdid": "7eeaf349529eb55ed50113",
      "scope": [
         {
           "mid": 12332,
@@ -1123,11 +1125,12 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
             </list></t>
 
           <t hangText="conflict-information:">As an active attack evolves,
-          DOTS clients are able to adjust as necessary the scope of requested
-          mitigation by refining the scope of resources requiring mitigation.
-          This can be achieved, for example, by sending a PUT request with a
-          new 'mid' value that will overrides existing one or re-using the
-          same 'mid' with updated mitigation scopes.</t>
+          DOTS clients can adjust the scope of requested mitigation as
+          necessary, by refining the scope of resources requiring mitigation.
+          This can be achieved, for example, by (1) sending a PUT request with
+          a new 'mid' value that will override the existing one with
+          overlapping mitigation scopes or (2) by re- using the same 'mid'
+          with updated mitigation scopes.</t>
 
           <t hangText="conflict-information:">For a mitigation request to
           continue beyond the initial negotiated lifetime, the DOTS client has
@@ -1136,27 +1139,6 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
           repeat all the other parameters as sent in the original mitigation
           request apart from a possible change to the lifetime parameter
           value.</t>
-
-          <t>The DOTS gateway that inserted a 'cdid' in a request, MUST strip
-          the 'cdid' parameter in the corresponding response before forwarding
-          the response to the DOTS client. If we consider the example depicted
-          in <xref target="put_response"></xref>, the message that will be
-          relayed by the DOTS gateway is shown in <xref
-          target="put_response2"></xref>.</t>
-
-          <t><figure anchor="put_response2"
-              title="2.xx Response Body Relayed by a DOTS Gateway">
-              <artwork align="left"><![CDATA[{
-  "ietf-dots-signal-channel:mitigation-scope": {
-     "scope": [
-        {
-          "mid": 12332,
-          "lifetime": 3600
-        }
-      ]
-   }
-}]]></artwork>
-            </figure></t>
         </section>
 
         <section anchor="get"
@@ -1332,7 +1314,7 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
             <c>1</c>
 
             <c>Attack mitigation is in progress (e.g., changing the network
-            path to re-route the inbound traffic to DOTS mitigator).</c>
+            path to redirect the inbound traffic to a DOTS mitigator).</c>
 
             <c>2</c>
 
@@ -1493,8 +1475,8 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
         </section>
 
         <section anchor="put" title="Efficacy Update from DOTS Clients">
-          <t>While DDoS mitigation is active, due to the likelihood of packet
-          loss, a DOTS client MAY periodically transmit DOTS mitigation
+          <t>While DDoS mitigation is in progress, due to the likelihood of
+          packet loss, a DOTS client MAY periodically transmit DOTS mitigation
           efficacy updates to the relevant DOTS server. A PUT request is used
           to convey the mitigation efficacy update to the DOTS server.</t>
 
@@ -1650,7 +1632,7 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
           exponentially increase the active-but-terminating period up to a
           maximum of 300 seconds (5 minutes).</t>
 
-          <t>After the active-but-terminating period elapses, the DOTS server
+          <t>Once the active-but-terminating period elapses, the DOTS server
           MUST treat the mitigation as terminated, as the DOTS client is no
           longer responsible for the mitigation. For example, if there is a
           financial relationship between the DOTS client and server domains,
@@ -1720,11 +1702,12 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
             a CON message may want to clean up the message state right after
             sending the ACK. If that ACK is lost and the DOTS server
             retransmits the CON, the DOTS client may no longer have any state
-            that would help it correlate this response, thereby unexpecting
-            the retransmission message. The DOTS client will send a Reset
-            message so it does not receive any more retransmissions. This
-            behavior is normal and not an indication of an error (see Section
-            5.3.2 of <xref target="RFC7252"></xref> for more details).</t>
+            that would help it correlate this response: from the DOTS
+            client&rsquo;s standpoint, the retransmission message is
+            unexpected. The DOTS client will send a Reset message so it does
+            not receive any more retransmissions. This behavior is normal and
+            not an indication of an error (see Section 5.3.2 of <xref
+            target="RFC7252"></xref> for more details).</t>
           </list></t>
 
         <section anchor="discovery" title="Discover Configuration Parameters">
@@ -1880,8 +1863,8 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
               refresh requests MUST NOT be sent by DOTS clients and the DOTS
               server MUST NOT terminate the (D)TLS session after the expiry of
               'config-interval'. <vspace blankLines="1" />This mechanism
-              allows updating the configuration data if a change occurs at the
-              DOTS server side. For example, the new configuration may
+              allows the update of the configuration data if a change occurs
+              at the DOTS server side. For example, the new configuration may
               instruct a DOTS client to cease heartbeats or reduce heartbeat
               frequency. <vspace blankLines="1" />If this parameter is not
               returned, this is equivalent to receiving a 'config-interval'
@@ -1991,9 +1974,9 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
               heartbeat-interval of 240 seconds. The recommended value of 30
               seconds is selected to anticipate the expiry of NAT state.</t>
 
-              <t>A heartbeat-interval of 30 seconds may be seen as too chatty
-              in some deployments. For such deployments, DOTS agents may
-              negotiate longer heartbeat-interval values to prevent any
+              <t>A heartbeat-interval of 30 seconds may be considered as too
+              chatty in some deployments. For such deployments, DOTS agents
+              may negotiate longer heartbeat-interval values to prevent any
               network overload with too frequent keepalives.</t>
 
               <t>Different heartbeat intervals can be defined for
@@ -2087,10 +2070,9 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
           target="uris"></xref> is as follows: <list style="hanging">
               <t hangText="sid:">Session Identifier is an identifier for the
               DOTS signal channel session configuration data represented as an
-              integer. This identifier MUST be generated by DOTS clients. This
-              document does not make any assumption about how this identifier
-              is generated. <vspace blankLines="1" />This is a mandatory
-              attribute.</t>
+              integer. This identifier MUST be generated by DOTS clients.
+              'sid' values MUST increase monotonically. <vspace
+              blankLines="1" />This is a mandatory attribute.</t>
             </list></t>
 
           <t>The meaning of the parameters in the CBOR body is defined in
@@ -2110,8 +2092,8 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
 
           <t><xref target="Figure14"></xref> shows a PUT request example to
           convey the configuration parameters for the DOTS signal channel. In
-          this example, heartbeat mechanism is disabled when no mitigation is
-          active, while the heartbeat interval is set to '91' when a
+          this example, the heartbeat mechanism is disabled when no mitigation
+          is active, while the heartbeat interval is set to '91' when a
           mitigation is active.</t>
 
           <t><figure anchor="Figure14"
@@ -2374,8 +2356,8 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
       <t>This YANG module defines the DOTS client interaction with the DOTS
       server as seen by the DOTS client. A DOTS server is allowed to update
       the non-configurable 'ro' entities in the responses. This YANG module is
-      not intended to be used for DOTS servers management purposes. Such
-      module is out of the scope of this document.</t>
+      not intended to be used for DOTS server management purposes. Such module
+      is out of the scope of this document.</t>
 
       <section title="Tree Structure">
         <t>This document defines the YANG module "ietf-dots-signal-channel"
@@ -2388,9 +2370,10 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
     +--rw dots-signal
        +--rw (message-type)?
           +--:(mitigation-scope)
-          |  +--rw cdid?                 string
+          |  +--rw hop-limit?            uint8
           |  +--rw scope* [cuid mid]
           |     +--rw cuid                    string
+          |     +--rw cdid?                   string
           |     +--rw mid                     uint32
           |     +--rw target-prefix*          inet:ip-prefix
           |     +--rw target-port-range* [lower-port upper-port]
@@ -2482,7 +2465,7 @@ What behavior to follow if the server fails to resolve a target-fqdn?--></t>
 
       <section anchor="yrequest" title="YANG Module ">
         <t><figure>
-            <artwork><![CDATA[<CODE BEGINS> file "ietf-dots-signal-channel@2018-01-23.yang"
+            <artwork><![CDATA[<CODE BEGINS> file "ietf-dots-signal-channel@2018-01-31.yang"
 
 module ietf-dots-signal-channel {
   yang-version 1.1;
@@ -2536,12 +2519,12 @@ module ietf-dots-signal-channel {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2018-01-23 {
+  revision 2018-01-31 {
     description
       "Initial revision.";
     reference
       "RFC XXXX: Distributed Denial-of-Service Open Threat
-                 Signaling (DOTS) Signal Channel";
+                 Signaling (DOTS) Signal Channel Specification";
   }
 
  /*
@@ -2606,18 +2589,13 @@ module ietf-dots-signal-channel {
   grouping mitigation-scope {
     description
       "Specifies the scope of the mitigation request.";
-    leaf cdid {
-      type string;
+    leaf hop-limit {
+      type uint8;
+      default 16;
       description
-        "The cdid should be included by a server-domain 
-         DOTS gateway to propagate the client domain 
-         identification information from the
-         gateway's client-facing-side to the gateway's
-         server-facing-side, and from the gateway's
-         server-facing-side to the DOTS server.
-         
-         It may be used by the final DOTS server
-         for policy enforcement purposes.";
+        "Used to detect and prevent infinite loops. 
+         This attribute is typically inserted by 
+         a DOTS gateway.";
     }
     list scope {
       key "cuid mid";
@@ -2631,6 +2609,19 @@ module ietf-dots-signal-channel {
            request collisions.  It is expected that the 
            cuid will remain consistent throughout the
            lifetime of the DOTS client.";
+      }
+      leaf cdid {
+        type string;
+        description
+          "The cdid should be included by a server-domain 
+           DOTS gateway to propagate the client domain 
+           identification information from the
+           gateway's client-facing-side to the gateway's
+           server-facing-side, and from the gateway's
+           server-facing-side to the DOTS server.
+         
+           It may be used by the final DOTS server
+           for policy enforcement purposes.";
       }
       leaf mid {
         type uint32;
@@ -3156,81 +3147,82 @@ module ietf-dots-signal-channel {
    +----------------------+-------------+-----+---------------+--------+
    | ietf-dots-signal-cha |             |     |               |        |
    | nnel:mitigation-scope| container   |   1 | 5 map         | Object |
-   | cdid                 | string      |   2 | 3 text string | String |
+   | hop-limit            | uint8       |   2 | 0 unsigned    | Number |
    | scope                | list        |   3 | 4 array       | Array  |
    | cuid                 | string      |   4 | 3 text string | String |
-   | mid                  | uint32      |   5 | 0 unsigned    | Number |
-   | target-prefix        | leaf-list   |   6 | 4 array       | Array  |
+   | cdid                 | string      |   5 | 3 text string | String |
+   | mid                  | uint32      |   6 | 0 unsigned    | Number |
+   | target-prefix        | leaf-list   |   7 | 4 array       | Array  |
    |                      | inet:       |     |               |        |
    |                      |  ip-prefix  |     | 3 text string | String |
-   | target-port-range    | list        |   7 | 4 array       | Array  |
+   | target-port-range    | list        |   8 | 4 array       | Array  |
    | lower-port           | inet:       |     |               |        |
-   |                      |  port-number|   8 | 0 unsigned    | Number |
-   | upper-port           | inet:       |     |               |        |
    |                      |  port-number|   9 | 0 unsigned    | Number |
-   | target-protocol      | leaf-list   |  10 | 4 array       | Array  |
+   | upper-port           | inet:       |     |               |        |
+   |                      |  port-number|  10 | 0 unsigned    | Number |
+   | target-protocol      | leaf-list   |  11 | 4 array       | Array  |
    |                      | uint8       |     | 0 unsigned    | Number |
-   | target-fqdn          | leaf-list   |  11 | 4 array       | Array  |
+   | target-fqdn          | leaf-list   |  12 | 4 array       | Array  |
    |                      | inet:       |     |               |        |
    |                      |  domain-name|     | 3 text string | String |
-   | target-uri           | leaf-list   |  12 | 4 array       | Array  |
+   | target-uri           | leaf-list   |  13 | 4 array       | Array  |
    |                      | inet:uri    |     | 3 text string | String |
-   | alias-name           | leaf-list   |  13 | 4 array       | Array  |
+   | alias-name           | leaf-list   |  14 | 4 array       | Array  |
    |                      | string      |     | 3 text string | String |
-   | lifetime             | int32       |  14 | 0 unsigned    | Number |
+   | lifetime             | int32       |  15 | 0 unsigned    | Number |
    |                      |             |     | 1 negative    | Number |
-   | mitigation-start     | uint64      |  15 | 0 unsigned    | String |
-   | status               | enumeration |  16 | 0 unsigned    | String |
-   | conflict-information | container   |  17 | 5 map         | Object |
-   | conflict-status      | enumeration |  18 | 0 unsigned    | String |
-   | conflict-cause       | enumeration |  19 | 0 unsigned    | String |
-   | retry-timer          | uint32      |  20 | 0 unsigned    | Number |
-   | conflict-scope       | container   |  21 | 5 map         | Object |
-   | acl-list             | list        |  22 | 4 array       | Array  |
-   | acl-name             | leafref     |  23 | 3 text string | String |
-   | acl-type             | leafref     |  24 | 3 text string | String |
+   | mitigation-start     | uint64      |  16 | 0 unsigned    | String |
+   | status               | enumeration |  17 | 0 unsigned    | String |
+   | conflict-information | container   |  18 | 5 map         | Object |
+   | conflict-status      | enumeration |  19 | 0 unsigned    | String |
+   | conflict-cause       | enumeration |  20 | 0 unsigned    | String |
+   | retry-timer          | uint32      |  21 | 0 unsigned    | Number |
+   | conflict-scope       | container   |  22 | 5 map         | Object |
+   | acl-list             | list        |  23 | 4 array       | Array  |
+   | acl-name             | leafref     |  24 | 3 text string | String |
+   | acl-type             | leafref     |  25 | 3 text string | String |
    | bytes-dropped        | yang:zero-  |     |               |        |
    |                      |  based-     |     |               |        |
-   |                      |  counter64  |  25 | 0 unsigned    | String |
+   |                      |  counter64  |  26 | 0 unsigned    | String |
    | bps-dropped          | yang:zero-  |     |               |        |
    |                      |  based-     |     |               |        |
-   |                      |  counter64  |  26 | 0 unsigned    | String |
+   |                      |  counter64  |  27 | 0 unsigned    | String |
    | pkts-dropped         | yang:zero-  |     |               |        |
    |                      |  based-     |     |               |        |
-   |                      |  counter64  |  27 | 0 unsigned    | String |
+   |                      |  counter64  |  28 | 0 unsigned    | String |
    | pps-dropped          | yang:zero-  |     |               |        |
    |                      |  based-     |     |               |        |
-   |                      |  counter64  |  28 | 0 unsigned    | String |
-   | attack-status        | enumeration |  29 | 0 unsigned    | String |
+   |                      |  counter64  |  29 | 0 unsigned    | String |
+   | attack-status        | enumeration |  30 | 0 unsigned    | String |
    | ietf-dots-signal-    |             |     |               |        |
-   | channel:signal-config| container   |  30 | 5 map         | Object |
-   | sid                  | uint32      |  31 | 0 unsigned    | Number |
-   | mitigating-config    | container   |  32 | 5 map         | Object |
-   | heartbeat-interval   | container   |  33 | 5 map         | Object |
-   | max-value            | uint16      |  34 | 0 unsigned    | Number |
-   | min-value            | uint16      |  35 | 0 unsigned    | Number |
-   | current-value        | uint16      |  36 | 0 unsigned    | Number |
-   | missing-hb-allowed   | container   |  37 | 5 map         | Object |
-   | max-retransmit       | container   |  38 | 5 map         | Object |
-   | ack-timeout          | container   |  39 | 5 map         | Object |
-   | ack-random-factor    | container   |  40 | 5 map         | Object |
-   | max-value-decimal    | decimal64   |  41 | 6 tag 4       |        |
+   | channel:signal-config| container   |  31 | 5 map         | Object |
+   | sid                  | uint32      |  32 | 0 unsigned    | Number |
+   | mitigating-config    | container   |  33 | 5 map         | Object |
+   | heartbeat-interval   | container   |  34 | 5 map         | Object |
+   | max-value            | uint16      |  35 | 0 unsigned    | Number |
+   | min-value            | uint16      |  36 | 0 unsigned    | Number |
+   | current-value        | uint16      |  37 | 0 unsigned    | Number |
+   | missing-hb-allowed   | container   |  38 | 5 map         | Object |
+   | max-retransmit       | container   |  39 | 5 map         | Object |
+   | ack-timeout          | container   |  40 | 5 map         | Object |
+   | ack-random-factor    | container   |  41 | 5 map         | Object |
+   | max-value-decimal    | decimal64   |  42 | 6 tag 4       |        |
    |                      |             |     |  [-2, integer]| String |
-   | min-value-decimal    | decimal64   |  42 | 6 tag 4       |        |
+   | min-value-decimal    | decimal64   |  43 | 6 tag 4       |        |
    |                      |             |     |  [-2, integer]| String |
-   | current-value-decimal| decimal64   |  43 | 6 tag 4       |        |
+   | current-value-decimal| decimal64   |  44 | 6 tag 4       |        |
    |                      |             |     |  [-2, integer]| String |
-   | idle-config          | container   |  44 | 5 map         | Object |
-   | trigger-mitigation   | boolean     |  45 | 7 bits 20     | False  |
+   | idle-config          | container   |  45 | 5 map         | Object |
+   | trigger-mitigation   | boolean     |  46 | 7 bits 20     | False  |
    |                      |             |     | 7 bits 21     | True   |
-   | config-interval      | uint32      |  46 | 0 unsigned    | Number |
+   | config-interval      | uint32      |  47 | 0 unsigned    | Number |
    | ietf-dots-signal-cha |             |     |               |        |
-   |nnel:redirected-signal| container   |  47 | 5 map         | Object |
-   | alt-server           | string      |  48 | 3 text string | String |
-   | alt-server-record    | list        |  49 | 4 array       | Array  |
+   |nnel:redirected-signal| container   |  48 | 5 map         | Object |
+   | alt-server           | string      |  49 | 3 text string | String |
+   | alt-server-record    | list        |  50 | 4 array       | Array  |
    | addr                 | inet:       |     |               |        |
-   |                      |  ip-address |  50 | 3 text string | String |
-   | ttl                  | uint32      |  51 | 0 unsigned    | Number |
+   |                      |  ip-address |  51 | 3 text string | String |
+   | ttl                  | uint32      |  52 | 0 unsigned    | Number |
    +----------------------+-------------+-----+---------------+--------+
 
     Table 4: CBOR Mappings Used in DOTS Signal Channel Messages]]></artwork>
@@ -3391,7 +3383,7 @@ module ietf-dots-signal-channel {
 
         <t>Implementation Note: DOTS choice of message size parameters works
         well with IPv6 and with most of today's IPv4 paths. However, with
-        IPv4, it is harder to reliably ensure that there is no IP
+        IPv4, it is harder to safely make sure that there is no IP
         fragmentation. If IPv4 path MTU is unknown, implementations may want
         to limit themselves to more conservative IPv4 datagram sizes such as
         576 bytes, as per <xref target="RFC0791"></xref>. IP packets whose
@@ -3450,14 +3442,14 @@ module ietf-dots-signal-channel {
 ]]></artwork>
         </figure>In the example depicted in <xref target="Figure12"></xref>,
       the DOTS gateway and DOTS clients within the 'example.com' domain
-      mutually authenticate with each other. After the DOTS gateway validates
-      the identity of a DOTS client, it communicates with the AAA server in
-      the 'example.com' domain to determine if the DOTS client is authorized
-      to request DDoS mitigation. If the DOTS client is not authorized, a 4.01
-      (Unauthorized) is returned in the response to the DOTS client. In this
-      example, the DOTS gateway only allows the application server and DDoS
-      attack detector to request DDoS mitigation, but does not permit the user
-      of type 'guest' to request DDoS mitigation.</t>
+      mutually authenticate. After the DOTS gateway validates the identity of
+      a DOTS client, it communicates with the AAA server in the 'example.com'
+      domain to determine if the DOTS client is authorized to request DDoS
+      mitigation. If the DOTS client is not authorized, a 4.01 (Unauthorized)
+      is returned in the response to the DOTS client. In this example, the
+      DOTS gateway only allows the application server and DDoS attack detector
+      to request DDoS mitigation, but does not permit the user of type 'guest'
+      to request DDoS mitigation.</t>
 
       <t>Also, DOTS gateways and servers located in different domains MUST
       perform mutual authentication (e.g., using certificates). A DOTS server
@@ -3504,18 +3496,19 @@ module ietf-dots-signal-channel {
       </section>
 
       <section anchor="code" title="CoAP Response Code">
-        <t>IANA is requested to add the following entry to the "CoAP Response
-        Codes" sub-registry available at
+        <t>IANA is requested to add the following entries to the "CoAP
+        Response Codes" sub-registry available at
         https://www.iana.org/assignments/core-parameters/core-parameters.xhtml#response-codes:</t>
 
         <t><figure>
             <artwork><![CDATA[                  +------+------------------+-----------+
                   | Code | Description      | Reference |
                   +------+------------------+-----------+
-                  | 3.00 | Alternate Server | [RFCXXXX] |
+                  | 3.00 | Alternate Server | [RFCXXXX] | 
+                  | 5.06 | Hop Limit Reached| [RFCXXXX] |
                   +------+------------------+-----------+
 
-                        Table 6: CoAP Response Code]]></artwork>
+                        Table 6: CoAP Response Codes]]></artwork>
           </figure></t>
       </section>
 
@@ -3538,7 +3531,7 @@ module ietf-dots-signal-channel {
               <t hangText="CBOR Key Value:"><vspace />Key value for the
               parameter. The key value MUST be an integer in the 1-65535
               range. The key values in the 32768-65535 range are assigned to
-              Vendor-Specific parameters. </t>
+              Vendor-Specific parameters.</t>
 
               <t hangText="CBOR Major Type:"><vspace />CBOR Major type and
               optional tag for the claim.</t>
@@ -3565,59 +3558,60 @@ module ietf-dots-signal-channel {
    +----------------------+-------+-------+------------+---------------+
    | ietf-dots-signal-chan|    1  |   5   |    IESG    |   [RFCXXXX]   |
    | nel:mitigation-scope |       |       |            |               |
-   | cdid                 |    2  |   3   |    IESG    |   [RFCXXXX]   |
+   | hop-limit            |    2  |   0   |    IESG    |   [RFCXXXX]   |
    | scope                |    3  |   4   |    IESG    |   [RFCXXXX]   |
    | cuid                 |    4  |   3   |    IESG    |   [RFCXXXX]   |
-   | mid                  |    5  |   0   |    IESG    |   [RFCXXXX]   |
-   | target-prefix        |    6  |   4   |    IESG    |   [RFCXXXX]   |
-   | target-port-range    |    7  |   4   |    IESG    |   [RFCXXXX]   |
-   | lower-port           |    8  |   0   |    IESG    |   [RFCXXXX]   |
-   | upper-port           |    9  |   0   |    IESG    |   [RFCXXXX]   |
-   | target-protocol      |   10  |   4   |    IESG    |   [RFCXXXX]   |
-   | target-fqdn          |   11  |   4   |    IESG    |   [RFCXXXX]   |
-   | target-uri           |   12  |   4   |    IESG    |   [RFCXXXX]   |
-   | alias-name           |   13  |   4   |    IESG    |   [RFCXXXX]   |
-   | lifetime             |   14  |  0/1  |    IESG    |   [RFCXXXX]   |
-   | mitigation-start     |   15  |   0   |    IESG    |   [RFCXXXX]   |
-   | status               |   16  |   0   |    IESG    |   [RFCXXXX]   |
-   | conflict-information |   17  |   5   |    IESG    |   [RFCXXXX]   |
-   | conflict-status      |   18  |   0   |    IESG    |   [RFCXXXX]   |
-   | conflict-cause       |   19  |   0   |    IESG    |   [RFCXXXX]   |
-   | retry-timer          |   20  |   0   |    IESG    |   [RFCXXXX]   |
-   | conflict-scope       |   21  |   5   |    IESG    |   [RFCXXXX]   |
-   | acl-list             |   22  |   4   |    IESG    |   [RFCXXXX]   |
-   | acl-name             |   23  |   3   |    IESG    |   [RFCXXXX]   |
-   | acl-type             |   24  |   3   |    IESG    |   [RFCXXXX]   |
-   | bytes-dropped        |   25  |   0   |    IESG    |   [RFCXXXX]   |
-   | bps-dropped          |   26  |   0   |    IESG    |   [RFCXXXX]   |
-   | pkts-dropped         |   27  |   0   |    IESG    |   [RFCXXXX]   |
-   | pps-dropped          |   28  |   0   |    IESG    |   [RFCXXXX]   |
-   | attack-status        |   29  |   0   |    IESG    |   [RFCXXXX]   |
-   | ietf-dots-signal-    |   30  |   5   |    IESG    |   [RFCXXXX]   |
+   | cdid                 |    5  |   3   |    IESG    |   [RFCXXXX]   |
+   | mid                  |    6  |   0   |    IESG    |   [RFCXXXX]   |
+   | target-prefix        |    7  |   4   |    IESG    |   [RFCXXXX]   |
+   | target-port-range    |    8  |   4   |    IESG    |   [RFCXXXX]   |
+   | lower-port           |    9  |   0   |    IESG    |   [RFCXXXX]   |
+   | upper-port           |   10  |   0   |    IESG    |   [RFCXXXX]   |
+   | target-protocol      |   11  |   4   |    IESG    |   [RFCXXXX]   |
+   | target-fqdn          |   12  |   4   |    IESG    |   [RFCXXXX]   |
+   | target-uri           |   13  |   4   |    IESG    |   [RFCXXXX]   |
+   | alias-name           |   14  |   4   |    IESG    |   [RFCXXXX]   |
+   | lifetime             |   15  |  0/1  |    IESG    |   [RFCXXXX]   |
+   | mitigation-start     |   16  |   0   |    IESG    |   [RFCXXXX]   |
+   | status               |   17  |   0   |    IESG    |   [RFCXXXX]   |
+   | conflict-information |   18  |   5   |    IESG    |   [RFCXXXX]   |
+   | conflict-status      |   19  |   0   |    IESG    |   [RFCXXXX]   |
+   | conflict-cause       |   20  |   0   |    IESG    |   [RFCXXXX]   |
+   | retry-timer          |   21  |   0   |    IESG    |   [RFCXXXX]   |
+   | conflict-scope       |   22  |   5   |    IESG    |   [RFCXXXX]   |
+   | acl-list             |   23  |   4   |    IESG    |   [RFCXXXX]   |
+   | acl-name             |   24  |   3   |    IESG    |   [RFCXXXX]   |
+   | acl-type             |   25  |   3   |    IESG    |   [RFCXXXX]   |
+   | bytes-dropped        |   26  |   0   |    IESG    |   [RFCXXXX]   |
+   | bps-dropped          |   27  |   0   |    IESG    |   [RFCXXXX]   |
+   | pkts-dropped         |   28  |   0   |    IESG    |   [RFCXXXX]   |
+   | pps-dropped          |   29  |   0   |    IESG    |   [RFCXXXX]   |
+   | attack-status        |   30  |   0   |    IESG    |   [RFCXXXX]   |
+   | ietf-dots-signal-    |   31  |   5   |    IESG    |   [RFCXXXX]   |
    | channel:signal-config|       |       |            |               |
-   | sid                  |   31  |   0   |    IESG    |   [RFCXXXX]   |
-   | mitigating-config    |   32  |   5   |    IESG    |   [RFCXXXX]   |
-   | heartbeat-interval   |   33  |   5   |    IESG    |   [RFCXXXX]   |
-   | min-value            |   34  |   0   |    IESG    |   [RFCXXXX]   |
-   | max-value            |   35  |   0   |    IESG    |   [RFCXXXX]   |
-   | current-value        |   36  |   0   |    IESG    |   [RFCXXXX]   |
-   | missing-hb-allowed   |   37  |   5   |    IESG    |   [RFCXXXX]   |
-   | max-retransmit       |   38  |   5   |    IESG    |   [RFCXXXX]   |
-   | ack-timeout          |   39  |   5   |    IESG    |   [RFCXXXX]   |
-   | ack-random-factor    |   40  |   5   |    IESG    |   [RFCXXXX]   |
-   | min-value-decimal    |   41  | 6tag4 |    IESG    |   [RFCXXXX]   |
-   | max-value-decimal    |   42  | 6tag4 |    IESG    |   [RFCXXXX]   |
-   | current-value-       |   43  | 6tag4 |    IESG    |   [RFCXXXX]   |
+   | sid                  |   32  |   0   |    IESG    |   [RFCXXXX]   |
+   | mitigating-config    |   33  |   5   |    IESG    |   [RFCXXXX]   |
+   | heartbeat-interval   |   34  |   5   |    IESG    |   [RFCXXXX]   |
+   | min-value            |   35  |   0   |    IESG    |   [RFCXXXX]   |
+   | max-value            |   36  |   0   |    IESG    |   [RFCXXXX]   |
+   | current-value        |   37  |   0   |    IESG    |   [RFCXXXX]   |
+   | missing-hb-allowed   |   38  |   5   |    IESG    |   [RFCXXXX]   |
+   | max-retransmit       |   39  |   5   |    IESG    |   [RFCXXXX]   |
+   | ack-timeout          |   40  |   5   |    IESG    |   [RFCXXXX]   |
+   | ack-random-factor    |   41  |   5   |    IESG    |   [RFCXXXX]   |
+   | min-value-decimal    |   42  | 6tag4 |    IESG    |   [RFCXXXX]   |
+   | max-value-decimal    |   43  | 6tag4 |    IESG    |   [RFCXXXX]   |
+   | current-value-       |   44  | 6tag4 |    IESG    |   [RFCXXXX]   |
    |  decimal             |       |       |            |               |
-   | idle-config          |   44  |   5   |    IESG    |   [RFCXXXX]   |
-   | trigger-mitigation   |   45  |   7   |    IESG    |   [RFCXXXX]   |
-   | config-interval      |   46  |   0   |    IESG    |   [RFCXXXX]   |
-   | ietf-dots-signal-chan|   47  |   5   |    IESG    |   [RFCXXXX]   |
+   | idle-config          |   45  |   5   |    IESG    |   [RFCXXXX]   |
+   | trigger-mitigation   |   46  |   7   |    IESG    |   [RFCXXXX]   |
+   | config-interval      |   47  |   0   |    IESG    |   [RFCXXXX]   |
+   | ietf-dots-signal-chan|   48  |   5   |    IESG    |   [RFCXXXX]   |
    | nel:redirected-signal|       |       |            |               |
-   | alt-server           |   48  |   3   |    IESG    |   [RFCXXXX]   |
-   | alt-server-record    |   49  |   4   |    IESG    |   [RFCXXXX]   |
-   | addr                 |   50  |   3   |    IESG    |   [RFCXXXX]   |
-   | ttl                  |   51  |   0   |    IESG    |   [RFCXXXX]   |
+   | alt-server           |   49  |   3   |    IESG    |   [RFCXXXX]   |
+   | alt-server-record    |   50  |   4   |    IESG    |   [RFCXXXX]   |
+   | addr                 |   51  |   3   |    IESG    |   [RFCXXXX]   |
+   | ttl                  |   52  |   0   |    IESG    |   [RFCXXXX]   |
    +----------------------+-------+-------+------------+---------------+
 
         Table 7: Initial DOTS Signal Channel CBOR Mappings Registry
@@ -3746,6 +3740,11 @@ module ietf-dots-signal-channel {
       <t>Special care should be taken in order to ensure that the activation
       of the proposed mechanism will not impact the stability of the network
       (including connectivity and services delivered over that network).</t>
+
+      <t>DOTS servers MUST verify that requesting DOTS clients are entitled to
+      trigger actions on a given IP prefix. That is, only actions on IP
+      resources that belong to the DOTS client' domain MUST be authorized by a
+      DOTS server.</t>
     </section>
 
     <section anchor="contr" title="Contributors">
@@ -3784,8 +3783,6 @@ module ietf-dots-signal-channel {
 
       <?rfc include="reference.RFC.5246"?>
 
-      <?rfc include="reference.RFC.5925"?>
-
       <?rfc include="reference.RFC.7252"?>
 
       <?rfc include="reference.RFC.7250"?>
@@ -3819,6 +3816,8 @@ module ietf-dots-signal-channel {
       <?rfc include="reference.RFC.4732"?>
 
       <?rfc include='reference.RFC.7452'?>
+
+      <?rfc include="reference.RFC.5925"?>
 
       <?rfc include='reference.RFC.5389'?>
 
