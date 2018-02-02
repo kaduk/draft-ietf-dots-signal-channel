@@ -3669,8 +3669,8 @@ Internet-Draft        DOTS Signal Channel Protocol         February 2018
    | nnel:mitigation-scope| container   |   1 | 5 map         | Object |
    | hop-limit            | uint8       |   2 | 0 unsigned    | Number |
    | scope                | list        |   3 | 4 array       | Array  |
-   | cuid                 | string      |   4 | 3 text string | String |
-   | cdid                 | string      |   5 | 3 text string | String |
+   | cdid                 | string      |   4 | 3 text string | String |
+   | cuid                 | string      |   5 | 3 text string | String |
    | mid                  | uint32      |   6 | 0 unsigned    | Number |
    | target-prefix        | leaf-list   |   7 | 4 array       | Array  |
    |                      | inet:       |     |               |        |
@@ -4136,8 +4136,8 @@ Internet-Draft        DOTS Signal Channel Protocol         February 2018
    | nel:mitigation-scope |       |       |            |               |
    | hop-limit            |    2  |   0   |    IESG    |   [RFCXXXX]   |
    | scope                |    3  |   4   |    IESG    |   [RFCXXXX]   |
-   | cuid                 |    4  |   3   |    IESG    |   [RFCXXXX]   |
-   | cdid                 |    5  |   3   |    IESG    |   [RFCXXXX]   |
+   | cdid                 |    4  |   3   |    IESG    |   [RFCXXXX]   |
+   | cuid                 |    5  |   3   |    IESG    |   [RFCXXXX]   |
 
 
 
