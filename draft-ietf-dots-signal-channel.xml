@@ -844,29 +844,30 @@
               blankLines="1" />Only single-valued 'cdid' are defined in this
               document.<vspace blankLines="1" />This is an optional Uri-Path.
               When present, 'cdid' MUST be positioned before 'cuid'.</t>
-            </list>A DOTS gateway may add the following parameter: <list
+            </list>A DOTS gateway may add the following option: <list
               style="hanging">
-              <t hangText="hop-limit:">This attribute is used to detect and
-              prevent infinite loops. This attribute is typically inserted by
-              a DOTS gateway. <vspace blankLines="1" />Each intermediate DOTS
-              agent involved in the handling of a DOTS message MUST decrement
-              the hop-limit value by 1 prior to forwarding upstream if this
-              parameter exists. DOTS messages MUST NOT be forwarded if the
-              value of hop-limit is set to '0' after decrement. Messages that
-              cannot be forwarded because of exhausted hop-limit SHOULD be
-              logged with a 5.06 (Hop Limit Reached) error message sent back
-              to the DOTS peer. It is RECOMMENDED that DOTS clients and
-              gateways support means to alert administrators about loop errors
-              so that appropriate actions are undertaken.<vspace
-              blankLines="1" />The initial hop-limit value SHOULD be
-              configurable. If no initial value is explicitly provided, the
-              default initial hop-limit value of 16 MUST be used. <vspace
-              blankLines="1" />Because forwarding errors may occur if
-              inadequate hop-limit values are used, DOTS agents at the
-              boundaries of an administrative domain MAY be instructed to
-              rewrite the value of hop-limit carried in received messages
-              (that is, ignore the value of hop-limit received in a message).
-              <vspace blankLines="1" />This is an optional attribute.</t>
+              <t hangText="hop-limit:">This option (see <xref
+              target="option"></xref>) is used to detect and prevent infinite
+              loops. This option is typically inserted by a DOTS gateway.
+              <vspace blankLines="1" />Each intermediate DOTS agent involved
+              in the handling of a DOTS message MUST decrement the hop-limit
+              option value by 1 prior to forwarding upstream if this parameter
+              exists. DOTS messages MUST NOT be forwarded if the hop-limit
+              option is set to '0' after decrement. Messages that cannot be
+              forwarded because of exhausted hop-limit SHOULD be logged with a
+              5.06 (Hop Limit Reached) error message sent back to the DOTS
+              peer. It is RECOMMENDED that DOTS clients and gateways support
+              means to alert administrators about loop errors so that
+              appropriate actions are undertaken.<vspace blankLines="1" />The
+              initial hop-limit value SHOULD be configurable. If no initial
+              value is explicitly provided, the default initial hop-limit
+              value of 16 MUST be used. <vspace blankLines="1" />Because
+              forwarding errors may occur if inadequate hop-limit values are
+              used, DOTS agents at the boundaries of an administrative domain
+              MAY be instructed to rewrite the value of hop-limit carried in
+              received messages (that is, ignore the value of hop-limit
+              received in a message). <vspace blankLines="1" />This is an
+              optional option.</t>
             </list></t>
 
           <t>Because of the complexity to handle partial failure cases, this
@@ -2342,9 +2343,9 @@
 
         <t>In DOTS over TCP, heartbeat messages MUST be exchanged between the
         DOTS agents using the Ping and Pong messages specified in Section 4.4
-        of <xref target="I-D.ietf-core-coap-tcp-tls"></xref>. That is, the
-        DOTS agent sends a Ping message and the peer DOTS agent would respond
-        by sending a single Pong message.</t>
+        of <xref target="RFC8323"></xref>. That is, the DOTS agent sends a
+        Ping message and the peer DOTS agent would respond by sending a single
+        Pong message.</t>
       </section>
     </section>
 
@@ -3512,6 +3513,22 @@ module ietf-dots-signal-channel {
           </figure></t>
       </section>
 
+      <section anchor="option" title="CoAP Option Number">
+        <t>IANA is requested to add the following entry to the "CoAP Option
+        Numbers" sub-registry available at
+        https://www.iana.org/assignments/core-parameters/core-parameters.xhtml#option-numbers:</t>
+
+        <t><figure>
+            <artwork><![CDATA[                  +--------+------------------+-----------+
+                  | Number | Name             | Reference |
+                  +--------+------------------+-----------+
+                  |    2   | Hop-Limit        | [RFCXXXX] |
+                  +--------+------------------+-----------+
+
+                        Table 7: CoAP Option Number]]></artwork>
+          </figure></t>
+      </section>
+
       <section anchor="map" title="DOTS Signal Channel CBOR Mappings Registry">
         <t>The document requests IANA to create a new registry, entitled "DOTS
         Signal Channel CBOR Mappings Registry". The structure of this registry
@@ -3614,7 +3631,7 @@ module ietf-dots-signal-channel {
    | ttl                  |   52  |   0   |    IESG    |   [RFCXXXX]   |
    +----------------------+-------+-------+------------+---------------+
 
-        Table 7: Initial DOTS Signal Channel CBOR Mappings Registry
+        Table 8: Initial DOTS Signal Channel CBOR Mappings Registry
 ]]></artwork>
             </figure></t>
 
@@ -3809,7 +3826,7 @@ module ietf-dots-signal-channel {
 
       <?rfc include='reference.RFC.6066'?>
 
-      <?rfc include="reference.I-D.ietf-core-coap-tcp-tls"?>
+      <?rfc include="reference.RFC.8323"?>
     </references>
 
     <references title="Informative References">
