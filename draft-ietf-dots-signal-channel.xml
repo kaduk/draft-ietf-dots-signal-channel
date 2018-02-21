@@ -2371,7 +2371,6 @@
     +--rw dots-signal
        +--rw (message-type)?
           +--:(mitigation-scope)
-          |  +--rw hop-limit?            uint8
           |  +--rw scope* [cuid mid]
           |     +--rw cdid?                   string
           |     +--rw cuid                    string
@@ -2590,14 +2589,6 @@ module ietf-dots-signal-channel {
   grouping mitigation-scope {
     description
       "Specifies the scope of the mitigation request.";
-    leaf hop-limit {
-      type uint8;
-      default 16;
-      description
-        "Used to detect and prevent infinite loops. 
-         This attribute is typically inserted by 
-         a DOTS gateway.";
-    }
     list scope {
       key "cuid mid";
       description
