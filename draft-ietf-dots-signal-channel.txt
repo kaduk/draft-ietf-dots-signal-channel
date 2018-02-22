@@ -4352,7 +4352,9 @@ Internet-Draft        DOTS Signal Channel Protocol         February 2018
    DOTS servers MUST verify that requesting DOTS clients are entitled to
    trigger actions on a given IP prefix.  That is, only actions on IP
    resources that belong to the DOTS client' domain MUST be authorized
-   by a DOTS server.
+   by a DOTS server.  The exact mechanism for the DOTS servers to
+   validate that the target prefixes are within the scope of the DOTS
+   client's domain is deployment-specific.
 
 12.  Contributors
 
@@ -4360,8 +4362,6 @@ Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
    o  Mike Geller, Cisco Systems, Inc. 3250 Florida 33309 USA, Email:
       mgeller@cisco.com
-
-
 
 
 

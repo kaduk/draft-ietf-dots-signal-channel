@@ -667,8 +667,8 @@
               parameter.</t>
             </list></t>
 
-          <t>'cuid' and 'mid' must not appear in the PUT request message body.
-          </t>
+          <t>'cuid' and 'mid' must not appear in the PUT request message
+          body.</t>
 
           <t>The parameters in the CBOR body of the PUT request are described
           below:</t>
@@ -3755,7 +3755,9 @@ module ietf-dots-signal-channel {
       <t>DOTS servers MUST verify that requesting DOTS clients are entitled to
       trigger actions on a given IP prefix. That is, only actions on IP
       resources that belong to the DOTS client' domain MUST be authorized by a
-      DOTS server.</t>
+      DOTS server. The exact mechanism for the DOTS servers to validate that
+      the target prefixes are within the scope of the DOTS client's domain is
+      deployment-specific.</t>
     </section>
 
     <section anchor="contr" title="Contributors">
