@@ -667,6 +667,9 @@
               parameter.</t>
             </list></t>
 
+          <t>'cuid' and 'mid' must not appear in the PUT request message body.
+          </t>
+
           <t>The parameters in the CBOR body of the PUT request are described
           below:</t>
 
@@ -903,7 +906,8 @@
           2001:db8:6401::2 servers are under attack (illustrated in JSON
           diagnostic notation). The presence of 'cdid' indicates that a
           server-domain DOTS gateway has modified the initial PUT request sent
-          by the DOTS client.</t>
+          by the DOTS client. Note that 'cdid' must not appear in the PUT
+          request message body.</t>
 
           <t><figure anchor="Figure2" title="PUT for DOTS Mitigation Request">
               <artwork align="left"><![CDATA[  Header: PUT (Code=0.03)
@@ -1015,7 +1019,8 @@
 
           <t><xref target="put_response"></xref> shows an example response to
           a PUT request that is successfully processed by a DOTS server (i.e.,
-          CoAP 2.xx response codes).</t>
+          CoAP 2.xx response codes). This version of the specification forbids
+          'cuid' and 'cdid' (if used) to be returned in a response.</t>
 
           <t><figure anchor="put_response" title="2.xx Response Body">
               <artwork align="left"><![CDATA[{

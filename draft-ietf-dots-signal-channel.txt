@@ -5,14 +5,14 @@
 DOTS                                                       T. Reddy, Ed.
 Internet-Draft                                                    McAfee
 Intended status: Standards Track                       M. Boucadair, Ed.
-Expires: August 25, 2018                                          Orange
+Expires: August 26, 2018                                          Orange
                                                                 P. Patil
                                                                    Cisco
                                                             A. Mortensen
                                                     Arbor Networks, Inc.
                                                                N. Teague
                                                           Verisign, Inc.
-                                                            February 21,
+                                                       February 22, 2018
 
 
    Distributed Denial-of-Service Open Threat Signaling (DOTS) Signal
@@ -53,9 +53,9 @@ Editorial Note (To be removed by RFC Editor)
 
 
 
-Reddy, et al.            Expires August 25, 2018                [Page 1]
+Reddy, et al.            Expires August 26, 2018                [Page 1]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
 Status of This Memo
@@ -73,7 +73,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 25, 2018.
+   This Internet-Draft will expire on August 26, 2018.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Reddy, et al.            Expires August 25, 2018                [Page 2]
+Reddy, et al.            Expires August 26, 2018                [Page 2]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
        4.5.2.  Convey DOTS Signal Channel Session Configuration  . .  42
@@ -165,9 +165,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018                [Page 3]
+Reddy, et al.            Expires August 26, 2018                [Page 3]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    DDoS attacker may be able to prevent an application from performing
@@ -221,9 +221,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018                [Page 4]
+Reddy, et al.            Expires August 26, 2018                [Page 4]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
       Network                                           DDoS mitigation
@@ -277,9 +277,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018                [Page 5]
+Reddy, et al.            Expires August 26, 2018                [Page 5]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    The reader should be familiar with the terms defined in
@@ -333,9 +333,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018                [Page 6]
+Reddy, et al.            Expires August 26, 2018                [Page 6]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    send heartbeats to keep the channel active (Section 4.7).  At any
@@ -389,9 +389,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018                [Page 7]
+Reddy, et al.            Expires August 26, 2018                [Page 7]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    distinct DOTS clients as conflicting, nor recommend a DOTS server
@@ -445,9 +445,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018                [Page 8]
+Reddy, et al.            Expires August 26, 2018                [Page 8]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    path-prefix to form the URI used with a CoAP request to perform the
@@ -501,9 +501,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018                [Page 9]
+Reddy, et al.            Expires August 26, 2018                [Page 9]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    In reference to Figure 4, the DOTS client sends two TCP SYNs and two
@@ -557,9 +557,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 10]
+Reddy, et al.            Expires August 26, 2018               [Page 10]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    Mitigation request and response messages are marked as Non-
@@ -613,9 +613,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 11]
+Reddy, et al.            Expires August 26, 2018               [Page 11]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
      Header: PUT (Code=0.03)
@@ -669,9 +669,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 12]
+Reddy, et al.            Expires August 26, 2018               [Page 12]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    The additional Uri-Path parameters to those defined in Section 4.2
@@ -725,12 +725,14 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 13]
+Reddy, et al.            Expires August 26, 2018               [Page 13]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
       This is a mandatory Uri-Path parameter.
+
+   'cuid' and 'mid' must not appear in the PUT request message body.
 
    The parameters in the CBOR body of the PUT request are described
    below:
@@ -775,17 +777,18 @@ Internet-Draft        DOTS Signal Channel Protocol              February
       resource, rather than just its hostname.  For example, "venera" is
       a hostname, and "venera.isi.edu" is an FQDN [RFC1983].
 
+
+
+
+
+Reddy, et al.            Expires August 26, 2018               [Page 14]
+
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
+
+
       How a name is passed to an underlying name resolution library is
       implementation- and deployment-specific.  Nevertheless, once the
       name is resolved into one or multiple IP addresses, DOTS servers
-
-
-
-Reddy, et al.            Expires August 25, 2018               [Page 14]
-
-Internet-Draft        DOTS Signal Channel Protocol              February
-
-
       MUST apply the same validation checks as those for 'target-
       prefix'.
 
@@ -831,16 +834,15 @@ Internet-Draft        DOTS Signal Channel Protocol              February
       response and the remaining lifetime in status messages sent to the
       DOTS client.
 
-      This is a mandatory attribute.
 
 
 
-
-
-Reddy, et al.            Expires August 25, 2018               [Page 15]
+Reddy, et al.            Expires August 26, 2018               [Page 15]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
+
+      This is a mandatory attribute.
 
    In deployments where server-domain DOTS gateways are enabled,
    identity information about the origin source client domain SHOULD be
@@ -891,11 +893,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-
-
-Reddy, et al.            Expires August 25, 2018               [Page 16]
+Reddy, et al.            Expires August 26, 2018               [Page 16]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
      Header: PUT (Code=0.03)
@@ -949,9 +949,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 17]
+Reddy, et al.            Expires August 26, 2018               [Page 17]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    cdid:  Stands for Client Domain IDentifier.  The 'cdid' is conveyed
@@ -1005,9 +1005,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 18]
+Reddy, et al.            Expires August 26, 2018               [Page 18]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
       Each intermediate DOTS agent involved in the handling of a DOTS
@@ -1061,16 +1061,17 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 19]
+Reddy, et al.            Expires August 26, 2018               [Page 19]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    Figure 7 shows a PUT request example to signal that ports 80, 8080,
    and 443 used by 2001:db8:6401::1 and 2001:db8:6401::2 servers are
    under attack (illustrated in JSON diagnostic notation).  The presence
    of 'cdid' indicates that a server-domain DOTS gateway has modified
-   the initial PUT request sent by the DOTS client.
+   the initial PUT request sent by the DOTS client.  Note that 'cdid'
+   must not appear in the PUT request message body.
 
      Header: PUT (Code=0.03)
      Uri-Host: "www.example.com"
@@ -1116,10 +1117,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-
-Reddy, et al.            Expires August 25, 2018               [Page 20]
+Reddy, et al.            Expires August 26, 2018               [Page 20]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
 A1                                      # map(1)
@@ -1173,9 +1173,9 @@ A1                                      # map(1)
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 21]
+Reddy, et al.            Expires August 26, 2018               [Page 21]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    contains the 'alias-name' and other parameters identifying the target
@@ -1193,7 +1193,8 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
    Figure 9 shows an example response to a PUT request that is
    successfully processed by a DOTS server (i.e., CoAP 2.xx response
-   codes).
+   codes).  This version of the specification forbids 'cuid' and 'cdid'
+   (if used) to be returned in a response.
 
    {
      "ietf-dots-signal-channel:mitigation-scope": {
@@ -1228,10 +1229,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-
-Reddy, et al.            Expires August 25, 2018               [Page 22]
+Reddy, et al.            Expires August 26, 2018               [Page 22]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    MAY update the mitigation request, and a 2.04 (Changed) response is
@@ -1285,9 +1285,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 23]
+Reddy, et al.            Expires August 26, 2018               [Page 23]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
       conflict-scope:  Indicates the conflict scope.  It may include a
@@ -1341,9 +1341,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 24]
+Reddy, et al.            Expires August 26, 2018               [Page 24]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    If the DOTS server does not find the 'mid' Uri-Query value conveyed
@@ -1397,9 +1397,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 25]
+Reddy, et al.            Expires August 26, 2018               [Page 25]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
      Header: GET (Code=0.01)
@@ -1453,9 +1453,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 26]
+Reddy, et al.            Expires August 26, 2018               [Page 26]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    {
@@ -1509,9 +1509,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 27]
+Reddy, et al.            Expires August 26, 2018               [Page 27]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
       [RFC7049]).  The CBOR encoding is modified so that the leading tag
@@ -1565,9 +1565,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 28]
+Reddy, et al.            Expires August 26, 2018               [Page 28]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    +-----------+-------------------------------------------------------+
@@ -1621,9 +1621,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 29]
+Reddy, et al.            Expires August 26, 2018               [Page 29]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    use an even less aggressive rate whenever possible (case 2 in
@@ -1677,9 +1677,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 30]
+Reddy, et al.            Expires August 26, 2018               [Page 30]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
        +-----------+                       +-----------+
@@ -1733,9 +1733,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 31]
+Reddy, et al.            Expires August 26, 2018               [Page 31]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    request prematurely because it is possible that the DOTS client does
@@ -1789,9 +1789,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 32]
+Reddy, et al.            Expires August 26, 2018               [Page 32]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
       Header: PUT (Code=0.03)
@@ -1845,9 +1845,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 33]
+Reddy, et al.            Expires August 26, 2018               [Page 33]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    +-----------+-------------------------------------------------------+
@@ -1901,9 +1901,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 34]
+Reddy, et al.            Expires August 26, 2018               [Page 34]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    Once the request is validated, the DOTS server immediately
@@ -1957,9 +1957,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 35]
+Reddy, et al.            Expires August 26, 2018               [Page 35]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    c.  Acceptable signal loss ratio: Maximum retransmissions,
@@ -2013,9 +2013,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 36]
+Reddy, et al.            Expires August 26, 2018               [Page 36]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
 4.5.1.  Discover Configuration Parameters
@@ -2069,9 +2069,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 37]
+Reddy, et al.            Expires August 26, 2018               [Page 37]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
          "ack-random-factor": {
@@ -2125,9 +2125,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 38]
+Reddy, et al.            Expires August 26, 2018               [Page 38]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
          '0' is used to disable the heartbeat mechanism.
@@ -2181,9 +2181,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 39]
+Reddy, et al.            Expires August 26, 2018               [Page 39]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
       '0' is used to disable this configuration refresh mechanism.
@@ -2237,9 +2237,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 40]
+Reddy, et al.            Expires August 26, 2018               [Page 40]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
            "current-value": 3
@@ -2293,9 +2293,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 41]
+Reddy, et al.            Expires August 26, 2018               [Page 41]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
 4.5.2.  Convey DOTS Signal Channel Session Configuration
@@ -2349,9 +2349,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 42]
+Reddy, et al.            Expires August 26, 2018               [Page 42]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    from the peer DOTS agent for 'missing-hb-allowed' number of
@@ -2405,9 +2405,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 43]
+Reddy, et al.            Expires August 26, 2018               [Page 43]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
              "current-value": integer
@@ -2461,9 +2461,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 44]
+Reddy, et al.            Expires August 26, 2018               [Page 44]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
      Header: PUT (Code=0.03)
@@ -2517,9 +2517,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 45]
+Reddy, et al.            Expires August 26, 2018               [Page 45]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    The DOTS server indicates the result of processing the PUT request
@@ -2573,9 +2573,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 46]
+Reddy, et al.            Expires August 26, 2018               [Page 46]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    Upon bootsrapping or reboot, a DOTS client MAY send a DELETE request
@@ -2629,9 +2629,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 47]
+Reddy, et al.            Expires August 26, 2018               [Page 47]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    {
@@ -2685,9 +2685,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 48]
+Reddy, et al.            Expires August 26, 2018               [Page 48]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    translators/firewalls are maintaining a binding so that the same
@@ -2741,9 +2741,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 49]
+Reddy, et al.            Expires August 26, 2018               [Page 49]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
 5.  DOTS Signal Channel YANG Module
@@ -2797,9 +2797,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 50]
+Reddy, et al.            Expires August 26, 2018               [Page 50]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
            |     |     +--ro alias-name*          string
@@ -2853,9 +2853,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 51]
+Reddy, et al.            Expires August 26, 2018               [Page 51]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
            |  |  |  +--ro max-value?       uint16
@@ -2909,9 +2909,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 52]
+Reddy, et al.            Expires August 26, 2018               [Page 52]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
         Author:  Andrew Mortensen
@@ -2965,9 +2965,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 53]
+Reddy, et al.            Expires August 26, 2018               [Page 53]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
            type inet:port-number;
@@ -3021,9 +3021,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 54]
+Reddy, et al.            Expires August 26, 2018               [Page 54]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
          leaf cdid {
@@ -3077,9 +3077,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 55]
+Reddy, et al.            Expires August 26, 2018               [Page 55]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
          }
@@ -3133,9 +3133,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 56]
+Reddy, et al.            Expires August 26, 2018               [Page 56]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
              enum "attack-mitigation-withdrawn" {
@@ -3189,9 +3189,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 57]
+Reddy, et al.            Expires August 26, 2018               [Page 57]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
                "Indicates the conflict status.";
@@ -3245,9 +3245,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 58]
+Reddy, et al.            Expires August 26, 2018               [Page 58]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
                  "Conflicting alias-name.";
@@ -3301,9 +3301,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 59]
+Reddy, et al.            Expires August 26, 2018               [Page 59]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
          }
@@ -3357,9 +3357,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 60]
+Reddy, et al.            Expires August 26, 2018               [Page 60]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
             completed in order to keep the DOTS signal channel
@@ -3413,9 +3413,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 61]
+Reddy, et al.            Expires August 26, 2018               [Page 61]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
        container max-retransmit {
@@ -3469,9 +3469,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 62]
+Reddy, et al.            Expires August 26, 2018               [Page 62]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
        container ack-random-factor {
@@ -3525,9 +3525,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 63]
+Reddy, et al.            Expires August 26, 2018               [Page 63]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
          description
@@ -3581,9 +3581,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 64]
+Reddy, et al.            Expires August 26, 2018               [Page 64]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
          description
@@ -3637,9 +3637,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 65]
+Reddy, et al.            Expires August 26, 2018               [Page 65]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
 6.  Mapping Parameters to CBOR
@@ -3693,9 +3693,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 66]
+Reddy, et al.            Expires August 26, 2018               [Page 66]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    |                      |  based-     |     |               |        |
@@ -3749,9 +3749,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 67]
+Reddy, et al.            Expires August 26, 2018               [Page 67]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
 7.  (D)TLS Protocol Profile and Performance Considerations
@@ -3805,9 +3805,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 68]
+Reddy, et al.            Expires August 26, 2018               [Page 68]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    o  DTLS record replay detection (Section 3.3 of [RFC6347]) to protect
@@ -3861,9 +3861,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 69]
+Reddy, et al.            Expires August 26, 2018               [Page 69]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
       During a DDoS attack, the DOTS client can use the (D)TLS session
@@ -3917,9 +3917,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 70]
+Reddy, et al.            Expires August 26, 2018               [Page 70]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    parameter could be split into multiple lists and each list conveyed
@@ -3973,9 +3973,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 71]
+Reddy, et al.            Expires August 26, 2018               [Page 71]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
  +-----------------------------------------------+
@@ -4029,9 +4029,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 72]
+Reddy, et al.            Expires August 26, 2018               [Page 72]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
 9.  IANA Considerations
@@ -4085,9 +4085,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 73]
+Reddy, et al.            Expires August 26, 2018               [Page 73]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
 9.4.  CoAP Option Number
@@ -4141,9 +4141,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 74]
+Reddy, et al.            Expires August 26, 2018               [Page 74]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
 9.5.2.  Initial Registry Content
@@ -4197,9 +4197,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 75]
+Reddy, et al.            Expires August 26, 2018               [Page 75]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    | ack-random-factor    |   40  |   5   |    IESG    |   [RFCXXXX]   |
@@ -4253,9 +4253,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 76]
+Reddy, et al.            Expires August 26, 2018               [Page 76]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    presented here, and which was provided by individuals.  This is not
@@ -4309,9 +4309,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 77]
+Reddy, et al.            Expires August 26, 2018               [Page 77]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    (TLS) with a cipher suite offering confidentiality protection and the
@@ -4365,9 +4365,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 78]
+Reddy, et al.            Expires August 26, 2018               [Page 78]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    o  Robert Moskowitz, HTT Consulting Oak Park, MI 42837 United States,
@@ -4421,9 +4421,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 79]
+Reddy, et al.            Expires August 26, 2018               [Page 79]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    [RFC5785]  Nottingham, M. and E. Hammer-Lahav, "Defining Well-Known
@@ -4477,9 +4477,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 80]
+Reddy, et al.            Expires August 26, 2018               [Page 80]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
@@ -4533,9 +4533,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 81]
+Reddy, et al.            Expires August 26, 2018               [Page 81]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    [I-D.ietf-dots-requirements]
@@ -4589,9 +4589,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 82]
+Reddy, et al.            Expires August 26, 2018               [Page 82]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
@@ -4645,9 +4645,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 83]
+Reddy, et al.            Expires August 26, 2018               [Page 83]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    [RFC6146]  Bagnulo, M., Matthews, P., and I. van Beijnum, "Stateful
@@ -4701,9 +4701,9 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 84]
+Reddy, et al.            Expires August 26, 2018               [Page 84]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    [RFC7924]  Santesson, S. and H. Tschofenig, "Transport Layer Security
@@ -4757,9 +4757,9 @@ Authors' Addresses
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 85]
+Reddy, et al.            Expires August 26, 2018               [Page 85]
 
-Internet-Draft        DOTS Signal Channel Protocol              February
+Internet-Draft        DOTS Signal Channel Protocol         February 2018
 
 
    Andrew Mortensen
@@ -4813,4 +4813,4 @@ Internet-Draft        DOTS Signal Channel Protocol              February
 
 
 
-Reddy, et al.            Expires August 25, 2018               [Page 86]
+Reddy, et al.            Expires August 26, 2018               [Page 86]
