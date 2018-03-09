@@ -158,6 +158,8 @@
           <t>reference: RFC XXXX</t>
         </list>Please update TBD statements with the port number to be
       assigned to DOTS Signal Channel Protocol.</t>
+
+      <t>Also, please update the "revision" date of the YANG module.</t>
     </note>
   </front>
 
@@ -852,25 +854,28 @@
               <t hangText="hop-limit:">This option (see <xref
               target="option"></xref>) is used to detect and prevent infinite
               loops. This option is typically inserted by a DOTS gateway.
-              <vspace blankLines="1" />Each intermediate DOTS agent involved
-              in the handling of a DOTS message MUST decrement the hop-limit
-              option value by 1 prior to forwarding upstream if this parameter
-              exists. DOTS messages MUST NOT be forwarded if the hop-limit
-              option is set to '0' after decrement. Messages that cannot be
-              forwarded because of exhausted hop-limit SHOULD be logged with a
-              5.06 (Hop Limit Reached) error message sent back to the DOTS
-              peer. It is RECOMMENDED that DOTS clients and gateways support
-              means to alert administrators about loop errors so that
-              appropriate actions are undertaken.<vspace blankLines="1" />The
-              initial hop-limit value SHOULD be configurable. If no initial
-              value is explicitly provided, the default initial hop-limit
-              value of 16 MUST be used. <vspace blankLines="1" />Because
-              forwarding errors may occur if inadequate hop-limit values are
-              used, DOTS agents at the boundaries of an administrative domain
-              MAY be instructed to rewrite the value of hop-limit carried in
-              received messages (that is, ignore the value of hop-limit
-              received in a message). <vspace blankLines="1" />This is an
-              optional option.</t>
+              <vspace blankLines="1" />The length of the hop-limit option is 1
+              byte.<vspace blankLines="1" />The value of the hop-limit option
+              is encoded as an unsigned integer (see Section 3.2 of <xref
+              target="RFC7252"></xref>).<vspace blankLines="1" />Each
+              intermediate DOTS agent involved in the handling of a DOTS
+              message MUST decrement the hop-limit option value by 1 prior to
+              forwarding upstream if this parameter exists. DOTS messages MUST
+              NOT be forwarded if the hop-limit option is set to '0' after
+              decrement. Messages that cannot be forwarded because of
+              exhausted hop-limit SHOULD be logged with a 5.06 (Hop Limit
+              Reached) error message sent back to the DOTS peer. It is
+              RECOMMENDED that DOTS clients and gateways support means to
+              alert administrators about loop errors so that appropriate
+              actions are undertaken.<vspace blankLines="1" />The initial
+              hop-limit value SHOULD be configurable. If no initial value is
+              explicitly provided, the default initial hop-limit value of 16
+              MUST be used. <vspace blankLines="1" />Because forwarding errors
+              may occur if inadequate hop-limit values are used, DOTS agents
+              at the boundaries of an administrative domain MAY be instructed
+              to rewrite the value of hop-limit carried in received messages
+              (that is, ignore the value of hop-limit received in a message).
+              <vspace blankLines="1" />This is an optional option.</t>
             </list></t>
 
           <t>Because of the complexity to handle partial failure cases, this
@@ -1152,21 +1157,21 @@
           <t>A GET request is used by a DOTS client to retrieve information
           (including status) of DOTS mitigations from a DOTS server.</t>
 
-          <t>'cuid' is a mandatory Uri-Query parameter for GET requests.</t>
+          <t>'cuid' is a mandatory Uri-Path parameter for GET requests.</t>
 
-          <t>Uri-Query parameters with empty values MUST NOT be present in a
+          <t>Uri-Path parameters with empty values MUST NOT be present in a
           request.</t>
 
           <t>The same considerations for manipulating 'cdid' parameter by
           server-domain DOTS gateways specified in <xref target="post"></xref>
           MUST be followed for GET requests.</t>
 
-          <t>If the DOTS server does not find the 'mid' Uri-Query value
+          <t>If the DOTS server does not find the 'mid' Uri-Path value
           conveyed in the GET request in its configuration data for the
           requesting DOTS client, it MUST respond with a 4.04 (Not Found)
           error response code. Likewise, the same error MUST be returned as a
           response to a request to retrieve all mitigation records (i.e.,
-          'mid' Uri-Query is not defined) of a given DOTS client if the DOTS
+          'mid' Uri-Path is not defined) of a given DOTS client if the DOTS
           server does not find any mitigation record for that DOTS client. As
           a reminder, a DOTS client is identified by its identity (e.g.,
           client certificate, 'cuid') and optionally the 'cdid'.</t>
@@ -1201,7 +1206,7 @@
   Uri-Path: "dots"
   Uri-Path: "v1"
   Uri-Path: "mitigate"
-  Uri-Query: "cuid=dz6pHjaADkaFTbjr0JGBpw"
+  Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
   Observe: 0]]></artwork>
           </figure>
 
@@ -1213,8 +1218,8 @@
   Uri-Path: "dots"
   Uri-Path: "v1"
   Uri-Path: "mitigate"
-  Uri-Query: "cuid=dz6pHjaADkaFTbjr0JGBpw"
-  Uri-Query: "mid=12332"
+  Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
+  Uri-Path: "mid=12332"
   Observe: 0
 ]]></artwork>
             </figure></t>
@@ -1589,12 +1594,12 @@
           <t>DELETE requests are used to withdraw DOTS mitigation requests
           from DOTS servers (<xref target="Figure3"></xref>).</t>
 
-          <t>'cuid' and 'mid' are mandatory Uri-Query parameters for DELETE
+          <t>'cuid' and 'mid' are mandatory Uri-Path parameters for DELETE
           requests.</t>
 
           <t>The same considerations for manipulating 'cdid' parameter by DOTS
           gateways, as specified in <xref target="post"></xref>, MUST be
-          followed for DELETE requests. Uri-Query parameters with empty values
+          followed for DELETE requests. Uri-Path parameters with empty values
           MUST NOT be present in a request.</t>
 
           <figure anchor="Figure3" title="Withdraw a DOTS Mitigation">
@@ -1604,8 +1609,8 @@
   Uri-Path: "dots"
   Uri-Path: "v1"
   Uri-Path: "mitigate"
-  Uri-Query: "cuid=dz6pHjaADkaFTbjr0JGBpw"
-  Uri-Query: "mid=123"
+  Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
+  Uri-Path: "mid=123"
 ]]></artwork>
           </figure>
 
@@ -1809,7 +1814,7 @@
           below:</t>
 
           <t><list style="hanging">
-              <t hangText="mitigation-config:">Set of configuration parameters
+              <t hangText="mitigating-config:">Set of configuration parameters
               to use when a mitigation is active. The following parameters may
               be included: <list style="hanging">
                   <t hangText="heartbeat-interval: ">Time interval in seconds
@@ -1986,10 +1991,10 @@
               network overload with too frequent keepalives.</t>
 
               <t>Different heartbeat intervals can be defined for
-              'mitigation-config' and 'idle-config' to reduce being too chatty
+              'mitigating-config' and 'idle-config' to reduce being too chatty
               during idle times. If there is an on-path translator between the
               DOTS client (standalone or part of a DOTS gateway) and the DOTS
-              server, the 'mitigation-config' heartbeat-interval has to be
+              server, the 'mitigating-config' heartbeat-interval has to be
               smaller than the translator session timeout. It is recommended
               that the 'idle-config' heartbeat-interval is also smaller than
               the translator session timeout to prevent translator transversal
@@ -2087,7 +2092,10 @@
           <t>At least one of the attributes 'heartbeat-interval',
           'missing-hb-allowed', 'max-retransmit', 'ack-timeout',
           'ack-random-factor', and 'trigger-mitigation' MUST be present in the
-          PUT request.</t>
+          PUT request. Note that 'heartbeat-interval', 'missing-hb-allowed',
+          'max-retransmit', 'ack-timeout', and 'ack-random-factor', if
+          present, do not need to be provided for both 'mitigating-config',
+          and 'idle-config' in a PUT request.</t>
 
           <t>The PUT request with a higher numeric 'sid' value overrides the
           DOTS signal channel session configuration data installed by a PUT
@@ -2192,7 +2200,7 @@
   Uri-Path: "dots"
   Uri-Path: "v1"
   Uri-Path: "config"
-  Uri-Query: "sid=123"
+  Uri-Path: "sid=123"
 ]]></artwork>
           </figure>
 
