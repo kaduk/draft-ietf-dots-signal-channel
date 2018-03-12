@@ -1767,9 +1767,9 @@
         "current-value": integer
       },
       "ack-timeout": {
-        "max-value": integer,
-        "min-value": integer,
-        "current-value": integer
+        "max-value-decimal": number,
+        "min-value-decimal": number,
+        "current-value-decimal": number
       },
       "ack-random-factor": {
         "max-value-decimal": number,
@@ -1794,9 +1794,9 @@
         "current-value": integer
       },
       "ack-timeout": {
-        "max-value": integer,
-        "min-value": integer,
-        "current-value": integer
+        "max-value-decimal": number,
+        "min-value-decimal": number,
+        "current-value-decimal": number
       },
       "ack-random-factor": {
         "max-value-decimal": number,
@@ -1915,9 +1915,9 @@
         "current-value": 3
       },
       "ack-timeout": {
-        "max-value": 30,
-        "min-value": 1,
-        "current-value": 2
+        "max-value-decimal": 30,
+        "min-value-decimal": 1,
+        "current-value-decimal": 2
       },
       "ack-random-factor": {
         "max-value-decimal": 4.0,
@@ -1942,9 +1942,9 @@
         "current-value": 3
       },
       "ack-timeout": {
-        "max-value": 30,
-        "min-value": 1,
-        "current-value": 2
+        "max-value-decimal": 30,
+        "min-value-decimal": 1,
+        "current-value-decimal": 2
       },
       "ack-random-factor": {
         "max-value-decimal": 4.0,
@@ -2049,7 +2049,7 @@
           "current-value": integer
         },
         "ack-timeout": {
-          "current-value": integer
+          "current-value-decimal": number
         },
         "ack-random-factor": {
           "current-value-decimal": number
@@ -2066,7 +2066,7 @@
           "current-value": integer
         },
         "ack-timeout": {
-          "current-value": integer
+          "current-value-decimal": number
         },
         "ack-random-factor": {
           "current-value-decimal": number
@@ -2133,7 +2133,7 @@
           "current-value": 7
         },
         "ack-timeout": {
-          "current-value": 5
+          "current-value-decimal": 5
         },
         "ack-random-factor": {
           "current-value-decimal": 1.5
@@ -2147,7 +2147,7 @@
           "current-value": 7
         },
         "ack-timeout": {
-          "current-value": 5
+          "current-value-decimal": 5
         },
         "ack-random-factor": {
           "current-value-decimal": 1.5
@@ -2438,9 +2438,9 @@
           |  |  |  +--ro min-value?       uint16
           |  |  |  +--rw current-value?   uint16
           |  |  +--rw ack-timeout
-          |  |  |  +--ro max-value?       uint16
-          |  |  |  +--ro min-value?       uint16
-          |  |  |  +--rw current-value?   uint16
+          |  |  |  +--ro max-value-decimal?       decimal64
+          |  |  |  +--ro min-value-decimal?       decimal64
+          |  |  |  +--rw current-value-decimal?   decimal64
           |  |  +--rw ack-random-factor
           |  |     +--ro max-value-decimal?       decimal64
           |  |     +--ro min-value-decimal?       decimal64
@@ -2459,9 +2459,9 @@
           |  |  |  +--ro min-value?       uint16
           |  |  |  +--rw current-value?   uint16
           |  |  +--rw ack-timeout
-          |  |  |  +--ro max-value?       uint16
-          |  |  |  +--ro min-value?       uint16
-          |  |  |  +--rw current-value?   uint16
+          |  |  |  +--ro max-value-decimal?       decimal64
+          |  |  |  +--ro min-value-decimal?       decimal64
+          |  |  |  +--rw current-value-decimal?   decimal64
           |  |  +--rw ack-random-factor
           |  |     +--ro max-value-decimal?       decimal64
           |  |     +--ro min-value-decimal?       decimal64
@@ -2478,7 +2478,7 @@
 
       <section anchor="yrequest" title="YANG Module ">
         <t><figure>
-            <artwork><![CDATA[<CODE BEGINS> file "ietf-dots-signal-channel@2018-01-31.yang"
+            <artwork><![CDATA[<CODE BEGINS> file "ietf-dots-signal-channel@2018-03-15.yang"
 
 module ietf-dots-signal-channel {
   yang-version 1.1;
@@ -2532,7 +2532,7 @@ module ietf-dots-signal-channel {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2018-01-31 {
+  revision 2018-03-15 {
     description
       "Initial revision.";
     reference
@@ -2968,22 +2968,28 @@ module ietf-dots-signal-channel {
     container ack-timeout {
       description
         "Initial retransmission timeout value.";
-      leaf max-value {
-        type uint16;
+      leaf max-value-decimal {
+        type decimal64 {
+          fraction-digits 2;
+        }
         units "seconds";
         config false;
         description
           "Maximum ack-timeout value.";
       }
-      leaf min-value {
-        type uint16;
+      leaf min-value-decimal {
+        type decimal64 {
+          fraction-digits 2;
+        }
         units "seconds";
         config false;
         description
           "Minimum ack-timeout value.";
       }
-      leaf current-value {
-        type uint16;
+      leaf current-value-decimal {
+        type decimal64 {
+          fraction-digits 2;
+        }
         units "seconds";
         default "2";
         description
