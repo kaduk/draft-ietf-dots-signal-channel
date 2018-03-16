@@ -2426,9 +2426,9 @@
           |     |     +--ro alias-name*          string
           |     |     +--ro acl-list* [acl-name]
           |     |        +--ro acl-name    
-          |     |        |       -> /ietf-acl:access-lists/acl/name
+          |     |        |       -> /ietf-acl:acls/acl/name
           |     |        +--ro acl-type?    
-          |     |                -> /ietf-acl:access-lists/acl/type
+          |     |                -> /ietf-acl:acls/acl/type
           |     +--ro bytes-dropped?          yang:zero-based-counter64
           |     +--ro bps-dropped?            yang:zero-based-counter64
           |     +--ro pkts-dropped?           yang:zero-based-counter64
@@ -2820,7 +2820,7 @@ module ietf-dots-signal-channel {
                cuid and acl-name.";
             leaf acl-name {
               type leafref {
-                path "/ietf-acl:access-lists/ietf-acl:acl/" + 
+                path "/ietf-acl:acls/ietf-acl:acl/" + 
                      "ietf-acl:name";
               }
               description
@@ -2829,7 +2829,7 @@ module ietf-dots-signal-channel {
             }
             leaf acl-type {
               type leafref {
-                path "/ietf-acl:access-lists/ietf-acl:acl/" + 
+                path "/ietf-acl:acls/ietf-acl:acl/" + 
                      "ietf-acl:type";
               }
               description
