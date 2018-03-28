@@ -766,7 +766,7 @@
           DOTS requests, and identifying the mitigation scope. These policies
           can be enforced per-client, per-client domain, or both. Also, the
           identity information may be used for auditing and debugging
-          purposes. </t>
+          purposes.</t>
 
           <t><xref target="Figure1a"></xref> shows an example of a request
           relayed by a server-domain DOTS gateway.</t>
@@ -861,29 +861,42 @@
               style="hanging">
               <t hangText="hop-limit:">This option (see <xref
               target="option"></xref>) is used to detect and prevent infinite
-              loops. This option is typically inserted by a DOTS gateway.
-              <vspace blankLines="1" />The length of the hop-limit option is 1
-              byte.<vspace blankLines="1" />The value of the hop-limit option
-              is encoded as an unsigned integer (see Section 3.2 of <xref
-              target="RFC7252"></xref>).<vspace blankLines="1" />Each
-              intermediate DOTS agent involved in the handling of a DOTS
-              message MUST decrement the hop-limit option value by 1 prior to
-              forwarding upstream if this parameter exists. DOTS messages MUST
-              NOT be forwarded if the hop-limit option is set to '0' after
-              decrement. Messages that cannot be forwarded because of
-              exhausted hop-limit SHOULD be logged with a 5.06 (Hop Limit
-              Reached) error message sent back to the DOTS peer. It is
-              RECOMMENDED that DOTS clients and gateways support means to
-              alert administrators about loop errors so that appropriate
-              actions are undertaken.<vspace blankLines="1" />The initial
-              hop-limit value SHOULD be configurable. If no initial value is
-              explicitly provided, the default initial hop-limit value of 16
-              MUST be used. <vspace blankLines="1" />Because forwarding errors
-              may occur if inadequate hop-limit values are used, DOTS agents
-              at the boundaries of an administrative domain MAY be instructed
-              to rewrite the value of hop-limit carried in received messages
+              loops. This option is typically inserted by a DOTS gateway. Only
+              one single instance of the option is allowed in a
+              message.<vspace blankLines="1" />The length of the hop-limit
+              option is 1 byte.<vspace blankLines="1" />The value of the
+              hop-limit option is encoded as an unsigned integer (see Section
+              3.2 of <xref target="RFC7252"></xref>).<vspace
+              blankLines="1" />Each intermediate DOTS agent involved in the
+              handling of a DOTS message MUST decrement the hop-limit option
+              value by 1 prior to forwarding upstream if this parameter
+              exists. DOTS messages MUST NOT be forwarded if the hop-limit
+              option is set to '0' after decrement. Messages that cannot be
+              forwarded because of exhausted hop-limit SHOULD be logged with a
+              5.06 (Hop Limit Reached) error message sent back to the DOTS
+              peer. It is RECOMMENDED that DOTS clients and gateways support
+              means to alert administrators about loop errors so that
+              appropriate actions are undertaken. <vspace blankLines="1" />To
+              ease debugging and troubleshooting, the DOTS gateway which
+              detects a loop SHOULD include its information (e.g., server
+              name, alias, IP address) in the diagnostic payload under the
+              conditions detailed in Section 5.5.2 of <xref
+              target="RFC7252"></xref>. Each intermediate DOTS gateway
+              involved in relaying a 5.06 (Hop Limit Reached) error message
+              SHOULD prepend its own information in the diagnostic payload
+              with a space character used as separator. Only one information
+              per DOTS gateway MUST appear in the diagnostic payload. The
+              ultimate DOTS gateway MAY remove the diagnostic payload before
+              forwarding the 5.06 (Hop Limit Reached) error message to a DOTS
+              client domain. <vspace blankLines="1" />The initial hop-limit
+              value SHOULD be configurable. If no initial value is explicitly
+              provided, the default initial hop-limit value of 16 MUST be
+              used. <vspace blankLines="1" />Because forwarding errors may
+              occur if inadequate hop-limit values are used, DOTS agents at
+              the boundaries of an administrative domain MAY be instructed to
+              rewrite the value of hop-limit carried in received messages
               (that is, ignore the value of hop-limit received in a message).
-              <vspace blankLines="1" />This is an optional option.</t>
+              <vspace blankLines="1" />This is an optional CoAP option.</t>
             </list></t>
 
           <t>Because of the complexity to handle partial failure cases, this
@@ -1895,9 +1908,9 @@
         "current-value": 3
       },
       "ack-timeout": {
-        "max-value-decimal": 30,
-        "min-value-decimal": 1,
-        "current-value-decimal": 2
+        "max-value-decimal": 30.0,
+        "min-value-decimal": 1.0,
+        "current-value-decimal": 2.0
       },
       "ack-random-factor": {
         "max-value-decimal": 4.0,
@@ -1922,9 +1935,9 @@
         "current-value": 3
       },
       "ack-timeout": {
-        "max-value-decimal": 30,
-        "min-value-decimal": 1,
-        "current-value-decimal": 2
+        "max-value-decimal": 30.0,
+        "min-value-decimal": 1.0,
+        "current-value-decimal": 2.0
       },
       "ack-random-factor": {
         "max-value-decimal": 4.0,
@@ -2109,10 +2122,10 @@
           "current-value": 3
         },
         "max-retransmit": {
-          "current-value": 7
+          "current-value": 3
         },
         "ack-timeout": {
-          "current-value-decimal": 5
+          "current-value-decimal": 2.0
         },
         "ack-random-factor": {
           "current-value-decimal": 1.5
@@ -2123,10 +2136,10 @@
           "current-value": 0
         },
         "max-retransmit": {
-          "current-value": 7
+          "current-value": 3
         },
         "ack-timeout": {
-          "current-value-decimal": 5
+          "current-value-decimal": 2.0
         },
         "ack-random-factor": {
           "current-value-decimal": 1.5
