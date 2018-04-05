@@ -2263,8 +2263,8 @@
         client.</t>
 
         <t>The DOTS server can return the error response code 3.00 in response
-        to a PUT request from the DOTS client or convey the error response
-        code 3.00 in a unidirectional notification response from the DOTS
+        to a request from the DOTS client or convey the error response code
+        3.00 in a unidirectional notification response from the DOTS
         server.</t>
 
         <t>The DOTS server in the error response conveys the alternate DOTS
@@ -2307,7 +2307,9 @@
             associated TTL.<vspace blankLines="1" />If all alternate IP
             addresses have expired, the DOTS client MUST use the DOTS
             server(s) that was provisioned using means discussed in <xref
-            target="discover"></xref>.</t>
+            target="discover"></xref>. Furthermore, a DOTS client MUST NOT use
+            the alt-server FQDN if all of the 'alt-server-records' have
+            expired. </t>
           </list><xref target="Figure21"></xref> shows a 3.00 response example
         to convey the DOTS alternate server 'alt-server.example', its IP
         addresses 2001:db8:6401::1 and 2001:db8:6401::2, and TTL values 3600
@@ -2344,12 +2346,11 @@
         alternate DOTS server.</t>
 
         <t>If the DOTS client has been redirected to a DOTS server to which it
-        has already sent the mitigation request within the last five (5)
-        minutes, it MUST ignore the redirection and try to contact other DOTS
-        servers listed in the local configuration or discovered using dynamic
-        means such as DHCP or SRV procedures. It is RECOMMENDED that DOTS
-        clients support means to alert administrators about redirect
-        loops.</t>
+        has already communicated with within the last five (5) minutes, it
+        MUST ignore the redirection and try to contact other DOTS servers
+        listed in the local configuration or discovered using dynamic means
+        such as DHCP or SRV procedures. It is RECOMMENDED that DOTS clients
+        support means to alert administrators about redirect loops.</t>
       </section>
 
       <section anchor="hb" title="Heartbeat Mechanism">
