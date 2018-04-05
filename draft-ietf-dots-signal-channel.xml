@@ -259,7 +259,7 @@
       channel.</t>
     </section>
 
-    <section anchor="notation" title="Notational Conventions and Terminology">
+    <section anchor="notation" title="Terminology">
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
       "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
       "OPTIONAL" in this document are to be interpreted as described in <xref
@@ -2178,6 +2178,11 @@
               client may re-try and send the PUT request with updated
               attribute values acceptable to the DOTS server.</t>
             </list></t>
+
+          <t>A DOTS client may issue a GET message with or without 'sid'
+          parameter to retrieve the configuration parameters. The response
+          message body is the same as the one depicted in <xref
+          target="Figure17"></xref>.</t>
         </section>
 
         <section title="Configuration Freshness and Notifications">
@@ -2273,7 +2278,7 @@
     "alt-server": "string",
     "alt-server-record": [
       {
-        "addr": "string",   
+        "addr": "string",
         "ttl" : integer
       }
     ]
@@ -2286,10 +2291,23 @@
         <t><list style="hanging">
             <t hangText="alt-server:">FQDN of an alternate DOTS server.</t>
 
-            <t hangText="addr:">IP address of an alternate DOTS server.</t>
+            <t hangText="addr:">An IP address of an alternate DOTS server.
+            </t>
 
-            <t hangText="ttl:">Time to live (TTL) represented as an integer
-            number of seconds.</t>
+            <t hangText="ttl:">Time to live (TTL) of the alternate IP address,
+            represented as an integer number of seconds. That is, the time
+            interval that an alternate IP address may be cached by a DOTS
+            client. <vspace blankLines="1" />'0' means that the alternate IP
+            address is only to be used for the request in progress, and
+            consequently that IP address should not be cached. <vspace
+            blankLines="1" />If no 'ttl' is returned in a redirect response,
+            this is equivalent to returning a 'ttl' parameter set to
+            '0'.<vspace blankLines="1" />A DOTS client MUST NOT use an
+            alternate IP address to contact its DOTS server upon expiry of the
+            associated TTL.<vspace blankLines="1" />If all alternate IP
+            addresses have expired, the DOTS client MUST use the DOTS
+            server(s) that was provisioned using means discussed in <xref
+            target="discover"></xref>.</t>
           </list><xref target="Figure21"></xref> shows a 3.00 response example
         to convey the DOTS alternate server 'alt-server.example', its IP
         addresses 2001:db8:6401::1 and 2001:db8:6401::2, and TTL values 3600
@@ -2301,13 +2319,13 @@
   "ietf-dots-signal-channel:redirected-signal": {
     "alt-server": "alt-server.example",
     "alt-server-record": [
-      {
-        "ttl" :  3600,        
-        "addr": "2001:db8:6401::1"         
+      {  
+        "addr": "2001:db8:6401::1",         
+        "ttl" :  3600   
       },
-      {
-        "ttl" :  1800,        
-        "addr": "2001:db8:6401::2"         
+      {   
+        "addr": "2001:db8:6401::2",
+        "ttl" :  1800            
       }
     ]
   }
@@ -2324,6 +2342,14 @@
         DOTS client SHOULD implement a DNS64 function to handle the scenario
         where an IPv6-only DOTS client communicates with an IPv4-only
         alternate DOTS server.</t>
+
+        <t>If the DOTS client has been redirected to a DOTS server to which it
+        has already sent the mitigation request within the last five (5)
+        minutes, it MUST ignore the redirection and try to contact other DOTS
+        servers listed in the local configuration or discovered using dynamic
+        means such as DHCP or SRV procedures. It is RECOMMENDED that DOTS
+        clients support means to alert administrators about redirect
+        loops.</t>
       </section>
 
       <section anchor="hb" title="Heartbeat Mechanism">
@@ -3394,7 +3420,7 @@ module ietf-dots-signal-channel {
         the DTLS processing when calculating the size of CoAP message that
         fits within the path MTU. Path MTU MUST be greater than or equal to
         [CoAP message size + DTLS overhead of 13 octets + authentication
-        overhead of the negotiated DTLS cipher suite + block padding (Section
+        overhead of the negotiated DTLS cipher suite + block padding] (Section
         4.1.1.1 of <xref target="RFC6347"></xref>). If the request size
         exceeds the path MTU then the DOTS client MUST split the DOTS signal
         into separate messages, for example the list of addresses in the
@@ -3720,6 +3746,8 @@ module ietf-dots-signal-channel {
     <section anchor="contr" title="Contributors">
       <t>The following individuals have contributed to this document:<list
           style="symbols">
+          <t>Jon Shallow, NCC Group, Email: jon.shallow@nccgroup.trust</t>
+
           <t>Mike Geller, Cisco Systems, Inc. 3250 Florida 33309 USA, Email:
           mgeller@cisco.com</t>
 
@@ -3727,8 +3755,6 @@ module ietf-dots-signal-channel {
           States, Email: rgm@htt-consult.com</t>
 
           <t>Dan Wing, Email: dwing-ietf@fuggles.com</t>
-
-          <t>Jon Shallow, NCC Group, Email: jon.shallow@nccgroup.trust</t>
         </list></t>
     </section>
 
