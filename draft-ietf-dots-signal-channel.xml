@@ -2289,19 +2289,19 @@
             <t hangText="alt-server-record:">A list of IP addresses of an
             alternate DOTS server.</t>
 
-            <t hangText="ttl:">Time to live (TTL) of alternate records,
-            represented as an integer number of seconds. That is, the time
-            interval that alternate IP addresses may be cached by a DOTS
-            client. <vspace blankLines="1" />'0' means that an alternate IP
-            address is only to be used for the request in progress, and
-            consequently that IP address should not be cached. <vspace
-            blankLines="1" />If no 'ttl' is returned in a redirect response,
-            this is equivalent to returning a 'ttl' parameter set to
-            '0'.<vspace blankLines="1" />If 'alt-server-record' has expired,
-            the DOTS client MUST use the DOTS server(s) that was provisioned
-            using means discussed in <xref target="discover"></xref>.
-            Furthermore, a DOTS client MUST NOT use the alt-server FQDN if the
-            'alt-server-records' has expired.</t>
+            <t hangText="ttl:">Time to live (TTL) of the alternate DOTS
+            server, represented as an integer number of seconds. That is, the
+            time interval that the alternate DOTS server may be cached for use
+            by a DOTS client. <vspace blankLines="1" />'0' means that the
+            alternate DOTS server is only to be used for the request in
+            progress, and consequently the alternate DOTS server should not be
+            cached. <vspace blankLines="1" />If no 'ttl' is returned in a
+            redirect response, this is equivalent to returning a 'ttl'
+            parameter set to '0'. <vspace blankLines="1" />If the alternate
+            DOTS server TTL has expired, the DOTS client MUST use the DOTS
+            server(s) that was provisioned using means discussed in <xref
+            target="discover"></xref>. Furthermore, a DOTS client MUST NOT use
+            the alt-server FQDN if the 'alt-server-records' has expired.</t>
           </list><xref target="Figure21"></xref> shows a 3.00 response example
         to convey the DOTS alternate server 'alt-server.example', its IP
         addresses 2001:db8:6401::1 and 2001:db8:6401::2, and TTL value

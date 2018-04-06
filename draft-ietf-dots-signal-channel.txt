@@ -2726,13 +2726,13 @@ Internet-Draft        DOTS Signal Channel Protocol            April 2018
    alt-server-record:  A list of IP addresses of an alternate DOTS
       server.
 
-   ttl:  Time to live (TTL) of alternate records, represented as an
-      integer number of seconds.  That is, the time interval that
-      alternate IP addresses may be cached by a DOTS client.
+   ttl:  Time to live (TTL) of the alternate DOTS server, represented as
+      an integer number of seconds.  That is, the time interval that the
+      alternate DOTS server may be cached for use by a DOTS client.
 
-      '0' means that an alternate IP address is only to be used for the
-      request in progress, and consequently that IP address should not
-      be cached.
+      '0' means that the alternate DOTS server is only to be used for
+      the request in progress, and consequently the alternate DOTS
+      server should not be cached.
 
       If no 'ttl' is returned in a redirect response, this is equivalent
       to returning a 'ttl' parameter set to '0'.
@@ -2746,9 +2746,9 @@ Reddy, et al.            Expires October 8, 2018               [Page 49]
 Internet-Draft        DOTS Signal Channel Protocol            April 2018
 
 
-      If 'alt-server-record' has expired, the DOTS client MUST use the
-      DOTS server(s) that was provisioned using means discussed in
-      Section 4.1.  Furthermore, a DOTS client MUST NOT use the alt-
+      If the alternate DOTS server TTL has expired, the DOTS client MUST
+      use the DOTS server(s) that was provisioned using means discussed
+      in Section 4.1.  Furthermore, a DOTS client MUST NOT use the alt-
       server FQDN if the 'alt-server-records' has expired.
 
    Figure 23 shows a 3.00 response example to convey the DOTS alternate
