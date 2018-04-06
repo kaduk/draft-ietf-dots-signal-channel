@@ -1961,7 +1961,7 @@
           (2 seconds), max-retransmit (3), ack-random-factor (1.5). In
           addition to those parameters, the RECOMMENDED specific DOTS
           transmission parameter values are 'heartbeat-interval' (30 seconds)
-          and 'missing-hb-allowed' (5).<list style="empty">
+          and 'missing-hb-allowed' (5). <list style="empty">
               <t>Note: heartbeat-interval should be tweaked to also assist
               DOTS messages for NAT traversal (SIG-010 of <xref
               target="I-D.ietf-dots-requirements"></xref>). According to <xref
@@ -2179,10 +2179,8 @@
               attribute values acceptable to the DOTS server.</t>
             </list></t>
 
-          <t>A DOTS client may issue a GET message with or without 'sid'
-          parameter to retrieve the configuration parameters. The response
-          message body is the same as the one depicted in <xref
-          target="Figure17"></xref>.</t>
+          <t>A DOTS client may issue a GET message with 'sid' parameter to
+          retrieve the negotiated configuration parameters. </t>
         </section>
 
         <section title="Configuration Freshness and Notifications">
@@ -2277,12 +2275,9 @@
   "ietf-dots-signal-channel:redirected-signal": {
     "alt-server": "string",
     "alt-server-record": [
-      {
-        "addr": "string",
-        "ttl" : integer
-      }
-    ]
-  }
+       "string"
+     ],
+     "ttl": integer
 }]]></artwork>
         </figure>
 
@@ -2291,29 +2286,26 @@
         <t><list style="hanging">
             <t hangText="alt-server:">FQDN of an alternate DOTS server.</t>
 
-            <t hangText="addr:">An IP address of an alternate DOTS server.
-            </t>
+            <t hangText="alt-server-record:">A list of IP addresses of an
+            alternate DOTS server.</t>
 
-            <t hangText="ttl:">Time to live (TTL) of the alternate IP address,
+            <t hangText="ttl:">Time to live (TTL) of alternate records,
             represented as an integer number of seconds. That is, the time
-            interval that an alternate IP address may be cached by a DOTS
-            client. <vspace blankLines="1" />'0' means that the alternate IP
+            interval that alternate IP addresses may be cached by a DOTS
+            client. <vspace blankLines="1" />'0' means that an alternate IP
             address is only to be used for the request in progress, and
             consequently that IP address should not be cached. <vspace
             blankLines="1" />If no 'ttl' is returned in a redirect response,
             this is equivalent to returning a 'ttl' parameter set to
-            '0'.<vspace blankLines="1" />A DOTS client MUST NOT use an
-            alternate IP address to contact its DOTS server upon expiry of the
-            associated TTL.<vspace blankLines="1" />If all alternate IP
-            addresses have expired, the DOTS client MUST use the DOTS
-            server(s) that was provisioned using means discussed in <xref
-            target="discover"></xref>. Furthermore, a DOTS client MUST NOT use
-            the alt-server FQDN if all of the 'alt-server-records' have
-            expired. </t>
+            '0'.<vspace blankLines="1" />If 'alt-server-record' has expired,
+            the DOTS client MUST use the DOTS server(s) that was provisioned
+            using means discussed in <xref target="discover"></xref>.
+            Furthermore, a DOTS client MUST NOT use the alt-server FQDN if the
+            'alt-server-records' has expired.</t>
           </list><xref target="Figure21"></xref> shows a 3.00 response example
         to convey the DOTS alternate server 'alt-server.example', its IP
-        addresses 2001:db8:6401::1 and 2001:db8:6401::2, and TTL values 3600
-        and 1800.</t>
+        addresses 2001:db8:6401::1 and 2001:db8:6401::2, and TTL value
+        3600.</t>
 
         <t><figure anchor="Figure21"
             title="Example of Redirected Server Error Response Body">
@@ -2321,16 +2313,10 @@
   "ietf-dots-signal-channel:redirected-signal": {
     "alt-server": "alt-server.example",
     "alt-server-record": [
-      {  
-        "addr": "2001:db8:6401::1",         
-        "ttl" :  3600   
-      },
-      {   
-        "addr": "2001:db8:6401::2",
-        "ttl" :  1800            
-      }
-    ]
-  }
+       "2001:db8:6401::1",
+       "2001:db8:6401::2"         
+     ],
+    "ttl": 3600            
 }]]></artwork>
           </figure></t>
 
@@ -2529,9 +2515,8 @@
           |  +--rw trigger-mitigation?   boolean
           +--:(redirected-signal)
              +--ro alt-server            string
-             +--ro alt-server-record* [addr]
-                +--ro addr    inet:ip-address
-                +--ro ttl?    uint32]]></artwork>
+             +--ro alt-server-record*    inet:ip-address
+             +--rw ttl?                  uint32]]></artwork>
           </figure></t>
       </section>
 
@@ -3127,21 +3112,16 @@ module ietf-dots-signal-channel {
       description
         "FQDN of an alternate server.";
     }
-    list alt-server-record {
-      key "addr";
+    leaf-list alt-server-record {
+      type inet:ip-address;
       config false;
-      description
+      description      
         "List of records for the alternate server.";
-      leaf addr {
-        type inet:ip-address;
-        description
-          "An IPv4 or IPv6 address identifying the server.";
-      }
-      leaf ttl {
-        type uint32;
-        description
-          "TTL associated with this record.";
-      }
+    }
+    leaf ttl {
+      type uint32;
+      description
+        "TTL associated with alt-server records.";
     }
   }
 
@@ -3266,10 +3246,10 @@ module ietf-dots-signal-channel {
    | ietf-dots-signal-cha |             |     |               |        |
    |nnel:redirected-signal| container   |  46 | 5 map         | Object |
    | alt-server           | string      |  47 | 3 text string | String |
-   | alt-server-record    | list        |  48 | 4 array       | Array  |
-   | addr                 | inet:       |     |               |        |
-   |                      |  ip-address |  49 | 3 text string | String |
-   | ttl                  | uint32      |  50 | 0 unsigned    | Number |
+   | alt-server-record    | leaf-list   |  48 | 4 array       | Array  |
+   |                      | inet:       |     |               |        |
+   |                      |  ip-address |     | 3 text string | String |
+   | ttl                  | uint32      |  49 | 0 unsigned    | Number |
    +----------------------+-------------+-----+---------------+--------+
 
     Table 4: CBOR Mappings Used in DOTS Signal Channel Messages]]></artwork>
@@ -3671,8 +3651,7 @@ module ietf-dots-signal-channel {
    | nel:redirected-signal|       |       |            |               |
    | alt-server           |   47  |   3   |    IESG    |   [RFCXXXX]   |
    | alt-server-record    |   48  |   4   |    IESG    |   [RFCXXXX]   |
-   | addr                 |   49  |   3   |    IESG    |   [RFCXXXX]   |
-   | ttl                  |   50  |   0   |    IESG    |   [RFCXXXX]   |
+   | ttl                  |   49  |   0   |    IESG    |   [RFCXXXX]   |
    +----------------------+-------+-------+------------+---------------+
 
         Table 8: Initial DOTS Signal Channel CBOR Mappings Registry
