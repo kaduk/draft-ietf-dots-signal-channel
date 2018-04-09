@@ -2295,16 +2295,17 @@
             server, represented as an integer number of seconds. That is, the
             time interval that the alternate DOTS server may be cached for use
             by a DOTS client. <vspace blankLines="1" />A lifetime of negative
-            one (-1) indicates indefinite TTL. That is, the alternate DOTS
-            server is to be used until the alternate DOTS server redirects the
-            traffic with another 3.00 response.<vspace blankLines="1" />If no
-            'ttl' is returned in a redirect response, this is equivalent to
-            returning a 'ttl' parameter set to '-1'. <vspace
-            blankLines="1" />If the alternate DOTS server TTL has expired, the
-            DOTS client MUST use the DOTS server(s), that was provisioned
-            using means discussed in <xref target="discover"></xref>, for
-            creating new requests. <vspace blankLines="1" />This is an
-            optional attribute.</t>
+            one (-1) indicates indefinite TTL. This value means that the
+            alternate DOTS server is to be used until the alternate DOTS
+            server redirects the traffic with another 3.00 response.<vspace
+            blankLines="1" />If no 'ttl' is returned in a redirect response,
+            this is equivalent to returning a 'ttl' parameter set to '-1'.
+            <vspace blankLines="1" />The RECOMMENDED minimum value is '300'
+            seconds for a finite TTL.<vspace blankLines="1" />If the alternate
+            DOTS server TTL has expired, the DOTS client MUST use the DOTS
+            server(s), that was provisioned using means discussed in <xref
+            target="discover"></xref>, for creating new requests. <vspace
+            blankLines="1" />This is an optional attribute.</t>
           </list><xref target="Figure21"></xref> shows a 3.00 response example
         to convey the DOTS alternate server 'alt-server.example', its IP
         addresses 2001:db8:6401::1 and 2001:db8:6401::2, and TTL value
@@ -3124,7 +3125,13 @@ module ietf-dots-signal-channel {
     leaf ttl {
       type uint32;
       description
-        "TTL associated with alt-server records.";
+        "TTL associated with alt-server records.  
+    
+         A lifetime of negative one (-1) indicates
+         indefinite TTL. This value means that the alternate
+         DOTS server is to be used until the alternate DOTS
+         server redirects the traffic with another
+         3.00 response.";
     }
   }
 
