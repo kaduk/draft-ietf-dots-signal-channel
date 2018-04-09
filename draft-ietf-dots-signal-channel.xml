@@ -2180,7 +2180,7 @@
             </list></t>
 
           <t>A DOTS client may issue a GET message with 'sid' parameter to
-          retrieve the negotiated configuration parameters. </t>
+          retrieve the negotiated configuration parameters.</t>
         </section>
 
         <section title="Configuration Freshness and Notifications">
@@ -2284,24 +2284,27 @@
         <t>The parameters are described below:</t>
 
         <t><list style="hanging">
-            <t hangText="alt-server:">FQDN of an alternate DOTS server.</t>
+            <t hangText="alt-server:">FQDN of an alternate DOTS server.
+            <vspace blankLines="1" />This is a mandatory attribute.</t>
 
             <t hangText="alt-server-record:">A list of IP addresses of an
-            alternate DOTS server.</t>
+            alternate DOTS server.<vspace blankLines="1" />This is an optional
+            attribute.</t>
 
             <t hangText="ttl:">Time to live (TTL) of the alternate DOTS
             server, represented as an integer number of seconds. That is, the
             time interval that the alternate DOTS server may be cached for use
-            by a DOTS client. <vspace blankLines="1" />'0' means that the
-            alternate DOTS server is only to be used for the request in
-            progress, and consequently the alternate DOTS server should not be
-            cached. <vspace blankLines="1" />If no 'ttl' is returned in a
-            redirect response, this is equivalent to returning a 'ttl'
-            parameter set to '0'. <vspace blankLines="1" />If the alternate
-            DOTS server TTL has expired, the DOTS client MUST use the DOTS
-            server(s) that was provisioned using means discussed in <xref
-            target="discover"></xref>. Furthermore, a DOTS client MUST NOT use
-            the alt-server FQDN if the 'alt-server-records' has expired.</t>
+            by a DOTS client. <vspace blankLines="1" />A lifetime of negative
+            one (-1) indicates indefinite TTL. That is, the alternate DOTS
+            server is to be used until the alternate DOTS server redirects the
+            traffic with another 3.00 response.<vspace blankLines="1" />If no
+            'ttl' is returned in a redirect response, this is equivalent to
+            returning a 'ttl' parameter set to '-1'. <vspace
+            blankLines="1" />If the alternate DOTS server TTL has expired, the
+            DOTS client MUST use the DOTS server(s), that was provisioned
+            using means discussed in <xref target="discover"></xref>, for
+            creating new requests. <vspace blankLines="1" />This is an
+            optional attribute.</t>
           </list><xref target="Figure21"></xref> shows a 3.00 response example
         to convey the DOTS alternate server 'alt-server.example', its IP
         addresses 2001:db8:6401::1 and 2001:db8:6401::2, and TTL value
@@ -3250,6 +3253,7 @@ module ietf-dots-signal-channel {
    |                      | inet:       |     |               |        |
    |                      |  ip-address |     | 3 text string | String |
    | ttl                  | uint32      |  49 | 0 unsigned    | Number |
+   |                      |             |     | 1 negative    | Number |
    +----------------------+-------------+-----+---------------+--------+
 
     Table 4: CBOR Mappings Used in DOTS Signal Channel Messages]]></artwork>
@@ -3651,7 +3655,7 @@ module ietf-dots-signal-channel {
    | nel:redirected-signal|       |       |            |               |
    | alt-server           |   47  |   3   |    IESG    |   [RFCXXXX]   |
    | alt-server-record    |   48  |   4   |    IESG    |   [RFCXXXX]   |
-   | ttl                  |   49  |   0   |    IESG    |   [RFCXXXX]   |
+   | ttl                  |   49  |  0/1  |    IESG    |   [RFCXXXX]   |
    +----------------------+-------+-------+------------+---------------+
 
         Table 8: Initial DOTS Signal Channel CBOR Mappings Registry
