@@ -146,8 +146,8 @@
     </abstract>
 
     <note title="Editorial Note (To be removed by RFC Editor)">
-      <t>Please update these statements with the RFC number to be assigned to
-      this document:<list style="symbols">
+      <t>Please update these statements within the document with the RFC
+      number to be assigned to this document:<list style="symbols">
           <t>"This version of this YANG module is part of RFC XXXX;"</t>
 
           <t>"RFC XXXX: Distributed Denial-of-Service Open Threat Signaling
@@ -235,15 +235,17 @@
         </figure>In typical deployments, the DOTS client belongs to a
       different administrative domain than the DOTS server. For example, the
       DOTS client is embedded in a firewall protecting services owned and
-      operated by a domain, while the DOTS server is owned and operated by a
-      different domain providing DDoS mitigation services. The latter might or
-      might not provide connectivity services to the network hosting the DOTS
-      client.</t>
+      operated by a customer, while the DOTS server is owned and operated by a
+      different administrative entity (service provider, typically) providing
+      DDoS mitigation services. The latter might or might not provide
+      connectivity services to the network hosting the DOTS client.</t>
+
+      <t>The DOTS client can communicate directly with a DOTS server or
+      indirectly via a DOTS gateway.</t>
 
       <t>The DOTS server may (not) be co-located with the DOTS mitigator. In
       typical deployments, the DOTS server belongs to the same administrative
-      domain as the mitigator. The DOTS client can communicate directly with a
-      DOTS server or indirectly via a DOTS gateway.</t>
+      domain as the mitigator. </t>
 
       <t>The document adheres to the DOTS architecture <xref
       target="I-D.ietf-dots-architecture"></xref>. The requirements for DOTS
@@ -309,10 +311,10 @@
       <t>By default, a DOTS signal channel MUST run over port number TBD as
       defined in <xref target="port"></xref>, for both UDP and TCP, unless the
       DOTS server has a mutual agreement with its DOTS clients to use a
-      different port number. DOTS clients may alternatively support means to
+      different port number. DOTS clients MAY alternatively support means to
       dynamically discover the ports used by their DOTS servers. In order to
       use a distinct port number (as opposed to TBD), DOTS clients and servers
-      should support a configurable parameter to supply the port number to
+      SHOULD support a configurable parameter to supply the port number to
       use. The rationale for not using the default port number 5684 ((D)TLS
       CoAP) is to allow for differentiated behaviors in environments where
       both a DOTS gateway and an IoT gateway (e.g., Figure 3 of <xref
@@ -342,8 +344,8 @@
       target="HE"></xref>.</t>
 
       <t>Messages exchanged between DOTS agents are serialized using Concise
-      Binary Object Representation (CBOR) <xref target="RFC7049"></xref>, CBOR
-      is a binary encoding scheme designed for small code and message size.
+      Binary Object Representation (CBOR) <xref target="RFC7049"></xref>, a
+      binary encoding scheme designed for small code and message size.
       CBOR-encoded payloads are used to carry signal channel-specific payload
       messages which convey request parameters and response information such
       as errors. In order to allow the use of the same data models, <xref
@@ -352,14 +354,14 @@
       target="I-D.ietf-core-yang-cbor"></xref>.</t>
 
       <t>From that standpoint, this document specifies a YANG module for
-      representing mitigation scopes and DOTS signal channel session
-      configuration data (<xref target="YANG"></xref>). Representing these
-      data as CBOR data is assumed to follow the rules in <xref
-      target="I-D.ietf-core-yang-cbor"></xref> or those in <xref
-      target="RFC7951"></xref> combined with JSON/CBOR conversion rules in
-      <xref target="RFC7049"></xref>. All parameters in the payload of the
-      DOTS signal channel are mapped to CBOR types as specified in <xref
-      target="mapping"></xref>.</t>
+      representing DOTS mitigation scopes, DOTS signal channel session
+      configuration data, and DOTS redirected signalling (<xref
+      target="YANG"></xref>). Representing these data as CBOR data is assumed
+      to follow the rules in <xref target="I-D.ietf-core-yang-cbor"></xref> or
+      those in <xref target="RFC7951"></xref> combined with JSON/CBOR
+      conversion rules in <xref target="RFC7049"></xref>. All parameters in
+      the payload of the DOTS signal channel are mapped to CBOR types as
+      specified in <xref target="mapping"></xref>.</t>
 
       <t>In order to prevent fragmentation, DOTS agents must follow the
       recommendations documented in Section 4.6 of <xref
@@ -390,9 +392,9 @@
       NAT64 <xref target="RFC6146"></xref>, NPTv6 <xref
       target="RFC6296"></xref>) are enabled between the client's network and
       the DOTS server, DOTS signal channel messages forwarded to a DOTS server
-      must not include internal IP addresses/prefixes and/or port numbers;
+      MUST NOT include internal IP addresses/prefixes and/or port numbers;
       external addresses/prefixes and/or port numbers as assigned by the
-      translator must be used instead. This document does not make any
+      translator MUST be used instead. This document does not make any
       recommendation about possible translator discovery mechanisms. The
       following are some (non-exhaustive) deployment examples that may be
       considered: <list style="symbols">
@@ -417,9 +419,9 @@
         description of such means is out of scope of this document.</t>
 
         <t>Likewise, it is out of scope of this document to specify the
-        behavior of a DOTS client when it sends requests (e.g., contact all
-        servers, select one server among the list) when multiple DOTS servers
-        are provisioned.</t>
+        behavior to be followed by a DOTS client to send DOTS requests when
+        multiple DOTS servers are provisioned (e.g., contact all DOTS servers,
+        select one DOTS server among the list).</t>
       </section>
 
       <section anchor="uri-path" title="CoAP URIs">
@@ -555,7 +557,8 @@
         <t>DOTS agents SHOULD follow the data transmission guidelines
         discussed in Section 3.1.3 of <xref target="RFC8085"></xref> and
         control transmission behavior by not sending more than one UDP
-        datagram per RTT to the peer DOTS agent on average.</t>
+        datagram per round-trip time (RTT) to the peer DOTS agent on
+        average.</t>
 
         <t>Requests marked by the DOTS client as Non-confirmable messages are
         sent at regular intervals until a response is received from the DOTS
@@ -772,7 +775,7 @@
               target="I-D.ietf-dots-architecture"></xref>. <vspace
               blankLines="1" />If the DOTS client ceases to respond to
               heartbeat messages, the DOTS server can detect that the DOTS
-              session is lost.<vspace blankLines="1" />The default value of
+              session is lost. <vspace blankLines="1" />The default value of
               the parameter is 'true' (that is, the mitigation starts
               immediately). If 'trigger-mitigation' is not present in a
               request, this is equivalent to receiving a request with
@@ -1036,7 +1039,7 @@
 
           <t>In both DOTS signal and data channel sessions, the DOTS client
           MUST authenticate itself to the DOTS server (<xref
-          target="mutauth"></xref>). The DOTS server may use the algorithm
+          target="mutauth"></xref>). The DOTS server MAY use the algorithm
           presented in Section 7 of <xref target="RFC7589"></xref> to derive
           the DOTS client identity or username from the client certificate.
           The DOTS client identity allows the DOTS server to accept mitigation
@@ -1190,8 +1193,8 @@
           necessary, by refining the scope of resources requiring mitigation.
           This can be achieved, for example, by (1) sending a PUT request with
           a new 'mid' value that will override the existing one with
-          overlapping mitigation scopes or (2) by re- using the same 'mid'
-          with updated mitigation scopes.</t>
+          overlapping mitigation scopes or (2) by re-using the same 'mid' with
+          updated mitigation scopes.</t>
 
           <t hangText="conflict-information:">For a mitigation request to
           continue beyond the initial negotiated lifetime, the DOTS client has
@@ -1229,7 +1232,7 @@
           <t>The 'c' (content) parameter and its permitted values defined in
           <xref target="I-D.ietf-core-comi"></xref> can be used to retrieve
           non-configuration data (attack mitigation status), configuration
-          data, or both. The DOTS server may support this optional filtering
+          data, or both. The DOTS server MAY support this optional filtering
           capability. It can safely ignore it if not supported.</t>
 
           <t>The following examples illustrate how a DOTS client retrieves
@@ -1330,8 +1333,8 @@
               (Section 2.4.1 of <xref target="RFC7049"></xref>). The CBOR
               encoding is modified so that the leading tag 1 (epoch-based
               date/time) MUST be omitted.<vspace blankLines="1" />This is a
-              mandatory attribute for mitigation requests that are immediately
-              activated.</t>
+              mandatory attribute except for a mitigation with 'status' code
+              set to 8.</t>
 
               <t hangText="lifetime:">The remaining lifetime of the mitigation
               request, in seconds.<vspace blankLines="1" />This is a mandatory
@@ -1386,11 +1389,11 @@
             <c>3</c>
 
             <c>Attack has stopped and the DOTS client can withdraw the
-            mitigation request. This code will be transmitted for immediate
-            mitigation requests till the mitigation is withdrawn or the
-            lifetime expires. For mitigation requests with pre-configured
-            scopes, this code will be transmitted few times and then
-            transition to "8".</c>
+            mitigation request. This status code will be transmitted for
+            immediate mitigation requests till the mitigation is withdrawn or
+            the lifetime expires. For mitigation requests with pre-configured
+            scopes (i.e., 'trigger-mitigation' set to 'false'), this status
+            code will be transmitted 4 times and then transition to "8".</c>
 
             <c>4</c>
 
@@ -1411,8 +1414,8 @@
 
             <c>8</c>
 
-            <c>When the DDoS signal channel session is lost, DDoS mitigation
-            will be triggered for the mitigation request.</c>
+            <c>Attack mitigation will be triggered for the mitigation request
+            only when the DOTS signal channel session is lost.</c>
           </texttable>
 
           <t>The Observe Option defined in <xref target="RFC7641"></xref>
@@ -1477,8 +1480,9 @@
           <t><xref target="Figure6"></xref> shows an example of a DOTS client
           requesting a DOTS server to send notifications related to a
           mitigation request. Note that for mitigations with pre-configured
-          socpes, the state will need to transition from 3 (attack-stopped) to
-          8 (attack-mitigation-signal-loss).</t>
+          scopes (i.e., 'trigger-mitigation' set to 'false'), the state will
+          need to transition from 3 (attack-stopped) to 8
+          (attack-mitigation-signal-loss).</t>
 
           <t><figure anchor="Figure6"
               title="Notifications of Attack Mitigation Status">
@@ -1706,9 +1710,9 @@
           <t>If a mitigation is triggered due to a signal channel loss, the
           DOTS server relies upon normal triggers to stop that mitigation
           (typically, receipt of a valid DELETE request, expiry of the
-          mitigation lifetime, or local traffic observation). In particular,
-          the DOTS server MUST NOT consider the signal channel recovery as a
-          trigger to stop the mitigation.</t>
+          mitigation lifetime, or observation of traffic to the attack
+          target). In particular, the DOTS server MUST NOT consider the signal
+          channel recovery as a trigger to stop the mitigation.</t>
         </section>
       </section>
 
@@ -2016,7 +2020,7 @@
               server, the 'mitigating-config' heartbeat-interval has to be
               smaller than the translator session timeout. It is recommended
               that the 'idle-config' heartbeat-interval is also smaller than
-              the translator session timeout to prevent translator transversal
+              the translator session timeout to prevent translator traversal
               issues, or set to '0'. Means to discover the lifetime assigned
               by a translator are out of scope.</t>
             </list></t>
@@ -2035,7 +2039,7 @@
           response from the same DOTS server.</t>
 
           <t>If the DOTS agent wishes to change the default values of message
-          transmission parameters, it should follow the guidance given in
+          transmission parameters, it SHOULD follow the guidance given in
           Section 4.8.1 of <xref target="RFC7252"></xref>. The DOTS agents
           MUST use the negotiated values for message transmission parameters
           and default values for non-negotiated message transmission
@@ -2185,7 +2189,8 @@
               <t>If the DOTS server does not find the 'sid' parameter value
               conveyed in the PUT request in its configuration data and if the
               DOTS server has accepted the configuration parameters, then a
-              response code 2.01 (Created) is returned in the response.</t>
+              response code 2.01 (Created) MUST be returned in the
+              response.</t>
 
               <t>If the DOTS server finds the 'sid' parameter value conveyed
               in the PUT request in its configuration data and if the DOTS
@@ -2271,7 +2276,7 @@
           client's request to remove the DOTS signal channel session
           configuration using 2.02 (Deleted) response code.</t>
 
-          <t>Upon bootsrapping or reboot, a DOTS client MAY send a DELETE
+          <t>Upon bootstrapping or reboot, a DOTS client MAY send a DELETE
           request to set the configuration parameters to default values. Such
           a request does not include any 'sid'.</t>
         </section>
@@ -2366,9 +2371,10 @@
         addresses conveyed in the 3.00 response help the DOTS client skip DNS
         lookup of the alternate DOTS server. The DOTS client can then try to
         establish a UDP or a TCP session with the alternate DOTS server. The
-        DOTS client SHOULD implement a DNS64 function to handle the scenario
-        where an IPv6-only DOTS client communicates with an IPv4-only
-        alternate DOTS server.</t>
+        DOTS client MAY implement a method to construct IPv4-embedded IPv6
+        addresses <xref target="RFC6052"></xref>; this is required to handle
+        the scenario where an IPv6-only DOTS client communicates with an
+        IPv4-only alternate DOTS server.</t>
 
         <t>If the DOTS client has been redirected to a DOTS server to which it
         has already communicated with within the last five (5) minutes, it
@@ -2449,8 +2455,8 @@
 
     <section anchor="YANG" title="DOTS Signal Channel YANG Module">
       <t>This document defines a YANG <xref target="RFC7950"></xref> module
-      for mitigation scope and DOTS signal channel session configuration
-      data.</t>
+      for DOTS mitigation scope, DOTS signal channel session configuration
+      data, and DOTS redirected signalling.</t>
 
       <t>This YANG module defines the DOTS client interaction with the DOTS
       server as seen by the DOTS client. A DOTS server is allowed to update
@@ -2801,9 +2807,9 @@ module ietf-dots-signal-channel {
           enum "attack-mitigation-signal-loss" {
             value 8;
             description
-              "When the DDoS signal channel session is 
-               lost, DDoS mitigation will be triggered
-               for the mitigation request.";
+              "Attack mitigation will be triggered 
+               for the mitigation request only when
+               the DOTS signal channel session is lost.";
           }
         }
         config false;
@@ -3771,6 +3777,15 @@ module ietf-dots-signal-channel {
       DOTS server. The exact mechanism for the DOTS servers to validate that
       the target prefixes are within the scope of the DOTS client's domain is
       deployment-specific.</t>
+
+      <t>The presence of DOTS gateways may lead to infinite forwarding loops,
+      which is undesirable. To prevent and detect such loops, this document
+      specifies the 'hop-limit' option (<xref target="post"></xref>). </t>
+
+      <t>CoAP-specific security considerations are discussed in Section 11 of
+      <xref target="RFC7252"></xref>, while CBOR-related security
+      considerations are discussed in Section 8 of <xref
+      target="RFC7049"></xref>.</t>
     </section>
 
     <section anchor="contr" title="Contributors">
@@ -3793,9 +3808,6 @@ module ietf-dots-signal-channel {
       Michael Richardson, Ehud Doron, Kaname Nishizuka, Dave Dolson, Liang
       Xia, Gilbert Clark, and Nesredien Suleiman for the discussion and
       comments.</t>
-
-      <t>Special thanks to Jon Shallow for the careful reviews and inputs that
-      enhanced this specification.</t>
     </section>
   </middle>
 
@@ -3838,6 +3850,8 @@ module ietf-dots-signal-channel {
 
     <references title="Informative References">
       <?rfc include="reference.RFC.4732"?>
+
+      <?rfc include='reference.RFC.6052'?>
 
       <?rfc include='reference.RFC.7452'?>
 
