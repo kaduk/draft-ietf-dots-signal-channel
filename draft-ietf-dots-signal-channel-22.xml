@@ -134,6 +134,20 @@
 
     <keyword>cooperation</keyword>
 
+    <keyword>Resilience</keyword>
+
+    <keyword>Filtering</keyword>
+
+    <keyword>Security Center</keyword>
+
+    <keyword>Mitigator</keyword>
+
+    <keyword>Scrubbing</keyword>
+
+    <keyword>dynamic service protection</keyword>
+
+    <keyword>dynamic mitigation</keyword>
+
     <abstract>
       <t>This document specifies the DOTS signal channel, a protocol for
       signaling the need for protection against Distributed Denial-of-Service
@@ -245,7 +259,7 @@
 
       <t>The DOTS server may (not) be co-located with the DOTS mitigator. In
       typical deployments, the DOTS server belongs to the same administrative
-      domain as the mitigator. </t>
+      domain as the mitigator.</t>
 
       <t>The document adheres to the DOTS architecture <xref
       target="I-D.ietf-dots-architecture"></xref>. The requirements for DOTS
@@ -2228,12 +2242,14 @@
           associating an infinite lifetime with the configuration.</t>
 
           <t>If a non-zero value of Max-Age Option is received by a DOTS
-          client, it MUST issue a GET request to refresh the configuration
-          parameters for the signal channel before the expiry of the value
-          enclosed in the Max-Age option. When a DDoS attack is active,
-          refresh requests MUST NOT be sent by DOTS clients and the DOTS
-          server MUST NOT terminate the (D)TLS session after the expiry of the
-          value returned in Max-Age Option.</t>
+          client, it MUST issue a GET request with 'sid' Uri-Path parameter to
+          retrieve the current and acceptable configuration before the expiry
+          of the value enclosed in the Max-Age option. This request is
+          considered by the client and the server as a means to refresh the
+          configuration parameters for the signal channel. When a DDoS attack
+          is active, refresh requests MUST NOT be sent by DOTS clients and the
+          DOTS server MUST NOT terminate the (D)TLS session after the expiry
+          of the value returned in Max-Age Option.</t>
 
           <t>If Max-Age Option is not returned in a response, the DOTS client
           initiates GET requests to refresh the configuration parameters each
@@ -3780,7 +3796,7 @@ module ietf-dots-signal-channel {
 
       <t>The presence of DOTS gateways may lead to infinite forwarding loops,
       which is undesirable. To prevent and detect such loops, this document
-      specifies the 'hop-limit' option (<xref target="post"></xref>). </t>
+      specifies the 'hop-limit' option (<xref target="post"></xref>).</t>
 
       <t>CoAP-specific security considerations are discussed in Section 11 of
       <xref target="RFC7252"></xref>, while CBOR-related security
