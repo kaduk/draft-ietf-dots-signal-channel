@@ -1205,10 +1205,9 @@
           <t hangText="conflict-information:">As an active attack evolves,
           DOTS clients can adjust the scope of requested mitigation as
           necessary, by refining the scope of resources requiring mitigation.
-          This can be achieved, for example, by (1) sending a PUT request with
-          a new 'mid' value that will override the existing one with
-          overlapping mitigation scopes or (2) by re-using the same 'mid' with
-          updated mitigation scopes.</t>
+          This can be achieved by sending a PUT request with a new 'mid' value
+          that will override the existing one with overlapping mitigation
+          scopes.</t>
 
           <t hangText="conflict-information:">For a mitigation request to
           continue beyond the initial negotiated lifetime, the DOTS client has
@@ -1441,16 +1440,25 @@
           GET request to receive unsolicited notifications of attack
           mitigation status from the DOTS server.</t>
 
-          <t>Unidirectional notifications within the bidirectional signal
-          channel allows unsolicited message delivery, enabling asynchronous
-          notifications between the agents. Due to the higher likelihood of
-          packet loss during a DDoS attack, the DOTS server periodically sends
-          attack mitigation status to the DOTS client and also notifies the
-          DOTS client whenever the status of the attack mitigation changes. If
-          the DOTS server cannot maintain an RTT estimate, it SHOULD NOT send
-          more than one unsolicited notification every 3 seconds, and SHOULD
-          use an even less aggressive rate whenever possible (case 2 in
-          Section 3.1.3 of <xref target="RFC8085"></xref>).</t>
+          <t>Unidirectional mitigation notifications within the bidirectional
+          signal channel allows unsolicited message delivery, enabling
+          asynchronous notifications between the agents. <xref
+          target="RFC7641"></xref> indicates that (1) a notification can be
+          sent in a confirmable or a non-confirmable message, and (2) the
+          message type used is typically application dependent and may be
+          determined by the server for each notification individually. For
+          DOTS server application, the message type MUST always be set to
+          non-confirmable even if the underlying COAP library elects a
+          notification to be sent in a confirmable message.</t>
+
+          <t>Due to the higher likelihood of packet loss during a DDoS attack,
+          the DOTS server periodically sends attack mitigation status to the
+          DOTS client and also notifies the DOTS client whenever the status of
+          the attack mitigation changes. If the DOTS server cannot maintain an
+          RTT estimate, it SHOULD NOT send more than one unsolicited
+          notification every 3 seconds, and SHOULD use an even less aggressive
+          rate whenever possible (case 2 in Section 3.1.3 of <xref
+          target="RFC8085"></xref>).</t>
 
           <t><!--The DOTS server MUST use the same CUID as the one used by the DOTS client to observe a mitigation request.-->When
           conflicting requests are detected, the DOTS server enforces the
