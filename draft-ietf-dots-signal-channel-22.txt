@@ -1573,8 +1573,9 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
       [RFC7049]).  The CBOR encoding is modified so that the leading tag
       1 (epoch-based date/time) MUST be omitted.
 
-      This is a mandatory attribute except for a mitigation with
-      'status' code set to 8.
+      This is a mandatory attribute when an attack mitigation is
+      triggered.  Particularly, 'mitigation-start' is not returned for a
+      mitigation with 'status' code set to 8.
 
    lifetime:  The remaining lifetime of the mitigation request, in
       seconds.
@@ -1610,7 +1611,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
       This SHOULD be a five-minute average.
 
       This is an optional attribute.
-
 
 
 

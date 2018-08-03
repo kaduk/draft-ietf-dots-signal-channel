@@ -1346,8 +1346,9 @@
               (Section 2.4.1 of <xref target="RFC7049"></xref>). The CBOR
               encoding is modified so that the leading tag 1 (epoch-based
               date/time) MUST be omitted.<vspace blankLines="1" />This is a
-              mandatory attribute except for a mitigation with 'status' code
-              set to 8.</t>
+              mandatory attribute when an attack mitigation is triggered.
+              Particularly, 'mitigation-start' is not returned for a
+              mitigation with 'status' code set to 8.</t>
 
               <t hangText="lifetime:">The remaining lifetime of the mitigation
               request, in seconds.<vspace blankLines="1" />This is a mandatory
