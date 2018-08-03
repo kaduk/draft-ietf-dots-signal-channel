@@ -1078,15 +1078,16 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
    The relative order of two mitigation requests from a DOTS client is
    determined by comparing their respective 'mid' values.  If two
-   mitigation requests have overlapping mitigation scopes, the
-   mitigation request with the highest numeric 'mid' value will override
-   the other mitigation request.  Two mitigation requests from a DOTS
-   client are overlapping if there is a common IP address, IP prefix,
-   FQDN, URI, or alias-name.  To avoid maintaining a long list of
-   overlapping mitigation requests from a DOTS client and avoid error-
-   prone provisioning of mitigation requests from a DOTS client, the
-   overlapped lower numeric 'mid' MUST be automatically deleted and no
-   longer available at the DOTS server.
+   mitigation requests with the same 'trigger-mitigation' type have
+   overlapping mitigation scopes, the mitigation request with the
+   highest numeric 'mid' value will override the other mitigation
+   request.  Two mitigation requests from a DOTS client are overlapping
+   if there is a common IP address, IP prefix, FQDN, URI, or alias-name
+   and the same 'trigger-mitigation' type.  To avoid maintaining a long
+   list of overlapping mitigation requests from a DOTS client and avoid
+   error-prone provisioning of mitigation requests from a DOTS client,
+   the overlapped lower numeric 'mid' MUST be automatically deleted and
+   no longer available at the DOTS server.
 
    Figure 7 shows a PUT request example to signal that ports 80, 8080,
    and 443 used by 2001:db8:6401::1 and 2001:db8:6401::2 servers are
@@ -1094,7 +1095,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    of 'cdid' indicates that a server-domain DOTS gateway has modified
    the initial PUT request sent by the DOTS client.  Note that 'cdid'
    MUST NOT appear in the PUT request message body.
-
 
 
 

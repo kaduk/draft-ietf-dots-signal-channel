@@ -956,12 +956,13 @@
 
           <t>The relative order of two mitigation requests from a DOTS client
           is determined by comparing their respective 'mid' values. If two
-          mitigation requests have overlapping mitigation scopes, the
-          mitigation request with the highest numeric 'mid' value will
-          override the other mitigation request. Two mitigation requests from
-          a DOTS client are overlapping if there is a common IP address, IP
-          prefix, FQDN, URI, or alias-name. To avoid maintaining a long list
-          of overlapping mitigation requests from a DOTS client and avoid
+          mitigation requests with the same 'trigger-mitigation' type have
+          overlapping mitigation scopes, the mitigation request with the
+          highest numeric 'mid' value will override the other mitigation
+          request. Two mitigation requests from a DOTS client are overlapping
+          if there is a common IP address, IP prefix, FQDN, URI, or alias-name
+          and the same 'trigger-mitigation' type. To avoid maintaining a long
+          list of overlapping mitigation requests from a DOTS client and avoid
           error-prone provisioning of mitigation requests from a DOTS client,
           the overlapped lower numeric 'mid' MUST be automatically deleted and
           no longer available at the DOTS server.</t>
