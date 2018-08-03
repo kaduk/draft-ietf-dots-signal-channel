@@ -954,18 +954,28 @@
           <t>Attributes and Uri-Path parameters with empty values MUST NOT be
           present in a request.</t>
 
-          <t>The relative order of two mitigation requests from a DOTS client
-          is determined by comparing their respective 'mid' values. If two
-          mitigation requests with the same 'trigger-mitigation' type have
-          overlapping mitigation scopes, the mitigation request with the
-          highest numeric 'mid' value will override the other mitigation
-          request. Two mitigation requests from a DOTS client are overlapping
-          if there is a common IP address, IP prefix, FQDN, URI, or alias-name
-          and the same 'trigger-mitigation' type. To avoid maintaining a long
-          list of overlapping mitigation requests from a DOTS client and avoid
-          error-prone provisioning of mitigation requests from a DOTS client,
-          the overlapped lower numeric 'mid' MUST be automatically deleted and
-          no longer available at the DOTS server.</t>
+          <t>The relative order of two mitigation requests, having the same
+          'trigger-mitigation' type, from a DOTS client is determined by
+          comparing their respective 'mid' values. If two mitigation requests
+          with the same 'trigger-mitigation' type have overlapping mitigation
+          scopes, the mitigation request with the highest numeric 'mid' value
+          will override the other mitigation request. Two mitigation requests
+          from a DOTS client have overlapping scopes if there is a common IP
+          address, IP prefix, FQDN, URI, or alias-name. To avoid maintaining a
+          long list of overlapping mitigation requests (i.e., requests with
+          the same 'trigger-mitigation' type and overlapping scopes) from a
+          DOTS client and avoid error-prone provisioning of mitigation
+          requests from a DOTS client, the overlapped lower numeric 'mid' MUST
+          be automatically deleted and no longer available at the DOTS server.
+          If the DOTS server receives a mitigation request which overlaps with
+          an active mitigation request, but both having distinct
+          'trigger-mitigation' types, the DOTS server SHOULD deactivate the
+          mitigation request with 'trigger-mitigation' set to false.
+          Particularly, if the mitigation request with 'trigger-mitigation'
+          set to false was active, the DOTS server withdraws the mitigation
+          request (i.e., status code is set to '7' as defined in <xref
+          target="status"></xref>) and transitions the status of the
+          mitigation request to '8'.</t>
 
           <t><xref target="Figure2"></xref> shows a PUT request example to
           signal that ports 80, 8080, and 443 used by 2001:db8:6401::1 and
