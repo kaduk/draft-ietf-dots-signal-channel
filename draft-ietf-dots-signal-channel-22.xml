@@ -1570,7 +1570,8 @@
           <t>While DDoS mitigation is in progress, due to the likelihood of
           packet loss, a DOTS client MAY periodically transmit DOTS mitigation
           efficacy updates to the relevant DOTS server. A PUT request is used
-          to convey the mitigation efficacy update to the DOTS server.</t>
+          to convey the mitigation efficacy update to the DOTS server. This
+          PUT request is treated as a refresh of the current mitigation.</t>
 
           <t>The PUT request used for efficacy update MUST include all the
           parameters used in the PUT request to carry the DOTS mitigation
