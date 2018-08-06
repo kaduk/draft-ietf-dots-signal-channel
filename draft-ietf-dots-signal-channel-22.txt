@@ -1472,16 +1472,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    domain DOTS gateways specified in Section 4.4.1 MUST be followed for
    GET requests.
 
-   If the DOTS server does not find the 'mid' Uri-Path value conveyed in
-   the GET request in its configuration data for the requesting DOTS
-   client, it MUST respond with a 4.04 (Not Found) error response code.
-   Likewise, the same error MUST be returned as a response to a request
-   to retrieve all mitigation records (i.e., 'mid' Uri-Path is not
-   defined) of a given DOTS client if the DOTS server does not find any
-   mitigation record for that DOTS client.  As a reminder, a DOTS client
-   is identified by its identity (e.g., client certificate, 'cuid') and
-   optionally the 'cdid'.
-
    The 'c' (content) parameter and its permitted values defined in
    [I-D.ietf-core-comi] can be used to retrieve non-configuration data
    (attack mitigation status), configuration data, or both.  The DOTS
@@ -1503,6 +1493,16 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    These two examples assume the default of "c=a"; that is, the DOTS
    client asks for all data to be reported by the DOTS server.
 
+     Header: GET (Code=0.01)
+     Uri-Host: "host"
+     Uri-Path: ".well-known"
+     Uri-Path: "dots"
+     Uri-Path: "v1"
+     Uri-Path: "mitigate"
+     Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
+     Observe: 0
+
+          Figure 10: GET to Retrieve all DOTS Mitigation Requests
 
 
 
@@ -1521,26 +1521,26 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
      Uri-Path: "v1"
      Uri-Path: "mitigate"
      Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
-     Observe: 0
-
-          Figure 10: GET to Retrieve all DOTS Mitigation Requests
-
-     Header: GET (Code=0.01)
-     Uri-Host: "host"
-     Uri-Path: ".well-known"
-     Uri-Path: "dots"
-     Uri-Path: "v1"
-     Uri-Path: "mitigate"
-     Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
      Uri-Path: "mid=12332"
      Observe: 0
 
        Figure 11: GET to Retrieve a Specific DOTS Mitigation Request
 
+   If the DOTS server does not find the 'mid' Uri-Path value conveyed in
+   the GET request in its configuration data for the requesting DOTS
+   client, it MUST respond with a 4.04 (Not Found) error response code.
+   Likewise, the same error MUST be returned as a response to a request
+   to retrieve all mitigation records (i.e., 'mid' Uri-Path is not
+   defined) of a given DOTS client if the DOTS server does not find any
+   mitigation record for that DOTS client.  As a reminder, a DOTS client
+   is identified by its identity (e.g., client certificate, 'cuid') and
+   optionally the 'cdid'.
+
    Figure 12 shows a response example of all active mitigation requests
    associated with the DOTS client as maintained by the DOTS server.
    The response indicates the mitigation status of each mitigation
    request.
+
 
 
 

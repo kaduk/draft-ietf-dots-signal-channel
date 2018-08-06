@@ -1285,16 +1285,6 @@
           server-domain DOTS gateways specified in <xref target="post"></xref>
           MUST be followed for GET requests.</t>
 
-          <t>If the DOTS server does not find the 'mid' Uri-Path value
-          conveyed in the GET request in its configuration data for the
-          requesting DOTS client, it MUST respond with a 4.04 (Not Found)
-          error response code. Likewise, the same error MUST be returned as a
-          response to a request to retrieve all mitigation records (i.e.,
-          'mid' Uri-Path is not defined) of a given DOTS client if the DOTS
-          server does not find any mitigation record for that DOTS client. As
-          a reminder, a DOTS client is identified by its identity (e.g.,
-          client certificate, 'cuid') and optionally the 'cdid'.</t>
-
           <t>The 'c' (content) parameter and its permitted values defined in
           <xref target="I-D.ietf-core-comi"></xref> can be used to retrieve
           non-configuration data (attack mitigation status), configuration
@@ -1342,6 +1332,16 @@
   Observe: 0
 ]]></artwork>
             </figure></t>
+
+          <t>If the DOTS server does not find the 'mid' Uri-Path value
+          conveyed in the GET request in its configuration data for the
+          requesting DOTS client, it MUST respond with a 4.04 (Not Found)
+          error response code. Likewise, the same error MUST be returned as a
+          response to a request to retrieve all mitigation records (i.e.,
+          'mid' Uri-Path is not defined) of a given DOTS client if the DOTS
+          server does not find any mitigation record for that DOTS client. As
+          a reminder, a DOTS client is identified by its identity (e.g.,
+          client certificate, 'cuid') and optionally the 'cdid'.</t>
 
           <t><xref target="Figure5"></xref> shows a response example of all
           active mitigation requests associated with the DOTS client as
