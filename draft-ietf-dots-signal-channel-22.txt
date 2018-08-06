@@ -733,7 +733,7 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
       In order to handle out-of-order delivery of mitigation requests,
       'mid' values MUST increase monotonically.
 
-      If the 'mid' value has reached 3/4 of (2**31 - 1) (i.e.,
+      If the 'mid' value has reached 3/4 of (2**32 - 1) (i.e.,
       3221225471) and it is peace-time, the DOTS client MUST reset 'mid'
       to 0 to handle 'mid' rollover.  If the DOTS client maintains
       mitigation requests with pre-configured scopes, it MUST re-create
