@@ -1477,7 +1477,11 @@
 
             <c>7</c>
 
-            <c>Attack mitigation is withdrawn.</c>
+            <c>Attack mitigation is withdrawn. If a mitigation request with
+            'trigger-mitigation' set to false is withdrawn because it overlaps
+            with an immediate mitigation request, this status code will be
+            transmitted 4 times and then transition to "8" for the mitigation
+            request with pre-configured scopes.</c>
 
             <c>8</c>
 

@@ -1711,7 +1711,12 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    +-----------+-------------------------------------------------------+
    |         6 | Attack mitigation is now terminated.                  |
    +-----------+-------------------------------------------------------+
-   |         7 | Attack mitigation is withdrawn.                       |
+   |         7 | Attack mitigation is withdrawn. If a mitigation       |
+   |           | request with 'trigger-mitigation' set to false is     |
+   |           | withdrawn because it overlaps with an immediate       |
+   |           | mitigation request, this status code will be          |
+   |           | transmitted 4 times and then transition to "8" for    |
+   |           | the mitigation request with pre-configured scopes.    |
    +-----------+-------------------------------------------------------+
    |         8 | Attack mitigation will be triggered for the           |
    |           | mitigation request only when the DOTS signal channel  |
@@ -1725,11 +1730,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    on a CoAP server: The client retrieves a representation of the
    resource and requests this representation be updated by the server as
    long as the client is interested in the resource.  DOTS
-   implementations MUST use the Observe Option for both 'mitigate' and
-   'config' (Section 4.2).
-
-
-
 
 
 
@@ -1737,6 +1737,9 @@ Reddy, et al.           Expires February 7, 2019               [Page 31]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
+
+   implementations MUST use the Observe Option for both 'mitigate' and
+   'config' (Section 4.2).
 
    A DOTS client conveys the Observe Option set to '0' in the GET
    request to receive unsolicited notifications of attack mitigation
@@ -1782,9 +1785,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
       sent to a DOTS client to indicate that this mitigation request is
       in progress, but a conflict is detected.
 
-   Upon receipt of a conflict notification message indicating that a
-   mitigation request is deactivated because of a conflict, a DOTS
-   client MUST NOT resend the same mitigation request before the expiry
 
 
 
@@ -1794,6 +1794,9 @@ Reddy, et al.           Expires February 7, 2019               [Page 32]
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
 
+   Upon receipt of a conflict notification message indicating that a
+   mitigation request is deactivated because of a conflict, a DOTS
+   client MUST NOT resend the same mitigation request before the expiry
    of 'retry-timer'.  It is also recommended that DOTS clients support
    means to alert administrators about mitigation conflicts.
 
@@ -1812,9 +1815,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    mitigations with pre-configured scopes (i.e., 'trigger-mitigation'
    set to 'false'), the state will need to transition from 3 (attack-
    stopped) to 8 (attack-mitigation-signal-loss).
-
-
-
 
 
 
