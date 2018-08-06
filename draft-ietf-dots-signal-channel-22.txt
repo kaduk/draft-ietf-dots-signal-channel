@@ -101,7 +101,7 @@ Table of Contents
      4.3.  Happy Eyeballs for DOTS Signal Channel  . . . . . . . . .   9
      4.4.  DOTS Mitigation Methods . . . . . . . . . . . . . . . . .  10
        4.4.1.  Request Mitigation  . . . . . . . . . . . . . . . . .  11
-       4.4.2.  Retrieve Information Related to a Mitigation  . . . .  26
+       4.4.2.  Retrieve Information Related to a Mitigation  . . . .  27
        4.4.3.  Efficacy Update from DOTS Clients . . . . . . . . . .  35
        4.4.4.  Withdraw a Mitigation . . . . . . . . . . . . . . . .  37
      4.5.  DOTS Signal Channel Session Configuration . . . . . . . .  38
@@ -1076,66 +1076,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    Attributes and Uri-Path parameters with empty values MUST NOT be
    present in a request.
 
-   The relative order of two mitigation requests, having the same
-   'trigger-mitigation' type, from a DOTS client is determined by
-   comparing their respective 'mid' values.  If two mitigation requests
-   with the same 'trigger-mitigation' type have overlapping mitigation
-   scopes, the mitigation request with the highest numeric 'mid' value
-   will override the other mitigation request.  Two mitigation requests
-   from a DOTS client have overlapping scopes if there is a common IP
-   address, IP prefix, FQDN, URI, or alias-name.  To avoid maintaining a
-   long list of overlapping mitigation requests (i.e., requests with the
-   same 'trigger-mitigation' type and overlapping scopes) from a DOTS
-   client and avoid error-prone provisioning of mitigation requests from
-   a DOTS client, the overlapped lower numeric 'mid' MUST be
-   automatically deleted and no longer available at the DOTS server.
-
-   For example, if the DOTS server receives a mitigation request which
-   overlaps with an existing mitigation with a higher numeric 'mid', the
-   DOTS server rejects the request by returning 4.09 (Conflict) to the
-   DOTS client.  The response includes enough information for a DOTS
-   client to recognize the source of the conflict as described below:
-
-   conflict-information:  Indicates that a mitigation request is
-      conflicting with another mitigation request.  This optional
-      attribute has the following structure:
-
-      conflict-cause:  Indicates the cause of the conflict.  The
-         following values are defined:
-
-         1:  Overlapping targets. 'conflict-scope' provides more details
-             about the conflicting target clauses.
-
-      conflict-scope:  Indicates the conflict scope.  It may include a
-         list of IP addresses, a list of prefixes, a list of port
-         numbers, a list of target protocols, a list of FQDNs, a list of
-         URIs, a list of alias-names, or a 'mid'.
-
-   If the DOTS server receives a mitigation request which overlaps with
-   an active mitigation request, but both having distinct 'trigger-
-   mitigation' types, the DOTS server MUST deactivate (absent explicit
-
-
-
-Reddy, et al.           Expires February 7, 2019               [Page 20]
-
-Internet-Draft        DOTS Signal Channel Protocol           August 2018
-
-
-   policy/configuration otherwise) the mitigation request with 'trigger-
-   mitigation' set to false.  Particularly, if the mitigation request
-   with 'trigger-mitigation' set to false is active, the DOTS server
-   withdraws the mitigation request (i.e., status code is set to '7' as
-   defined in Table 2) and transitions the status of the mitigation
-   request to '8'.
-
-   Upon DOTS signal channel session loss with a peer DOTS client, the
-   DOTS server MUST withdraw (absent explicit policy/configuration
-   otherwise) any active mitigation requests overlapping with mitigation
-   requests having 'trigger-mitigation' set to false from that DOTS
-   client.  Note that active-but-terminating period is not observed for
-   mitigations withdrawn at the initiative of the DOTS server.
-
    Figure 7 shows a PUT request example to signal that ports 80, 8080,
    and 443 used by 2001:db8:6401::1 and 2001:db8:6401::2 servers are
    under attack (illustrated in JSON diagnostic notation).  The presence
@@ -1173,7 +1113,11 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
 
 
-Reddy, et al.           Expires February 7, 2019               [Page 21]
+
+
+
+
+Reddy, et al.           Expires February 7, 2019               [Page 20]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
@@ -1229,7 +1173,7 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
 
 
-Reddy, et al.           Expires February 7, 2019               [Page 22]
+Reddy, et al.           Expires February 7, 2019               [Page 21]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
@@ -1285,7 +1229,7 @@ A1                                      # map(1)
 
 
 
-Reddy, et al.           Expires February 7, 2019               [Page 23]
+Reddy, et al.           Expires February 7, 2019               [Page 22]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
@@ -1341,7 +1285,7 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
 
 
-Reddy, et al.           Expires February 7, 2019               [Page 24]
+Reddy, et al.           Expires February 7, 2019               [Page 23]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
@@ -1350,6 +1294,67 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    PUT request in its configuration data bound to that DOTS client, it
    MAY update the mitigation request, and a 2.04 (Changed) response is
    returned to indicate a successful update of the mitigation request.
+
+   The relative order of two mitigation requests, having the same
+   'trigger-mitigation' type, from a DOTS client is determined by
+   comparing their respective 'mid' values.  If two mitigation requests
+   with the same 'trigger-mitigation' type have overlapping mitigation
+   scopes, the mitigation request with the highest numeric 'mid' value
+   will override the other mitigation request.  Two mitigation requests
+   from a DOTS client have overlapping scopes if there is a common IP
+   address, IP prefix, FQDN, URI, or alias-name.  To avoid maintaining a
+   long list of overlapping mitigation requests (i.e., requests with the
+   same 'trigger-mitigation' type and overlapping scopes) from a DOTS
+   client and avoid error-prone provisioning of mitigation requests from
+   a DOTS client, the overlapped lower numeric 'mid' MUST be
+   automatically deleted and no longer available at the DOTS server.
+
+   For example, if the DOTS server receives a mitigation request which
+   overlaps with an existing mitigation with a higher numeric 'mid', the
+   DOTS server rejects the request by returning 4.09 (Conflict) to the
+   DOTS client.  The response includes enough information for a DOTS
+   client to recognize the source of the conflict as described below:
+
+   conflict-information:  Indicates that a mitigation request is
+      conflicting with another mitigation request.  This optional
+      attribute has the following structure:
+
+      conflict-cause:  Indicates the cause of the conflict.  The
+         following values are defined:
+
+         1:  Overlapping targets. 'conflict-scope' provides more details
+             about the conflicting target clauses.
+
+      conflict-scope:  Indicates the conflict scope.  It may include a
+         list of IP addresses, a list of prefixes, a list of port
+         numbers, a list of target protocols, a list of FQDNs, a list of
+         URIs, a list of alias-names, or a 'mid'.
+
+   If the DOTS server receives a mitigation request which overlaps with
+   an active mitigation request, but both having distinct 'trigger-
+   mitigation' types, the DOTS server MUST deactivate (absent explicit
+   policy/configuration otherwise) the mitigation request with 'trigger-
+   mitigation' set to false.  Particularly, if the mitigation request
+   with 'trigger-mitigation' set to false is active, the DOTS server
+   withdraws the mitigation request (i.e., status code is set to '7' as
+
+
+
+
+Reddy, et al.           Expires February 7, 2019               [Page 24]
+
+Internet-Draft        DOTS Signal Channel Protocol           August 2018
+
+
+   defined in Table 2) and transitions the status of the mitigation
+   request to '8'.
+
+   Upon DOTS signal channel session loss with a peer DOTS client, the
+   DOTS server MUST withdraw (absent explicit policy/configuration
+   otherwise) any active mitigation requests overlapping with mitigation
+   requests having 'trigger-mitigation' set to false from that DOTS
+   client.  Note that active-but-terminating period is not observed for
+   mitigations withdrawn at the initiative of the DOTS server.
 
    If the request is conflicting with an existing mitigation request
    from a different DOTS client, the DOTS server may return 2.01
@@ -1388,12 +1393,7 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
          1:  Overlapping targets. 'conflict-scope' provides more details
              about the conflicting target clauses.
 
-         2:  Conflicts with an existing white list.  This code is
-             returned when the DDoS mitigation detects source addresses/
-             prefixes in the white-listed ACLs are attacking the target.
 
-         3:  CUID Collision.  This code is returned when a DOTS client
-             uses a 'cuid' that is already used by another DOTS client.
 
 
 
@@ -1402,6 +1402,12 @@ Reddy, et al.           Expires February 7, 2019               [Page 25]
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
 
+         2:  Conflicts with an existing white list.  This code is
+             returned when the DDoS mitigation detects source addresses/
+             prefixes in the white-listed ACLs are attacking the target.
+
+         3:  CUID Collision.  This code is returned when a DOTS client
+             uses a 'cuid' that is already used by another DOTS client.
              This code is an indication that the request has been
              rejected and a new request with a new 'cuid' is to be re-
              sent by the DOTS client.  Note that 'conflict-status',
@@ -1441,6 +1447,17 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    the original mitigation request apart from a possible change to the
    lifetime parameter value.
 
+
+
+
+
+
+
+Reddy, et al.           Expires February 7, 2019               [Page 26]
+
+Internet-Draft        DOTS Signal Channel Protocol           August 2018
+
+
 4.4.2.  Retrieve Information Related to a Mitigation
 
    A GET request is used by a DOTS client to retrieve information
@@ -1450,13 +1467,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
    Uri-Path parameters with empty values MUST NOT be present in a
    request.
-
-
-
-Reddy, et al.           Expires February 7, 2019               [Page 26]
-
-Internet-Draft        DOTS Signal Channel Protocol           August 2018
-
 
    The same considerations for manipulating 'cdid' parameter by server-
    domain DOTS gateways specified in Section 4.4.1 MUST be followed for
@@ -1493,16 +1503,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    These two examples assume the default of "c=a"; that is, the DOTS
    client asks for all data to be reported by the DOTS server.
 
-     Header: GET (Code=0.01)
-     Uri-Host: "host"
-     Uri-Path: ".well-known"
-     Uri-Path: "dots"
-     Uri-Path: "v1"
-     Uri-Path: "mitigate"
-     Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
-     Observe: 0
-
-          Figure 10: GET to Retrieve all DOTS Mitigation Requests
 
 
 
@@ -1521,6 +1521,17 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
      Uri-Path: "v1"
      Uri-Path: "mitigate"
      Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
+     Observe: 0
+
+          Figure 10: GET to Retrieve all DOTS Mitigation Requests
+
+     Header: GET (Code=0.01)
+     Uri-Host: "host"
+     Uri-Path: ".well-known"
+     Uri-Path: "dots"
+     Uri-Path: "v1"
+     Uri-Path: "mitigate"
+     Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
      Uri-Path: "mid=12332"
      Observe: 0
 
@@ -1530,17 +1541,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    associated with the DOTS client as maintained by the DOTS server.
    The response indicates the mitigation status of each mitigation
    request.
-
-
-
-
-
-
-
-
-
-
-
 
 
 

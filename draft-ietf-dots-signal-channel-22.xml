@@ -959,66 +959,6 @@
           <t>Attributes and Uri-Path parameters with empty values MUST NOT be
           present in a request.</t>
 
-          <t>The relative order of two mitigation requests, having the same
-          'trigger-mitigation' type, from a DOTS client is determined by
-          comparing their respective 'mid' values. If two mitigation requests
-          with the same 'trigger-mitigation' type have overlapping mitigation
-          scopes, the mitigation request with the highest numeric 'mid' value
-          will override the other mitigation request. Two mitigation requests
-          from a DOTS client have overlapping scopes if there is a common IP
-          address, IP prefix, FQDN, URI, or alias-name. To avoid maintaining a
-          long list of overlapping mitigation requests (i.e., requests with
-          the same 'trigger-mitigation' type and overlapping scopes) from a
-          DOTS client and avoid error-prone provisioning of mitigation
-          requests from a DOTS client, the overlapped lower numeric 'mid' MUST
-          be automatically deleted and no longer available at the DOTS server.
-          </t>
-
-          <t>For example, if the DOTS server receives a mitigation request
-          which overlaps with an existing mitigation with a higher numeric
-          'mid', the DOTS server rejects the request by returning 4.09
-          (Conflict) to the DOTS client. The response includes enough
-          information for a DOTS client to recognize the source of the
-          conflict as described below:</t>
-
-          <t hangText="status:"><list style="hanging">
-              <t hangText="conflict-information:">Indicates that a mitigation
-              request is conflicting with another mitigation request. This
-              optional attribute has the following structure: <list
-                  style="hanging">
-                  <t hangText="conflict-cause:">Indicates the cause of the
-                  conflict. The following values are defined:<list
-                      style="format %d:">
-                      <t>Overlapping targets. 'conflict-scope' provides more
-                      details about the conflicting target clauses.</t>
-                    </list></t>
-
-                  <t hangText="conflict-scope:">Indicates the conflict scope.
-                  It may include a list of IP addresses, a list of prefixes, a
-                  list of port numbers, a list of target protocols, a list of
-                  FQDNs, a list of URIs, a list of alias-names, or a
-                  'mid'.</t>
-                </list></t>
-            </list></t>
-
-          <t>If the DOTS server receives a mitigation request which overlaps
-          with an active mitigation request, but both having distinct
-          'trigger-mitigation' types, the DOTS server MUST deactivate (absent
-          explicit policy/configuration otherwise) the mitigation request with
-          'trigger-mitigation' set to false. Particularly, if the mitigation
-          request with 'trigger-mitigation' set to false is active, the DOTS
-          server withdraws the mitigation request (i.e., status code is set to
-          '7' as defined in <xref target="status"></xref>) and transitions the
-          status of the mitigation request to '8'.</t>
-
-          <t>Upon DOTS signal channel session loss with a peer DOTS client,
-          the DOTS server MUST withdraw (absent explicit policy/configuration
-          otherwise) any active mitigation requests overlapping with
-          mitigation requests having 'trigger-mitigation' set to false from
-          that DOTS client. Note that active-but-terminating period is not
-          observed for mitigations withdrawn at the initiative of the DOTS
-          server. </t>
-
           <t><xref target="Figure2"></xref> shows a PUT request example to
           signal that ports 80, 8080, and 443 used by 2001:db8:6401::1 and
           2001:db8:6401::2 servers are under attack (illustrated in JSON
@@ -1177,6 +1117,66 @@
           it MAY update the mitigation request, and a 2.04 (Changed) response
           is returned to indicate a successful update of the mitigation
           request.</t>
+
+          <t>The relative order of two mitigation requests, having the same
+          'trigger-mitigation' type, from a DOTS client is determined by
+          comparing their respective 'mid' values. If two mitigation requests
+          with the same 'trigger-mitigation' type have overlapping mitigation
+          scopes, the mitigation request with the highest numeric 'mid' value
+          will override the other mitigation request. Two mitigation requests
+          from a DOTS client have overlapping scopes if there is a common IP
+          address, IP prefix, FQDN, URI, or alias-name. To avoid maintaining a
+          long list of overlapping mitigation requests (i.e., requests with
+          the same 'trigger-mitigation' type and overlapping scopes) from a
+          DOTS client and avoid error-prone provisioning of mitigation
+          requests from a DOTS client, the overlapped lower numeric 'mid' MUST
+          be automatically deleted and no longer available at the DOTS
+          server.</t>
+
+          <t>For example, if the DOTS server receives a mitigation request
+          which overlaps with an existing mitigation with a higher numeric
+          'mid', the DOTS server rejects the request by returning 4.09
+          (Conflict) to the DOTS client. The response includes enough
+          information for a DOTS client to recognize the source of the
+          conflict as described below:</t>
+
+          <t hangText="status:"><list style="hanging">
+              <t hangText="conflict-information:">Indicates that a mitigation
+              request is conflicting with another mitigation request. This
+              optional attribute has the following structure: <list
+                  style="hanging">
+                  <t hangText="conflict-cause:">Indicates the cause of the
+                  conflict. The following values are defined:<list
+                      style="format %d:">
+                      <t>Overlapping targets. 'conflict-scope' provides more
+                      details about the conflicting target clauses.</t>
+                    </list></t>
+
+                  <t hangText="conflict-scope:">Indicates the conflict scope.
+                  It may include a list of IP addresses, a list of prefixes, a
+                  list of port numbers, a list of target protocols, a list of
+                  FQDNs, a list of URIs, a list of alias-names, or a
+                  'mid'.</t>
+                </list></t>
+            </list></t>
+
+          <t>If the DOTS server receives a mitigation request which overlaps
+          with an active mitigation request, but both having distinct
+          'trigger-mitigation' types, the DOTS server MUST deactivate (absent
+          explicit policy/configuration otherwise) the mitigation request with
+          'trigger-mitigation' set to false. Particularly, if the mitigation
+          request with 'trigger-mitigation' set to false is active, the DOTS
+          server withdraws the mitigation request (i.e., status code is set to
+          '7' as defined in <xref target="status"></xref>) and transitions the
+          status of the mitigation request to '8'.</t>
+
+          <t>Upon DOTS signal channel session loss with a peer DOTS client,
+          the DOTS server MUST withdraw (absent explicit policy/configuration
+          otherwise) any active mitigation requests overlapping with
+          mitigation requests having 'trigger-mitigation' set to false from
+          that DOTS client. Note that active-but-terminating period is not
+          observed for mitigations withdrawn at the initiative of the DOTS
+          server.</t>
 
           <t>If the request is conflicting with an existing mitigation request
           from a different DOTS client, the DOTS server may return 2.01
