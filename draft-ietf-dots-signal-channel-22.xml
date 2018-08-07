@@ -2,7 +2,7 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 <?rfc toc="yes"?>
 <?rfc tocompact="yes"?>
-<?rfc tocdepth="3"?>
+<?rfc tocdepth="4"?>
 <?rfc tocindent="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
@@ -1176,7 +1176,17 @@
           mitigation requests having 'trigger-mitigation' set to false from
           that DOTS client. Note that active-but-terminating period is not
           observed for mitigations withdrawn at the initiative of the DOTS
-          server.</t>
+          server. </t>
+
+          <t>DOTS clients may adopt various strategies for setting the scopes
+          of immediate and pre-configured mitigation requests to avoid
+          potential conflicts. For example, a DOTS client may tweak
+          pre-configured scopes so that the scope of any overlapping immediate
+          mitigation request will be a subset of the pre-configured scopes.
+          Also, if an immediate mitigation request overlaps with any of the
+          pre-configured scopes, the DOTS client sets the scope of the
+          overlapping immediate mitigation request to be a subset of the
+          pre-configured scopes.</t>
 
           <t>If the request is conflicting with an existing mitigation request
           from a different DOTS client, the DOTS server may return 2.01
@@ -1489,87 +1499,93 @@
             only when the DOTS signal channel session is lost.</c>
           </texttable>
 
-          <t>The Observe Option defined in <xref target="RFC7641"></xref>
-          extends the CoAP core protocol with a mechanism for a CoAP client to
-          "observe" a resource on a CoAP server: The client retrieves a
-          representation of the resource and requests this representation be
-          updated by the server as long as the client is interested in the
-          resource. DOTS implementations MUST use the Observe Option for both
-          'mitigate' and 'config' (<xref target="uri-path"></xref>).</t>
+          <t></t>
 
-          <t>A DOTS client conveys the Observe Option set to '0' in the GET
-          request to receive unsolicited notifications of attack mitigation
-          status from the DOTS server.</t>
+          <section title="DOTS Servers Sending Mitigation Status">
+            <t>The Observe Option defined in <xref target="RFC7641"></xref>
+            extends the CoAP core protocol with a mechanism for a CoAP client
+            to "observe" a resource on a CoAP server: The client retrieves a
+            representation of the resource and requests this representation be
+            updated by the server as long as the client is interested in the
+            resource. DOTS implementations MUST use the Observe Option for
+            both 'mitigate' and 'config' (<xref
+            target="uri-path"></xref>).</t>
 
-          <t>Unidirectional mitigation notifications within the bidirectional
-          signal channel allows unsolicited message delivery, enabling
-          asynchronous notifications between the agents. <xref
-          target="RFC7641"></xref> indicates that (1) a notification can be
-          sent in a confirmable or a non-confirmable message, and (2) the
-          message type used is typically application dependent and may be
-          determined by the server for each notification individually. For
-          DOTS server application, the message type MUST always be set to
-          non-confirmable even if the underlying COAP library elects a
-          notification to be sent in a confirmable message.</t>
+            <t>A DOTS client conveys the Observe Option set to '0' in the GET
+            request to receive unsolicited notifications of attack mitigation
+            status from the DOTS server.</t>
 
-          <t>Due to the higher likelihood of packet loss during a DDoS attack,
-          the DOTS server periodically sends attack mitigation status to the
-          DOTS client and also notifies the DOTS client whenever the status of
-          the attack mitigation changes. If the DOTS server cannot maintain an
-          RTT estimate, it SHOULD NOT send more than one unsolicited
-          notification every 3 seconds, and SHOULD use an even less aggressive
-          rate whenever possible (case 2 in Section 3.1.3 of <xref
-          target="RFC8085"></xref>).</t>
+            <t>Unidirectional mitigation notifications within the
+            bidirectional signal channel allows unsolicited message delivery,
+            enabling asynchronous notifications between the agents. <xref
+            target="RFC7641"></xref> indicates that (1) a notification can be
+            sent in a confirmable or a non-confirmable message, and (2) the
+            message type used is typically application dependent and may be
+            determined by the server for each notification individually. For
+            DOTS server application, the message type MUST always be set to
+            non-confirmable even if the underlying COAP library elects a
+            notification to be sent in a confirmable message.</t>
 
-          <t><!--The DOTS server MUST use the same CUID as the one used by the DOTS client to observe a mitigation request.-->When
-          conflicting requests are detected, the DOTS server enforces the
-          corresponding policy (e.g., accept all requests, reject all
-          requests, accept only one request but reject all the others, ...).
-          It is assumed that this policy is supplied by the DOTS server
-          administrator or it is a default behavior of the DOTS server
-          implementation. Then, the DOTS server sends notification message(s)
-          to the DOTS client(s) at the origin of the conflict (refer to the
-          conflict parameters defined in <xref target="post"></xref>). A
-          conflict notification message includes information about the
-          conflict cause, scope, and the status of the mitigation request(s).
-          For example,<list style="symbols">
-              <t>A notification message with 'status' code set to '7 (Attack
-              mitigation is withdrawn)' and 'conflict-status' set to '1' is
-              sent to a DOTS client to indicate that an active mitigation
-              request is deactivated because a conflict is detected.</t>
+            <t>Due to the higher likelihood of packet loss during a DDoS
+            attack, the DOTS server periodically sends attack mitigation
+            status to the DOTS client and also notifies the DOTS client
+            whenever the status of the attack mitigation changes. If the DOTS
+            server cannot maintain an RTT estimate, it SHOULD NOT send more
+            than one unsolicited notification every 3 seconds, and SHOULD use
+            an even less aggressive rate whenever possible (case 2 in Section
+            3.1.3 of <xref target="RFC8085"></xref>).</t>
 
-              <t>A notification message with 'status' code set to '1 (Attack
-              mitigation is in progress)' and 'conflict-status' set to '2' is
-              sent to a DOTS client to indicate that this mitigation request
-              is in progress, but a conflict is detected.</t>
-            </list></t>
+            <t><!--The DOTS server MUST use the same CUID as the one used by the DOTS client to observe a mitigation request.-->When
+            conflicting requests are detected, the DOTS server enforces the
+            corresponding policy (e.g., accept all requests, reject all
+            requests, accept only one request but reject all the others, ...).
+            It is assumed that this policy is supplied by the DOTS server
+            administrator or it is a default behavior of the DOTS server
+            implementation. Then, the DOTS server sends notification
+            message(s) to the DOTS client(s) at the origin of the conflict
+            (refer to the conflict parameters defined in <xref
+            target="post"></xref>). A conflict notification message includes
+            information about the conflict cause, scope, and the status of the
+            mitigation request(s). For example,<list style="symbols">
+                <t>A notification message with 'status' code set to '7 (Attack
+                mitigation is withdrawn)' and 'conflict-status' set to '1' is
+                sent to a DOTS client to indicate that an active mitigation
+                request is deactivated because a conflict is detected.</t>
 
-          <t>Upon receipt of a conflict notification message indicating that a
-          mitigation request is deactivated because of a conflict, a DOTS
-          client MUST NOT resend the same mitigation request before the expiry
-          of 'retry-timer'. It is also recommended that DOTS clients support
-          means to alert administrators about mitigation conflicts.</t>
+                <t>A notification message with 'status' code set to '1 (Attack
+                mitigation is in progress)' and 'conflict-status' set to '2'
+                is sent to a DOTS client to indicate that this mitigation
+                request is in progress, but a conflict is detected.</t>
+              </list></t>
 
-          <t>A DOTS client that is no longer interested in receiving
-          notifications from the DOTS server can simply "forget" the
-          observation. When the DOTS server sends the next notification, the
-          DOTS client will not recognize the token in the message and thus
-          will return a Reset message. This causes the DOTS server to remove
-          the associated entry. Alternatively, the DOTS client can explicitly
-          deregister itself by issuing a GET request that has the Token field
-          set to the token of the observation to be cancelled and includes an
-          Observe Option with the value set to '1' (deregister).</t>
+            <t>Upon receipt of a conflict notification message indicating that
+            a mitigation request is deactivated because of a conflict, a DOTS
+            client MUST NOT resend the same mitigation request before the
+            expiry of 'retry-timer'. It is also recommended that DOTS clients
+            support means to alert administrators about mitigation
+            conflicts.</t>
 
-          <t><xref target="Figure6"></xref> shows an example of a DOTS client
-          requesting a DOTS server to send notifications related to a
-          mitigation request. Note that for mitigations with pre-configured
-          scopes (i.e., 'trigger-mitigation' set to 'false'), the state will
-          need to transition from 3 (attack-stopped) to 8
-          (attack-mitigation-signal-loss).</t>
+            <t>A DOTS client that is no longer interested in receiving
+            notifications from the DOTS server can simply "forget" the
+            observation. When the DOTS server sends the next notification, the
+            DOTS client will not recognize the token in the message and thus
+            will return a Reset message. This causes the DOTS server to remove
+            the associated entry. Alternatively, the DOTS client can
+            explicitly deregister itself by issuing a GET request that has the
+            Token field set to the token of the observation to be cancelled
+            and includes an Observe Option with the value set to '1'
+            (deregister).</t>
 
-          <t><figure anchor="Figure6"
-              title="Notifications of Attack Mitigation Status">
-              <artwork align="center"><![CDATA[+-----------+                              +-----------+
+            <t><xref target="Figure6"></xref> shows an example of a DOTS
+            client requesting a DOTS server to send notifications related to a
+            mitigation request. Note that for mitigations with pre-configured
+            scopes (i.e., 'trigger-mitigation' set to 'false'), the state will
+            need to transition from 3 (attack-stopped) to 8
+            (attack-mitigation-signal-loss).</t>
+
+            <t><figure anchor="Figure6"
+                title="Notifications of Attack Mitigation Status">
+                <artwork align="center"><![CDATA[+-----------+                              +-----------+
 |DOTS client|                              |DOTS server|
 +-----------+                              +-----------+
       |                                          |
@@ -1597,9 +1613,8 @@
       |<-----------------------------------------+
       |                                          |
                          ...     ]]></artwork>
-            </figure></t>
-
-          <t></t>
+              </figure></t>
+          </section>
 
           <section title="DOTS Clients Polling for Mitigation Status">
             <t>The DOTS client can send the GET request at frequent intervals
@@ -2346,7 +2361,7 @@
           channel session configuration data (<xref
           target="Figure15"></xref>).</t>
 
-          <figure anchor="Figure15" title="DELETE Configuration">
+          <figure anchor="Figure15" title="Delete Configuration">
             <artwork align="left"><![CDATA[  Header: DELETE (Code=0.04)
   Uri-Host: "host" 
   Uri-Path: ".well-known"
@@ -3519,7 +3534,7 @@ module ietf-dots-signal-channel {
             mechanisms. <vspace blankLines="1" />A simplified TLS 1.3
             handshake with 0-RTT DOTS mitigation request message exchange is
             shown in <xref target="Figure24"></xref>.<figure anchor="Figure24"
-                title="TLS 1.3 handshake with 0-RTT">
+                title="TLS 1.3 Handshake with 0-RTT">
                 <artwork align="left"><![CDATA[       DOTS Client                                    DOTS Server
 
       ClientHello
