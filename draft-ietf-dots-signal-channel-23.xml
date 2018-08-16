@@ -3865,6 +3865,8 @@ module ietf-dots-signal-channel {
       <?rfc include="reference.RFC.8085"?>
 
       <?rfc include="reference.RFC.7049"?>
+
+      <?rfc include="reference.RFC.8446"?>
     </references>
 
     <references title="Informative References">
@@ -3921,8 +3923,6 @@ module ietf-dots-signal-channel {
       <?rfc include='reference.RFC.1983'?>
 
       <?rfc include='reference.RFC.8340'?>
-
-      <?rfc include="reference.RFC.8446"?>
 
       <?rfc include="reference.I-D.ietf-core-yang-cbor"?>
 

@@ -4568,6 +4568,10 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               RFC 8323, DOI 10.17487/RFC8323, February 2018,
               <https://www.rfc-editor.org/info/rfc8323>.
 
+   [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
+              Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
+              <https://www.rfc-editor.org/info/rfc8446>.
+
 13.2.  Informative References
 
    [I-D.boucadair-core-hop-limit]
@@ -4581,11 +4585,7 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               Management Interface", draft-ietf-core-comi-03 (work in
               progress), June 2018.
 
-   [I-D.ietf-core-yang-cbor]
-              Veillette, M., Pelov, A., Somaraju, A., Turner, R., and A.
-              Minaburo, "CBOR Encoding of Data Modeled with YANG",
-              draft-ietf-core-yang-cbor-06 (work in progress), February
-              2018.
+
 
 
 
@@ -4593,6 +4593,12 @@ Reddy, et al.           Expires February 17, 2019              [Page 82]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
+
+   [I-D.ietf-core-yang-cbor]
+              Veillette, M., Pelov, A., Somaraju, A., Turner, R., and A.
+              Minaburo, "CBOR Encoding of Data Modeled with YANG",
+              draft-ietf-core-yang-cbor-06 (work in progress), February
+              2018.
 
    [I-D.ietf-dots-architecture]
               Mortensen, A., Andreasen, F., Reddy, T.,
@@ -4634,6 +4640,16 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               DOI 10.17487/RFC0791, September 1981,
               <https://www.rfc-editor.org/info/rfc791>.
 
+
+
+
+
+
+Reddy, et al.           Expires February 17, 2019              [Page 83]
+
+Internet-Draft        DOTS Signal Channel Protocol           August 2018
+
+
    [RFC1983]  Malkin, G., Ed., "Internet Users' Glossary", FYI 18,
               RFC 1983, DOI 10.17487/RFC1983, August 1996,
               <https://www.rfc-editor.org/info/rfc1983>.
@@ -4642,13 +4658,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               Address Translator (Traditional NAT)", RFC 3022,
               DOI 10.17487/RFC3022, January 2001,
               <https://www.rfc-editor.org/info/rfc3022>.
-
-
-
-Reddy, et al.           Expires February 17, 2019              [Page 83]
-
-Internet-Draft        DOTS Signal Channel Protocol           August 2018
-
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
@@ -4688,15 +4697,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               DOI 10.17487/RFC5389, October 2008,
               <https://www.rfc-editor.org/info/rfc5389>.
 
-   [RFC5925]  Touch, J., Mankin, A., and R. Bonica, "The TCP
-              Authentication Option", RFC 5925, DOI 10.17487/RFC5925,
-              June 2010, <https://www.rfc-editor.org/info/rfc5925>.
-
-   [RFC6052]  Bao, C., Huitema, C., Bagnulo, M., Boucadair, M., and X.
-              Li, "IPv6 Addressing of IPv4/IPv6 Translators", RFC 6052,
-              DOI 10.17487/RFC6052, October 2010,
-              <https://www.rfc-editor.org/info/rfc6052>.
-
 
 
 
@@ -4705,6 +4705,15 @@ Reddy, et al.           Expires February 17, 2019              [Page 84]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
+
+   [RFC5925]  Touch, J., Mankin, A., and R. Bonica, "The TCP
+              Authentication Option", RFC 5925, DOI 10.17487/RFC5925,
+              June 2010, <https://www.rfc-editor.org/info/rfc5925>.
+
+   [RFC6052]  Bao, C., Huitema, C., Bagnulo, M., Boucadair, M., and X.
+              Li, "IPv6 Addressing of IPv4/IPv6 Translators", RFC 6052,
+              DOI 10.17487/RFC6052, October 2010,
+              <https://www.rfc-editor.org/info/rfc6052>.
 
    [RFC6146]  Bagnulo, M., Matthews, P., and I. van Beijnum, "Stateful
               NAT64: Network Address and Protocol Translation from IPv6
@@ -4744,6 +4753,15 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               RFC 7452, DOI 10.17487/RFC7452, March 2015,
               <https://www.rfc-editor.org/info/rfc7452>.
 
+
+
+
+
+Reddy, et al.           Expires February 17, 2019              [Page 85]
+
+Internet-Draft        DOTS Signal Channel Protocol           August 2018
+
+
    [RFC7589]  Badra, M., Luchuk, A., and J. Schoenwaelder, "Using the
               NETCONF Protocol over Transport Layer Security (TLS) with
               Mutual X.509 Authentication", RFC 7589,
@@ -4754,13 +4772,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               Layer Security (TLS) False Start", RFC 7918,
               DOI 10.17487/RFC7918, August 2016,
               <https://www.rfc-editor.org/info/rfc7918>.
-
-
-
-Reddy, et al.           Expires February 17, 2019              [Page 85]
-
-Internet-Draft        DOTS Signal Channel Protocol           August 2018
-
 
    [RFC7924]  Santesson, S. and H. Tschofenig, "Transport Layer Security
               (TLS) Cached Information Extension", RFC 7924,
@@ -4779,10 +4790,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
               <https://www.rfc-editor.org/info/rfc8340>.
-
-   [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
-              Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
-              <https://www.rfc-editor.org/info/rfc8446>.
 
 Authors' Addresses
 
@@ -4803,19 +4810,18 @@ Authors' Addresses
    Email: mohamed.boucadair@orange.com
 
 
-   Prashanth Patil
-   Cisco Systems, Inc.
-
-   Email: praspati@cisco.com
-
-
-
 
 
 
 Reddy, et al.           Expires February 17, 2019              [Page 86]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
+
+
+   Prashanth Patil
+   Cisco Systems, Inc.
+
+   Email: praspati@cisco.com
 
 
    Andrew Mortensen
@@ -4832,12 +4838,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    United States
 
    Email: nteague@verisign.com
-
-
-
-
-
-
 
 
 
