@@ -2385,10 +2385,10 @@
         <t>The DOTS server returns the Time to live (TTL) of the alternate
         DOTS server in a Max-Age Option. That is, the time interval that the
         alternate DOTS server may be cached for use by a DOTS client. A
-        Max-Age Option set to 2**32-1 indicates indefinite TTL. This value
-        means that the alternate DOTS server is to be used until the alternate
-        DOTS server redirects the traffic with another 5.03 response which
-        encloses an alternate server.</t>
+        Max-Age Option set to 2**32-1 is equivalent to receiving an indefinite
+        TTL. This value means that the alternate DOTS server is to be used
+        until the alternate DOTS server redirects the traffic with another
+        5.03 response which encloses an alternate server.</t>
 
         <t>A Max-Age Option set to '0' may be returned for redirecting
         mitigation requests. Such value means that the redirection applies
@@ -3379,7 +3379,7 @@ module ietf-dots-signal-channel {
         considerations of <xref target="RFC7525"></xref> except with respect
         to (D)TLS version. Since DOTS signal channel encryption relies upon
         (D)TLS is virtually a green-field deployment, DOTS agents MUST
-        implement only TLS 1.3 and DTLS 1.2 or later.</t>
+        implement only (D)TLS 1.2 or later.</t>
 
         <t>When a DOTS client is configured with a domain name of the DOTS
         server, and connects to its configured DOTS server, the server may
@@ -3870,6 +3870,8 @@ module ietf-dots-signal-channel {
     <references title="Informative References">
       <?rfc include="reference.RFC.4732"?>
 
+      <?rfc include='reference.I-D.boucadair-core-hop-limit'?>
+
       <?rfc include="reference.RFC.6234"?>
 
       <?rfc include='reference.RFC.6052'?>
@@ -3949,77 +3951,6 @@ module ietf-dots-signal-channel {
           </author>
 
           <date year="2011" />
-        </front>
-      </reference>
-
-      <reference anchor="I-D.boucadair-core-hop-limit"
-                 target="https://datatracker.ietf.org/doc/draft-boucadair-core-hop-limit/">
-        <front>
-          <title>Constrained Application Protocol (CoAP) Hop Limit
-          Option</title>
-
-          <author fullname="Mohamed Boucadair" initials="M."
-                  surname="Boucadair">
-            <organization>Orange</organization>
-
-            <address>
-              <postal>
-                <street></street>
-
-                <city>Rennes</city>
-
-                <region></region>
-
-                <code>35000</code>
-
-                <country>France</country>
-              </postal>
-
-              <email>mohamed.boucadair@orange.com</email>
-            </address>
-          </author>
-
-          <author fullname="Tirumaleswar Reddy" initials="T." surname="Reddy">
-            <organization abbrev="McAfee">McAfee, Inc.</organization>
-
-            <address>
-              <postal>
-                <street>Embassy Golf Link Business Park</street>
-
-                <city>Bangalore</city>
-
-                <region>Karnataka</region>
-
-                <code>560071</code>
-
-                <country>India</country>
-              </postal>
-
-              <email>kondtir@gmail.com</email>
-            </address>
-          </author>
-
-          <author fullname="Jon Shallow" initials="J." surname="Shallow">
-            <organization>NCC Group</organization>
-
-            <address>
-              <postal>
-                <street></street>
-
-                <city></city>
-
-                <region></region>
-
-                <code></code>
-
-                <country>United Kingdom</country>
-              </postal>
-
-              <email>jon.shallow@nccgroup.trust</email>
-            </address>
-          </author>
-
-          <date />
         </front>
       </reference>
     </references>

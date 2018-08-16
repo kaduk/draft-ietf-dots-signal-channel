@@ -2788,10 +2788,10 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    The DOTS server returns the Time to live (TTL) of the alternate DOTS
    server in a Max-Age Option.  That is, the time interval that the
    alternate DOTS server may be cached for use by a DOTS client.  A Max-
-   Age Option set to 2**32-1 indicates indefinite TTL.  This value means
-   that the alternate DOTS server is to be used until the alternate DOTS
-   server redirects the traffic with another 5.03 response which
-   encloses an alternate server.
+   Age Option set to 2**32-1 is equivalent to receiving an indefinite
+   TTL.  This value means that the alternate DOTS server is to be used
+   until the alternate DOTS server redirects the traffic with another
+   5.03 response which encloses an alternate server.
 
 
 
@@ -3936,8 +3936,8 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    MUST adhere to the (D)TLS implementation recommendations and security
    considerations of [RFC7525] except with respect to (D)TLS version.
    Since DOTS signal channel encryption relies upon (D)TLS is virtually
-   a green-field deployment, DOTS agents MUST implement only TLS 1.3 and
-   DTLS 1.2 or later.
+   a green-field deployment, DOTS agents MUST implement only (D)TLS 1.2
+   or later.
 
    When a DOTS client is configured with a domain name of the DOTS
    server, and connects to its configured DOTS server, the server may
@@ -4572,9 +4572,9 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
    [I-D.boucadair-core-hop-limit]
               Boucadair, M., Reddy, T., and J. Shallow, "Constrained
-              Application Protocol (CoAP) Hop Limit Option",
-              <https://datatracker.ietf.org/doc/
-              draft-boucadair-core-hop-limit/>.
+              Application Protocol (CoAP) Hop Limit Option", draft-
+              boucadair-core-hop-limit-00 (work in progress), August
+              2018.
 
    [I-D.ietf-core-comi]
               Veillette, M., Stok, P., Pelov, A., and A. Bierman, "CoAP
