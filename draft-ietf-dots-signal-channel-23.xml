@@ -3472,10 +3472,11 @@ module ietf-dots-signal-channel {
             can resume the (D)TLS session in 0-RTT mode using PSK. <vspace
             blankLines="1" />Section 8 of <xref target="RFC8446"></xref>
             discusses some mechanisms to implement to limit the impact of
-            replay attacks on 0-RTT data. DOTS servers MUST implement one of
-            these mechanisms. <vspace blankLines="1" />A simplified TLS 1.3
-            handshake with 0-RTT DOTS mitigation request message exchange is
-            shown in <xref target="Figure24"></xref>.<figure anchor="Figure24"
+            replay attacks on 0-RTT data. If TLS1.3 is used, DOTS servers must
+            implement one of these mechanisms. <vspace blankLines="1" />A
+            simplified TLS 1.3 handshake with 0-RTT DOTS mitigation request
+            message exchange is shown in <xref
+            target="Figure24"></xref>.<figure anchor="Figure24"
                 title="TLS 1.3 Handshake with 0-RTT">
                 <artwork align="left"><![CDATA[       DOTS Client                                    DOTS Server
 
@@ -3726,7 +3727,7 @@ module ietf-dots-signal-channel {
    | alt-server-record    |   48  |   4   |    IESG    |   [RFCXXXX]   |
    +----------------------+-------+-------+------------+---------------+
 
-        Table 8: Initial DOTS Signal Channel CBOR Mappings Registry
+        Table 6: Initial DOTS Signal Channel CBOR Mappings Registry
 ]]></artwork>
             </figure></t>
 

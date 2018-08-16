@@ -4040,8 +4040,8 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
       can resume the (D)TLS session in 0-RTT mode using PSK.
 
       Section 8 of [RFC8446] discusses some mechanisms to implement to
-      limit the impact of replay attacks on 0-RTT data.  DOTS servers
-      MUST implement one of these mechanisms.
+      limit the impact of replay attacks on 0-RTT data.  If TLS1.3 is
+      used, DOTS servers must implement one of these mechanisms.
 
       A simplified TLS 1.3 handshake with 0-RTT DOTS mitigation request
       message exchange is shown in Figure 24.
@@ -4351,7 +4351,7 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    | alt-server-record    |   48  |   4   |    IESG    |   [RFCXXXX]   |
    +----------------------+-------+-------+------------+---------------+
 
-        Table 8: Initial DOTS Signal Channel CBOR Mappings Registry
+        Table 6: Initial DOTS Signal Channel CBOR Mappings Registry
 
 9.4.  DOTS Signal Channel YANG Module
 
