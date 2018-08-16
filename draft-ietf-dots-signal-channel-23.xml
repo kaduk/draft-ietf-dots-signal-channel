@@ -2390,9 +2390,6 @@
         DOTS server redirects the traffic with another 5.03 response which
         encloses an alternate server.</t>
 
-        <t>If no Max-Age Option is returned in a redirect response, this is
-        equivalent to returning an indefinite TTL. </t>
-
         <t>A Max-Age Option set to '0' may be returned for redirecting
         mitigation requests. Such value means that the redirection applies
         only for the mitigation request in progress. Returning short TTL in a
@@ -3382,7 +3379,7 @@ module ietf-dots-signal-channel {
         considerations of <xref target="RFC7525"></xref> except with respect
         to (D)TLS version. Since DOTS signal channel encryption relies upon
         (D)TLS is virtually a green-field deployment, DOTS agents MUST
-        implement only (D)TLS 1.2 or later.</t>
+        implement only TLS 1.3 and DTLS 1.2 or later.</t>
 
         <t>When a DOTS client is configured with a domain name of the DOTS
         server, and connects to its configured DOTS server, the server may
@@ -3420,7 +3417,7 @@ module ietf-dots-signal-channel {
             <t>DTLS record replay detection (Section 3.3 of <xref
             target="RFC6347"></xref>) to protect against replay attacks.</t>
 
-            <t>(D)TLS session resumption without server-side state to resume
+            <t>DTLS session resumption without server-side state to resume
             session and convey the DOTS signal.</t>
 
             <t>Raw public keys <xref target="RFC7250"></xref> or PSK handshake
