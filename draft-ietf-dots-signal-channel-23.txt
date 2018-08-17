@@ -269,9 +269,9 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    [RFC2119].
 
    (D)TLS is used for statements that apply to both Transport Layer
-   Security [RFC8446] and Datagram Transport Layer Security [RFC6347].
-   Specific terms are used for any statement that applies to either
-   protocol alone.
+   Security [RFC5246][RFC8446] and Datagram Transport Layer Security
+   [RFC6347].  Specific terms are used for any statement that applies to
+   either protocol alone.
 
 
 
@@ -352,10 +352,10 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    active until the DOTS client explicitly terminates mitigation, or the
    mitigation lifetime expires.
 
-   DOTS signaling can happen with DTLS [RFC6347] over UDP and TLS
-   [RFC8446] over TCP.  Likewise, DOTS requests may be sent using IPv4
-   or IPv6 transfer capabilities.  A Happy Eyeballs procedure for DOTS
-   signal channel is specified in Section 4.3.
+   DOTS signaling can happen with DTLS over UDP and TLS over TCP.
+   Likewise, DOTS requests may be sent using IPv4 or IPv6 transfer
+   capabilities.  A Happy Eyeballs procedure for DOTS signal channel is
+   specified in Section 4.3.
 
    Messages exchanged between DOTS agents are serialized using Concise
    Binary Object Representation (CBOR) [RFC7049], a binary encoding
@@ -1252,7 +1252,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    client and avoid error-prone provisioning of mitigation requests from
    a DOTS client, the overlapped lower numeric 'mid' MUST be
    automatically deleted and no longer available at the DOTS server.
-
    For example, if the DOTS server receives a mitigation request which
    overlaps with an existing mitigation with a higher numeric 'mid', the
    DOTS server rejects the request by returning 4.09 (Conflict) to the
@@ -1281,7 +1280,8 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    mitigation' set to false.  Particularly, if the mitigation request
    with 'trigger-mitigation' set to false is active, the DOTS server
    withdraws the mitigation request (i.e., status code is set to '7' as
-
+   defined in Table 2) and transitions the status of the mitigation
+   request to '8'.
 
 
 
@@ -1289,9 +1289,6 @@ Reddy, et al.           Expires February 17, 2019              [Page 23]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
-
-   defined in Table 2) and transitions the status of the mitigation
-   request to '8'.
 
    Upon DOTS signal channel session loss with a peer DOTS client, the
    DOTS server MUST withdraw (absent explicit policy/configuration
@@ -1336,6 +1333,9 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
              from different DOTS clients.  This mitigation request is
              currently active.
 
+         3:  DOTS server has detected conflicting mitigation requests
+             from different DOTS clients.  All conflicting mitigation
+             requests are inactive.
 
 
 
@@ -1345,10 +1345,6 @@ Reddy, et al.           Expires February 17, 2019              [Page 24]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
-
-         3:  DOTS server has detected conflicting mitigation requests
-             from different DOTS clients.  All conflicting mitigation
-             requests are inactive.
 
       conflict-cause:  Indicates the cause of the conflict.  The
          following values are defined:
@@ -1394,6 +1390,10 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    with a new 'mid' value that will override the existing one with
    overlapping mitigation scopes.
 
+   For a mitigation request to continue beyond the initial negotiated
+   lifetime, the DOTS client has to refresh the current mitigation
+   request by sending a new PUT request.  This PUT request MUST use the
+   same 'mid' value, and MUST repeat all the other parameters as sent in
 
 
 
@@ -1402,10 +1402,6 @@ Reddy, et al.           Expires February 17, 2019              [Page 25]
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
 
-   For a mitigation request to continue beyond the initial negotiated
-   lifetime, the DOTS client has to refresh the current mitigation
-   request by sending a new PUT request.  This PUT request MUST use the
-   same 'mid' value, and MUST repeat all the other parameters as sent in
    the original mitigation request apart from a possible change to the
    lifetime parameter value.
 
@@ -1444,20 +1440,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    These two examples assume the default of "c=a"; that is, the DOTS
    client asks for all data to be reported by the DOTS server.
 
-
-
-
-
-
-
-
-
-
-Reddy, et al.           Expires February 17, 2019              [Page 26]
-
-Internet-Draft        DOTS Signal Channel Protocol           August 2018
-
-
      Header: GET (Code=0.01)
      Uri-Host: "host"
      Uri-Path: ".well-known"
@@ -1468,6 +1450,13 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
      Observe: 0
 
           Figure 10: GET to Retrieve all DOTS Mitigation Requests
+
+
+
+Reddy, et al.           Expires February 17, 2019              [Page 26]
+
+Internet-Draft        DOTS Signal Channel Protocol           August 2018
+
 
      Header: GET (Code=0.01)
      Uri-Host: "host"
@@ -1509,6 +1498,17 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 Reddy, et al.           Expires February 17, 2019              [Page 27]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
@@ -1519,7 +1519,7 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
        "scope": [
          {
            "mid": 12332,
-           "mitigation-start": 1507818434,
+           "mitigation-start": "1507818434",
            "target-prefix": [
                 "2001:db8:6401::1/128",
                 "2001:db8:6401::2/128"
@@ -1528,15 +1528,15 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
              17
            ],
            "lifetime": 1800,
-           "status": 2,
-           "bytes-dropped": 134334555,
-           "bps-dropped": 43344,
-           "pkts-dropped": 333334444,
-           "pps-dropped": 432432
+           "status": "attack-successfully-mitigated",
+           "bytes-dropped": "134334555",
+           "bps-dropped": "43344",
+           "pkts-dropped": "333334444",
+           "pps-dropped": "432432"
          },
          {
            "mid": 12333,
-           "mitigation-start": 1507818393,
+           "mitigation-start": "1507818393",
            "target-prefix": [
                 "2001:db8:6401::1/128",
                 "2001:db8:6401::2/128"
@@ -1545,11 +1545,11 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
              6
            ],
            "lifetime": 1800,
-           "status": 3,
-           "bytes-dropped": 0,
-           "bps-dropped": 0,
-           "pkts-dropped": 0,
-           "pps-dropped": 0
+           "status": "attack-stopped",
+           "bytes-dropped": "0",
+           "bps-dropped": "0",
+           "pkts-dropped": "0",
+           "pps-dropped": "0"
          }
        ]
      }
@@ -2314,14 +2314,14 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
            "current-value": 3
          },
          "ack-timeout": {
-           "max-value-decimal": 30.0,
-           "min-value-decimal": 1.0,
-           "current-value-decimal": 2.0
+           "max-value-decimal": "30.0",
+           "min-value-decimal": "1.0",
+           "current-value-decimal": "2.0"
          },
          "ack-random-factor": {
-           "max-value-decimal": 4.0,
-           "min-value-decimal": 1.1,
-           "current-value-decimal": 1.5
+           "max-value-decimal": "4.0",
+           "min-value-decimal": "1.1",
+           "current-value-decimal": "1.5"
          }
        },
        "idle-config": {
@@ -2341,9 +2341,9 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
            "current-value": 3
          },
          "ack-timeout": {
-           "max-value-decimal": 30.0,
-           "min-value-decimal": 1.0,
-           "current-value-decimal": 2.0
+           "max-value-decimal": "30.0",
+           "min-value-decimal": "1.0",
+           "current-value-decimal": "2.0"
          },
          "ack-random-factor": {
 
@@ -2354,9 +2354,9 @@ Reddy, et al.           Expires February 17, 2019              [Page 42]
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
 
-           "max-value-decimal": 4.0,
-           "min-value-decimal": 1.1,
-           "current-value-decimal": 1.5
+           "max-value-decimal": "4.0",
+           "min-value-decimal": "1.1",
+           "current-value-decimal": "1.5"
          }
        }
      }
@@ -2599,10 +2599,10 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
              "current-value": 3
            },
            "ack-timeout": {
-             "current-value-decimal": 2.0
+             "current-value-decimal": "2.0"
            },
            "ack-random-factor": {
-             "current-value-decimal": 1.5
+             "current-value-decimal": "1.5"
            }
          },
          "idle-config": {
@@ -2613,10 +2613,10 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
              "current-value": 3
            },
            "ack-timeout": {
-             "current-value-decimal": 2.0
+             "current-value-decimal": "2.0"
            },
            "ack-random-factor": {
-             "current-value-decimal": 1.5
+             "current-value-decimal": "1.5"
            }
          }
        }
@@ -3288,14 +3288,14 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
              enum "attack-mitigation-in-progress" {
                value 1;
                description
-                 "Attack mitigation is in progress (e.g., changing
+                 "Attack mitigation setup is in progress (e.g., changing
                   the network path to re-route the inbound traffic
                   to DOTS mitigator).";
              }
              enum "attack-successfully-mitigated" {
                value 2;
                description
-                 "Attack is successfully mitigated (e.g., traffic
+                 "Attack is being successfully mitigated (e.g., traffic
                   is redirected to a DDoS mitigator and attack
                   traffic is dropped or blackholed).";
 
@@ -4005,8 +4005,8 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
 7.2.  (D)TLS 1.3 Considerations
 
-   TLS 1.3 [RFC8446] provides critical latency improvements for
-   connection establishment over TLS 1.2.  The DTLS 1.3 protocol
+   TLS 1.3 provides critical latency improvements for connection
+   establishment over TLS 1.2.  The DTLS 1.3 protocol
    [I-D.ietf-tls-dtls13] is based upon the TLS 1.3 protocol and provides
    equivalent security guarantees.  (D)TLS 1.3 provides two basic
    handshake modes the DOTS signal channel can take advantage of:
@@ -4040,8 +4040,9 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
       can resume the (D)TLS session in 0-RTT mode using PSK.
 
       Section 8 of [RFC8446] discusses some mechanisms to implement to
-      limit the impact of replay attacks on 0-RTT data.  If TLS1.3 is
-      used, DOTS servers must implement one of these mechanisms.
+      limit the impact of replay attacks on 0-RTT data.  If the DOTS
+      server accepts 0-RTT, it MUST implement one of these mechanisms.
+      A DOTS server can reject 0-RTT by sending a TLS HelloRetryRequest.
 
       A simplified TLS 1.3 handshake with 0-RTT DOTS mitigation request
       message exchange is shown in Figure 24.
@@ -4080,8 +4081,7 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    (Section 4.1.1.1 of [RFC6347]).  If the request size exceeds the path
    MTU then the DOTS client MUST split the DOTS signal into separate
    messages, for example the list of addresses in the 'target-prefix'
-   parameter could be split into multiple lists and each list conveyed
-   in a new PUT request.
+
 
 
 
@@ -4089,6 +4089,9 @@ Reddy, et al.           Expires February 17, 2019              [Page 73]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
+
+   parameter could be split into multiple lists and each list conveyed
+   in a new PUT request.
 
    Implementation Note: DOTS choice of message size parameters works
    well with IPv6 and with most of today's IPv4 paths.  However, with
@@ -4120,9 +4123,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    [RFC5280] certificate profile.  If a DOTS client does not support TLS
    client certificate authentication, it MUST support pre-shared key
    based or raw public key based client authentication.
-
-
-
 
 
 
@@ -4431,7 +4431,7 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
    The presence of DOTS gateways may lead to infinite forwarding loops,
    which is undesirable.  To prevent and detect such loops, this
-   document uses the Hop-Limit option.
+   document uses the Hop-Limit Option.
 
    CoAP-specific security considerations are discussed in Section 11 of
    [RFC7252], while CBOR-related security considerations are discussed
@@ -4487,6 +4487,11 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               RFC 4279, DOI 10.17487/RFC4279, December 2005,
               <https://www.rfc-editor.org/info/rfc4279>.
 
+   [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
+              (TLS) Protocol Version 1.2", RFC 5246,
+              DOI 10.17487/RFC5246, August 2008,
+              <https://www.rfc-editor.org/info/rfc5246>.
+
    [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
               Housley, R., and W. Polk, "Internet X.509 Public Key
               Infrastructure Certificate and Certificate Revocation List
@@ -4524,11 +4529,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               Layer Security (DTLS)", RFC 7250, DOI 10.17487/RFC7250,
               June 2014, <https://www.rfc-editor.org/info/rfc7250>.
 
-   [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
-              Application Protocol (CoAP)", RFC 7252,
-              DOI 10.17487/RFC7252, June 2014,
-              <https://www.rfc-editor.org/info/rfc7252>.
-
 
 
 
@@ -4537,6 +4537,11 @@ Reddy, et al.           Expires February 17, 2019              [Page 81]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
+
+   [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
+              Application Protocol (CoAP)", RFC 7252,
+              DOI 10.17487/RFC7252, June 2014,
+              <https://www.rfc-editor.org/info/rfc7252>.
 
    [RFC7525]  Sheffer, Y., Holz, R., and P. Saint-Andre,
               "Recommendations for Secure Use of Transport Layer
@@ -4580,11 +4585,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               boucadair-core-hop-limit-00 (work in progress), August
               2018.
 
-   [I-D.ietf-core-comi]
-              Veillette, M., Stok, P., Pelov, A., and A. Bierman, "CoAP
-              Management Interface", draft-ietf-core-comi-03 (work in
-              progress), June 2018.
-
 
 
 
@@ -4593,6 +4593,11 @@ Reddy, et al.           Expires February 17, 2019              [Page 82]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
+
+   [I-D.ietf-core-comi]
+              Veillette, M., Stok, P., Pelov, A., and A. Bierman, "CoAP
+              Management Interface", draft-ietf-core-comi-03 (work in
+              progress), June 2018.
 
    [I-D.ietf-core-yang-cbor]
               Veillette, M., Pelov, A., Somaraju, A., Turner, R., and A.
@@ -4636,11 +4641,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               "IANA, "Protocol Numbers"", 2011,
               <http://www.iana.org/assignments/protocol-numbers>.
 
-   [RFC0791]  Postel, J., "Internet Protocol", STD 5, RFC 791,
-              DOI 10.17487/RFC0791, September 1981,
-              <https://www.rfc-editor.org/info/rfc791>.
-
-
 
 
 
@@ -4649,6 +4649,10 @@ Reddy, et al.           Expires February 17, 2019              [Page 83]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
+
+   [RFC0791]  Postel, J., "Internet Protocol", STD 5, RFC 791,
+              DOI 10.17487/RFC0791, September 1981,
+              <https://www.rfc-editor.org/info/rfc791>.
 
    [RFC1983]  Malkin, G., Ed., "Internet Users' Glossary", FYI 18,
               RFC 1983, DOI 10.17487/RFC1983, August 1996,
@@ -4692,10 +4696,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               Mitigations", RFC 4987, DOI 10.17487/RFC4987, August 2007,
               <https://www.rfc-editor.org/info/rfc4987>.
 
-   [RFC5389]  Rosenberg, J., Mahy, R., Matthews, P., and D. Wing,
-              "Session Traversal Utilities for NAT (STUN)", RFC 5389,
-              DOI 10.17487/RFC5389, October 2008,
-              <https://www.rfc-editor.org/info/rfc5389>.
 
 
 
@@ -4705,6 +4705,11 @@ Reddy, et al.           Expires February 17, 2019              [Page 84]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
+
+   [RFC5389]  Rosenberg, J., Mahy, R., Matthews, P., and D. Wing,
+              "Session Traversal Utilities for NAT (STUN)", RFC 5389,
+              DOI 10.17487/RFC5389, October 2008,
+              <https://www.rfc-editor.org/info/rfc5389>.
 
    [RFC5925]  Touch, J., Mankin, A., and R. Bonica, "The TCP
               Authentication Option", RFC 5925, DOI 10.17487/RFC5925,
@@ -4748,11 +4753,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
               Fast Open", RFC 7413, DOI 10.17487/RFC7413, December 2014,
               <https://www.rfc-editor.org/info/rfc7413>.
 
-   [RFC7452]  Tschofenig, H., Arkko, J., Thaler, D., and D. McPherson,
-              "Architectural Considerations in Smart Object Networking",
-              RFC 7452, DOI 10.17487/RFC7452, March 2015,
-              <https://www.rfc-editor.org/info/rfc7452>.
-
 
 
 
@@ -4761,6 +4761,11 @@ Reddy, et al.           Expires February 17, 2019              [Page 85]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
 
+
+   [RFC7452]  Tschofenig, H., Arkko, J., Thaler, D., and D. McPherson,
+              "Architectural Considerations in Smart Object Networking",
+              RFC 7452, DOI 10.17487/RFC7452, March 2015,
+              <https://www.rfc-editor.org/info/rfc7452>.
 
    [RFC7589]  Badra, M., Luchuk, A., and J. Schoenwaelder, "Using the
               NETCONF Protocol over Transport Layer Security (TLS) with
@@ -4802,12 +4807,7 @@ Authors' Addresses
    Email: kondtir@gmail.com
 
 
-   Mohamed Boucadair (editor)
-   Orange
-   Rennes  35000
-   France
 
-   Email: mohamed.boucadair@orange.com
 
 
 
@@ -4816,6 +4816,14 @@ Authors' Addresses
 Reddy, et al.           Expires February 17, 2019              [Page 86]
 
 Internet-Draft        DOTS Signal Channel Protocol           August 2018
+
+
+   Mohamed Boucadair (editor)
+   Orange
+   Rennes  35000
+   France
+
+   Email: mohamed.boucadair@orange.com
 
 
    Prashanth Patil
@@ -4838,14 +4846,6 @@ Internet-Draft        DOTS Signal Channel Protocol           August 2018
    United States
 
    Email: nteague@verisign.com
-
-
-
-
-
-
-
-
 
 
 
