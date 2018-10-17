@@ -4213,7 +4213,7 @@ module ietf-dots-signal-channel {
 
             <c>[RFCXXXX]</c>
 
-            <c>D1</c>
+            <c>2</c>
 
             <c>attack-successfully-mitigated</c>
 
