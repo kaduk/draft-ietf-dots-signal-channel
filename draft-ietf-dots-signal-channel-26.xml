@@ -607,7 +607,6 @@
               <artwork align="left"><![CDATA[  Header: PUT (Code=0.03)
   Uri-Path: ".well-known"
   Uri-Path: "dots"
-  Uri-Path: "v1.0"
   Uri-Path: "mitigate"
   Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
   Uri-Path: "mid=123"
@@ -645,10 +644,6 @@
   }
 ]]></artwork>
             </figure></t>
-
-          <t>The Uri-Path option carries a major and minor version
-          nomenclature to manage versioning; DOTS signal channel in this
-          specification uses 'v1' major version and '0' minor version.</t>
 
           <t>The order of the Uri-Path options is important as it defines the
           CoAP resource. In particular, 'mid' MUST follow 'cuid'.</t>
@@ -827,7 +822,6 @@
               <artwork align="left"><![CDATA[  Header: PUT (Code=0.03)
   Uri-Path: ".well-known"
   Uri-Path: "dots"
-  Uri-Path: "v1.0"
   Uri-Path: "mitigate"
   Uri-Path: "cdid=7eeaf349529eb55ed50113"
   Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
@@ -940,7 +934,6 @@
               <artwork align="left"><![CDATA[  Header: PUT (Code=0.03)
   Uri-Path: ".well-known"
   Uri-Path: "dots"
-  Uri-Path: "v1.0"
   Uri-Path: "mitigate"
   Uri-Path: "cdid=7eeaf349529eb55ed50113"
   Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
@@ -1194,9 +1187,9 @@
                       <t>Overlapping targets. 'conflict-scope' provides more
                       details about the conflicting target clauses.</t>
 
-                      <t>Conflicts with an existing white list. This code is
+                      <t>Conflicts with an existing accept-list. This code is
                       returned when the DDoS mitigation detects source
-                      addresses/prefixes in the white-listed ACLs are
+                      addresses/prefixes in the accept-listed ACLs are
                       attacking the target.</t>
 
                       <t>CUID Collision. This code is returned when a DOTS
@@ -1314,7 +1307,6 @@
             <artwork align="left"><![CDATA[  Header: GET (Code=0.01)
   Uri-Path: ".well-known"
   Uri-Path: "dots"
-  Uri-Path: "v1.0"
   Uri-Path: "mitigate"
   Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
   Observe: 0]]></artwork>
@@ -1325,7 +1317,6 @@
               <artwork align="left"><![CDATA[  Header: GET (Code=0.01)
   Uri-Path: ".well-known"
   Uri-Path: "dots"
-  Uri-Path: "v1.0"
   Uri-Path: "mitigate"
   Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
   Uri-Path: "mid=12332"
@@ -1667,7 +1658,6 @@
             <artwork align="left"><![CDATA[   Header: PUT (Code=0.03)
    Uri-Path: ".well-known"
    Uri-Path: "dots"
-   Uri-Path: "v1.0"
    Uri-Path: "mitigate"
    Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
    Uri-Path: "mid=123"
@@ -1753,7 +1743,6 @@
             <artwork align="left"><![CDATA[  Header: DELETE (Code=0.04)
   Uri-Path: ".well-known"
   Uri-Path: "dots"
-  Uri-Path: "v1.0"
   Uri-Path: "mitigate"
   Uri-Path: "cuid=dz6pHjaADkaFTbjr0JGBpw"
   Uri-Path: "mid=123"
@@ -1889,7 +1878,6 @@
             <artwork align="left"><![CDATA[  Header: GET (Code=0.01)
   Uri-Path: ".well-known"
   Uri-Path: "dots"
-  Uri-Path: "v1.0"
   Uri-Path: "config"
 ]]></artwork>
           </figure>
@@ -2141,7 +2129,6 @@
               <artwork align="left"><![CDATA[  Header: PUT (Code=0.03)
   Uri-Path: ".well-known"
   Uri-Path: "dots"
-  Uri-Path: "v1.0"
   Uri-Path: "config"
   Uri-Path: "sid=123"
   Content-Format: "application/dots+cbor"
@@ -2223,7 +2210,6 @@
               <artwork align="left"><![CDATA[  Header: PUT (Code=0.03)
   Uri-Path: ".well-known"
   Uri-Path: "dots"
-  Uri-Path: "v1.0"
   Uri-Path: "config"
   Uri-Path: "sid=123"
   Content-Format: "application/dots+cbor"
@@ -2351,7 +2337,6 @@
             <artwork align="left"><![CDATA[  Header: DELETE (Code=0.04)
   Uri-Path: ".well-known"
   Uri-Path: "dots"
-  Uri-Path: "v1.0"
   Uri-Path: "config"
   Uri-Path: "sid=123"
 ]]></artwork>
@@ -2540,7 +2525,7 @@
     <section anchor="YANG" title="DOTS Signal Channel YANG Modules">
       <t>This document defines a YANG <xref target="RFC7950"></xref> module
       for DOTS mitigation scope, DOTS signal channel session configuration
-      data, and DOTS redirected signalling. </t>
+      data, and DOTS redirected signalling.</t>
 
       <t>This YANG module (ietf-dots-signal-channel) defines the DOTS client
       interaction with the DOTS server as seen by the DOTS client. A DOTS
@@ -2793,14 +2778,14 @@ module iana-dots-signal-channel {
           "Overlapping targets. conflict-scope provides
            more details about the exact conflict.";
       }
-      enum "conflict-with-whitelist" {
+      enum "conflict-with-acceptlist" {
         value 2;
         description
-          "Conflicts with an existing white list.
+          "Conflicts with an existing accept-list.
                  
           This code is returned when the DDoS mitigation
           detects that some of the source addresses/prefixes
-          listed in the white list ACLs are actually
+          listed in the accept-list ACLs are actually
           attacking the target.";
       }
       enum "cuid-collision" {
@@ -3078,7 +3063,7 @@ module ietf-dots-signal-channel {
               "Conflicting alias-name.";
           }
           list acl-list {
-            when "../../conflict-cause = 'conflict-with-whitelist'";
+            when "../../conflict-cause = 'conflict-with-acceptlist'";
             key "acl-name";
             description
               "List of conflicting ACLs as defined in the DOTS data
@@ -3827,8 +3812,9 @@ module ietf-dots-signal-channel {
         applications to declare that a CBOR data structure is a DOTS signal
         channel object. Its use is optional and is intended for use in cases
         in which this information would not otherwise be known. DOTS CBOR tag
-        is not required for DOTS signal channel protocol version "v1.0". If
-        present, the DOTS tag MUST prefix a DOTS signal channel object.</t>
+        is not required for DOTS signal channel protocol version specified in
+        this document. If present, the DOTS tag MUST prefix a DOTS signal
+        channel object.</t>
 
         <t>This section registers the DOTS signal channel CBOR tag in the
         "CBOR Tags" registry <xref target="IANA.CBOR.Tags"></xref>.</t>
@@ -3861,7 +3847,7 @@ module ietf-dots-signal-channel {
         <section anchor="map"
                  title="DOTS Signal Channel CBOR Mappings Sub-Registry">
           <t>The document requests IANA to create a new sub-registry, entitled
-          "DOTS Signal Channel CBOR Mappings". </t>
+          "DOTS Signal Channel CBOR Mappings".</t>
 
           <t>The structure of this sub-registry is provided in <xref
           target="format"></xref>. Registration requests are evaluated using
@@ -4168,11 +4154,11 @@ module ietf-dots-signal-channel {
 
             <c>2</c>
 
-            <c>conflict-with-whitelist</c>
+            <c>conflict-with-acceptlist</c>
 
-            <c>Conflicts with an existing white list. This code is returned
+            <c>Conflicts with an existing accept-list. This code is returned
             when the DDoS mitigation detects source addresses/prefixes in the
-            white-listed ACLs are attacking the target.</c>
+            accept-listed ACLs are attacking the target.</c>
 
             <c>[RFCXXXX]</c>
 
@@ -4272,7 +4258,7 @@ module ietf-dots-signal-channel {
         "enum" statement, and substatements thereof, should be defined:<list
             hangIndent="15" style="hanging">
             <t hangText="&quot;enum&quot;:">Replicate the label from the
-            registry. </t>
+            registry.</t>
 
             <t hangText="&quot;value&quot;:">Contains the IANA-assigned value
             corresponding to the 'status', 'conflict-status',
