@@ -462,13 +462,13 @@
 
           <c>Mitigation</c>
 
-          <c>/v1.0/mitigate</c>
+          <c>/mitigate</c>
 
           <c><xref target="m_req"></xref></c>
 
           <c>Session configuration</c>
 
-          <c>/v1.0/config</c>
+          <c>/config</c>
 
           <c><xref target="sigconfig"></xref></c>
         </texttable>
