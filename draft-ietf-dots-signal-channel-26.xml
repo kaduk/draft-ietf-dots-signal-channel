@@ -173,7 +173,7 @@
         </list>Please update TBD statements with the port number to be
       assigned to DOTS Signal Channel Protocol.</t>
 
-      <t>Also, please update the "revision" date of the YANG module.</t>
+      <t>Also, please update the "revision" date of the YANG modules.</t>
     </note>
   </front>
 
@@ -3698,7 +3698,7 @@ module ietf-dots-signal-channel {
     <section anchor="IANA" title="IANA Considerations">
       <t>This specification registers a service port (<xref
       target="port"></xref>), a URI suffix in the Well-Known URIs registry
-      (<xref target="uri"></xref>), and a YANG module (<xref
+      (<xref target="uri"></xref>), and two YANG modules (<xref
       target="yang"></xref>). It also creates a new registry for DOTS signal
       channel protocol (<xref target="reg"></xref>).</t>
 
