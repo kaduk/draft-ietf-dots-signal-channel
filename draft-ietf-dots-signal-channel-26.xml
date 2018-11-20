@@ -2581,8 +2581,11 @@
           |     |     +--ro alias-name*          string
           |     |     +--ro acl-list* [acl-name]
           |     |     |  +--ro acl-name    
+          |     |     |  |-> /ietf-data:dots-data/dots-client/acls/acl   
+          |     |     |  |    /name 
+          |     |     |  +--ro acl-type?    
           |     |     |   -> /ietf-data:dots-data/dots-client/acls/acl   
-          |     |     |       /name 
+          |     |     |       /type 
           |     |     +--ro mid?                 -> ../../../mid
           |     +--ro bytes-dropped?          yang:zero-based-counter64
           |     +--ro bps-dropped?            yang:zero-based-counter64
@@ -3081,6 +3084,16 @@ module ietf-dots-signal-channel {
               description
                 "Reference to the conflicting ACL name bound to
                  a DOTS client.";
+            }
+            leaf acl-type {
+              type leafref {
+                path "/ietf-data:dots-data/ietf-data:dots-client/" +
+                     "ietf-data:acls/ietf-data:acl/ietf-data:type";
+              }
+              description
+                "Reference to the conflicting ACL type bound to
+                 a DOTS client.";
+              }
             }
           }
           leaf mid {
