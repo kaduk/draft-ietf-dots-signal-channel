@@ -1258,7 +1258,7 @@ Internet-Draft        DOTS Signal Channel Protocol         November 2018
      "ietf-dots-signal-channel:mitigation-scope": {
         "scope": [
            {
-             "mid": 12332,
+             "mid": 123,
              "lifetime": 3600
            }
          ]
@@ -5225,8 +5225,8 @@ Internet-Draft        DOTS Signal Channel Protocol         November 2018
               Boucadair, M., K, R., Nishizuka, K., Xia, L., Patil, P.,
               Mortensen, A., and N. Teague, "Distributed Denial-of-
               Service Open Threat Signaling (DOTS) Data Channel
-              Specification", draft-ietf-dots-data-channel-22 (work in
-              progress), September 2018.
+              Specification", draft-ietf-dots-data-channel-23 (work in
+              progress), November 2018.
 
    [I-D.ietf-dots-requirements]
               Mortensen, A., Moskowitz, R., and R. K, "Distributed

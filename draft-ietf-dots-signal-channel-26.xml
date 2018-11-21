@@ -1053,7 +1053,7 @@
   "ietf-dots-signal-channel:mitigation-scope": {
      "scope": [
         {
-          "mid": 12332,
+          "mid": 123,
           "lifetime": 3600
         }
       ]
@@ -3999,7 +3999,7 @@ module ietf-dots-signal-channel {
         <section anchor="sc" title="Status Codes Sub-Registry">
           <t>The document requests IANA to create a new sub-registry, entitled
           "DOTS Signal Channel Status Codes". Codes in this registry are used
-          as valid values of 'status' parameter. </t>
+          as valid values of 'status' parameter.</t>
 
           <t>The registry is initially populated with the following
           values:</t>
@@ -4091,7 +4091,7 @@ module ietf-dots-signal-channel {
         <section anchor="cs" title="Conflict Status Codes Sub-Registry">
           <t>The document requests IANA to create a new sub-registry, entitled
           "DOTS Signal Channel Conflict Status Codes". Codes in this registry
-          are used as valid values of 'conflict-status' parameter. </t>
+          are used as valid values of 'conflict-status' parameter.</t>
 
           <t>The registry is initially populated with the following
           values:</t>
@@ -4144,7 +4144,7 @@ module ietf-dots-signal-channel {
         <section anchor="cc" title="Conflict Cause Codes Sub-Registry">
           <t>The document requests IANA to create a new sub-registry, entitled
           "DOTS Signal Channel Conflict Cause Codes". Codes in this registry
-          are used as valid values of 'conflict-cause' parameter. </t>
+          are used as valid values of 'conflict-cause' parameter.</t>
 
           <t>The registry is initially populated with the following
           values:</t>
@@ -4193,7 +4193,7 @@ module ietf-dots-signal-channel {
         <section anchor="as" title="Attack Status Codes Sub-Registry">
           <t>The document requests IANA to create a new sub-registry, entitled
           "DOTS Signal Channel Attack Status Codes". Codes in this registry
-          are used as valid values of 'attack-status' parameter. </t>
+          are used as valid values of 'attack-status' parameter.</t>
 
           <t>The registry is initially populated with the following
           values:</t>
