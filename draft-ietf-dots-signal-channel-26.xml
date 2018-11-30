@@ -798,12 +798,13 @@
               mitigation request unless the DOTS signal channel session is
               lost. <vspace blankLines="1" />If the DOTS client ceases to
               respond to heartbeat messages, the DOTS server can detect that
-              the DOTS session is lost. <vspace blankLines="1" />The default
-              value of the parameter is 'true' (that is, the mitigation starts
-              immediately). If 'trigger-mitigation' is not present in a
-              request, this is equivalent to receiving a request with
-              'trigger-mitigation' set to 'true'. <vspace
-              blankLines="1" />This is an optional attribute.</t>
+              the DOTS signal channel session is lost. <vspace
+              blankLines="1" />The default value of the parameter is 'true'
+              (that is, the mitigation starts immediately). If
+              'trigger-mitigation' is not present in a request, this is
+              equivalent to receiving a request with 'trigger-mitigation' set
+              to 'true'. <vspace blankLines="1" />This is an optional
+              attribute.</t>
             </list></t>
 
           <t>In deployments where server-domain DOTS gateways are enabled,
@@ -2474,34 +2475,36 @@
         receiving heartbeat probes from peer DOTS clients. As a reminder, it
         is the responsibility of DOTS clients to ensure that on-path
         translators/firewalls are maintaining a binding so that the same
-        external IP address and/or port number is retained for the DOTS
-        session.</t>
+        external IP address and/or port number is retained for the DOTS signal
+        channel session.</t>
 
         <t>In case of a massive DDoS attack that saturates the incoming
         link(s) to the DOTS client, all traffic from the DOTS server to the
         DOTS client will likely be dropped, although the DOTS server receives
         heartbeat requests in addition to DOTS messages sent by the DOTS
         client. In this scenario, the DOTS agents MUST behave differently to
-        handle message transmission and DOTS session liveliness during link
-        saturation:</t>
+        handle message transmission and DOTS signal channel session liveliness
+        during link saturation:</t>
 
         <t><list style="symbols">
-            <t>The DOTS client MUST NOT consider the DOTS session terminated
-            even after a maximum 'missing-hb-allowed' threshold is reached.
-            The DOTS client SHOULD keep on using the current DOTS session to
-            send heartbeat requests over it, so that the DOTS server knows the
-            DOTS client has not disconnected the DOTS session. <vspace
+            <t>The DOTS client MUST NOT consider the DOTS signal channel
+            session terminated even after a maximum 'missing-hb-allowed'
+            threshold is reached. The DOTS client SHOULD keep on using the
+            current DOTS signal channel session to send heartbeat requests
+            over it, so that the DOTS server knows the DOTS client has not
+            disconnected the DOTS signal channel session. <vspace
             blankLines="1" />After the maximum 'missing-hb-allowed' threshold
             is reached, the DOTS client SHOULD try to resume the (D)TLS
             session. The DOTS client SHOULD send mitigation requests over the
-            current DOTS session, and in parallel, for example, try to resume
-            the (D)TLS session or use 0-RTT mode in DTLS 1.3 to piggyback the
-            mitigation request in the ClientHello message. <vspace
-            blankLines="1" />As soon as the link is no longer saturated, if
-            traffic from the DOTS server reaches the DOTS client over the
-            current DOTS session, the DOTS client can stop (D)TLS session
-            resumption or if (D)TLS session resumption is successful then
-            disconnect the current DOTS session.</t>
+            current DOTS signal channel session, and in parallel, for example,
+            try to resume the (D)TLS session or use 0-RTT mode in DTLS 1.3 to
+            piggyback the mitigation request in the ClientHello message.
+            <vspace blankLines="1" />As soon as the link is no longer
+            saturated, if traffic from the DOTS server reaches the DOTS client
+            over the current DOTS signal channel session, the DOTS client can
+            stop (D)TLS session resumption or if (D)TLS session resumption is
+            successful then disconnect the current DOTS signal channel
+            session.</t>
 
             <t>If the DOTS server does not receive any traffic from the peer
             DOTS client, then the DOTS server sends heartbeat requests to the
